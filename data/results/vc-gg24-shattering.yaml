@@ -1,0 +1,22 @@
+id: vc-gg24-shattering
+title: (Δ+1)-coloring via shattering below the network decomposition barrier
+problem: vertex-coloring
+reduce_to: vc-gg24-via-mis
+via: vertex-coloring-shattering-clp
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{5/3}\log n)
+  expr: Otilde(log(log(n))^(5/3))
+year: 2024
+sources:
+- paper: gg24
+  reference: Corollary 1.4
+  url: https://arxiv.org/html/2410.19516v1#S1.Thmtheorem4
+comments: uses the deterministic (deg+1)-list coloring
+status: approved

@@ -1,0 +1,16 @@
+id: bkm20
+label: BKM, 2020
+title: Efficient Deterministic Distributed Coloring with Small Bandwidth
+authors:
+- bamberger-philipp
+- kuhn-fabian
+- maus-yannic
+public_url: https://arxiv.org/abs/1912.02814
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1912.02814'
+- type: conference
+  venue: podc
+  year: 2020

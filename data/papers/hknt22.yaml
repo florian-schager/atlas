@@ -1,0 +1,17 @@
+id: hknt22
+label: HKNT, 2022
+title: Near-optimal distributed degree+1 coloring
+authors:
+- halldorsson-magnus
+- kuhn-fabian
+- nolin-alexandre
+- tonoyan-tigran
+public_url: https://arxiv.org/abs/2112.00604
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2021
+  arxiv: '2112.00604'
+- type: conference
+  venue: stoc
+  year: 2022

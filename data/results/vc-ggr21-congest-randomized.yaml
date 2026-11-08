@@ -1,0 +1,21 @@
+id: vc-ggr21-congest-randomized
+title: Randomized (Δ+1)-coloring in CONGEST via improved network decomposition
+problem: vertex-coloring
+reduce_to: vc-ggr21-congest
+via: vertex-coloring-shattering-degree-reduction
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{6}\log n)
+  expr: O(log(Delta) + log(log(n))^6)
+year: 2020
+sources:
+- paper: ggr21
+  reference: Corollary 1.6
+  url: https://arxiv.org/html/2007.08253v1#S1.Thmtheorem6
+status: approved

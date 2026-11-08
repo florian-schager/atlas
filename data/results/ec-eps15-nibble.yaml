@@ -1,0 +1,20 @@
+id: ec-eps15-nibble
+title: Rödl nibble
+problem: edge-coloring
+colors:
+  latex: (1+\varepsilon)\Delta
+  expr: (1+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-constant
+runtime:
+  latex: \mathcal{O}(\log^{\star}\Delta \cdot \max(1, \log n / \Delta^{1-\gamma}))
+  expr: O(logstar(Delta) * (1 + log(n) / Delta^(1-gamma)))
+year: 2015
+sources:
+- paper: eps15
+  reference: Theorem 2.1
+status: approved

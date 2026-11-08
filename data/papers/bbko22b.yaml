@@ -1,0 +1,18 @@
+id: bbko22b
+label: BBKO, 2022b
+title: Distributed Δ-Coloring Plays Hide-and-Seek
+authors:
+- balliu-alkida
+- brandt-sebastian
+- kuhn-fabian
+- olivetti-dennis
+public_url: https://arxiv.org/abs/2110.00643
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2021
+  arxiv: '2110.00643'
+- type: conference
+  venue: stoc
+  year: 2022
+  doi: 10.1145/3519935.3520027

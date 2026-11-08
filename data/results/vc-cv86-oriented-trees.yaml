@@ -1,0 +1,20 @@
+id: vc-cv86-oriented-trees
+title: Cole–Vishkin algorithm
+problem: vertex-coloring
+colors:
+  latex: '3'
+  expr: '3'
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+assumptions:
+- given-orientation-towards-root
+runtime:
+  latex: \log^{\star} n + \mathcal{O}(1)
+  expr: logstar(n) + O(1)
+year: 1986
+sources:
+- paper: cv86
+- paper: gps87
+status: approved

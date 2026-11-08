@@ -1,0 +1,14 @@
+id: fischer17
+label: Fischer, 2017
+title: Improved Deterministic Distributed Matching via Rounding
+authors:
+- fischer-manuela
+public_url: https://arxiv.org/abs/1703.00900
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1703.00900'
+- type: conference
+  venue: disc
+  year: 2017

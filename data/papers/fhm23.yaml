@@ -1,0 +1,16 @@
+id: fhm23
+label: FHM, 2023
+title: Fast distributed Brooks' theorem
+authors:
+- fischer-manuela
+- halldorsson-magnus
+- maus-yannic
+public_url: https://arxiv.org/abs/2211.07606
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2022
+  arxiv: '2211.07606'
+- type: conference
+  venue: soda
+  year: 2023

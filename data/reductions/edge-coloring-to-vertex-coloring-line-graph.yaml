@@ -1,0 +1,27 @@
+id: edge-coloring-to-vertex-coloring-line-graph
+title: Line graph
+from:
+  problem: edge-coloring
+  colors:
+    latex: 2\Delta - 1
+    expr: 2 * Delta - 1
+to:
+  problem: vertex-coloring
+  colors:
+    latex: 2\Delta - 1
+    expr: 2 * Delta - 1
+instance:
+  graph: line-graph
+  n:
+    latex: m \le n\Delta/2
+    expr: n * Delta / 2
+  Delta:
+    latex: 2\Delta - 2
+    expr: 2 * Delta - 2
+runtime:
+  latex: \mathcal{O}(T)
+  expr: O(T)
+models:
+- LOCAL
+comments: vertex coloring of L(G) is an edge coloring of G
+status: approved

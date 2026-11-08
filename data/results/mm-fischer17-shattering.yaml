@@ -1,0 +1,17 @@
+id: mm-fischer17-shattering
+title: Maximal matching via shattering and rounding
+problem: maximal-matching
+reduce_to: mm-fischer17-rounding
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{3}\log n)
+  expr: O(log(Delta) + log(log(n))^3)
+year: 2017
+sources:
+- paper: fischer17
+  reference: Corollary 1.3
+  url: https://arxiv.org/html/1703.00900v2#S1.Thmtheorem3
+status: approved

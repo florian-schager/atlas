@@ -1,0 +1,14 @@
+id: mis-lw11-trees
+title: MIS on trees
+problem: mis
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: trees
+runtime:
+  latex: \mathcal{O}(\sqrt{\log n \cdot \log\log n})
+  expr: O(sqrt(log(n) * log(log(n))))
+year: 2011
+sources:
+- paper: lw11
+status: approved

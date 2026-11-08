@@ -1,0 +1,22 @@
+id: ghkmsu17
+label: GHKMSU, 2017
+title: Improved distributed degree splitting and edge coloring
+authors:
+- ghaffari-mohsen
+- hirvonen-juho
+- kuhn-fabian
+- maus-yannic
+- suomela-jukka
+- uitto-jara
+public_url: https://arxiv.org/abs/1706.04746
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1706.04746'
+- type: conference
+  venue: disc
+  year: 2017
+- type: journal
+  venue: distributed-computing
+  year: 2020

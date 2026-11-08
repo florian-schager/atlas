@@ -1,0 +1,17 @@
+id: mis-cps17-congest-diameter
+title: MIS by derandomizing Ghaffari's algorithm with aggregation
+problem: mis
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(D \cdot \log^{2} n)
+  expr: O(D * log(n)^2)
+year: 2016
+sources:
+- paper: cps17
+  reference: Theorem 1.4
+  url: https://arxiv.org/html/1608.01689v1#S1.Thmtheorem4
+comments: seeds via conditional expectations, aggregated over a BFS tree
+status: approved

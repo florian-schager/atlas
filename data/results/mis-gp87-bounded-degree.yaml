@@ -1,0 +1,15 @@
+id: mis-gp87-bounded-degree
+title: MIS for constant-degree graphs
+problem: mis
+reduce_to: vc-gp87
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: bounded-degree
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 1987
+sources:
+- paper: gp87
+status: approved

@@ -1,0 +1,21 @@
+id: vc-gg24-via-mis
+title: (Δ+1)-coloring below the network decomposition barrier
+problem: vertex-coloring
+reduce_to: mis-gg24-below-network-decomposition
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{5/3} n)
+  expr: Otilde(log(n)^(5/3))
+year: 2024
+sources:
+- paper: gg24
+  reference: Theorem 1.3
+  url: https://arxiv.org/html/2410.19516v1#S1.Thmtheorem3
+comments: the paper states it for (deg+1)-list coloring directly
+status: approved

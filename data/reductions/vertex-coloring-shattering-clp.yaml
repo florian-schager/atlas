@@ -1,0 +1,31 @@
+id: vertex-coloring-shattering-clp
+title: Shattering after O(log* n) rounds
+from:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+to:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+randomness: randomized
+instance:
+  graph: components
+  n:
+    latex: \mathrm{poly}(\log n)
+    expr: poly(log(n))
+  Delta:
+    latex: \mathrm{poly}(\log n)
+    expr: poly(log(n))
+runtime:
+  latex: \mathcal{O}(\log^{\star} n) + T
+  expr: O(logstar(n)) + T
+models:
+- LOCAL
+year: 2017
+sources:
+- paper: clp18
+comments: the deterministic algorithm must solve (deg+1)-list coloring
+status: approved

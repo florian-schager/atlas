@@ -1,0 +1,17 @@
+id: vc-barenboim15-more-colors
+title: Fixing partial colorings
+problem: vertex-coloring
+colors:
+  latex: \Delta + \mathcal{O}(\Delta / \log\Delta)
+  expr: Delta + O(Delta / log(Delta))
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\sqrt{\Delta}\log^{3} \Delta + \log^{\star} n)
+  expr: O(sqrt(Delta) * log(Delta)^3 + logstar(n))
+year: 2015
+sources:
+- paper: barenboim15
+status: approved

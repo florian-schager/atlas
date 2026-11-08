@@ -1,0 +1,12 @@
+id: chk01
+label: CHK, 2001
+title: Distributed O(Δ log n)-edge-coloring algorithm
+authors:
+- czygrinow-andrzej
+- hanckowiak-michal
+- karonski-michal
+public_url: https://link.springer.com/chapter/10.1007/3-540-44676-1_29
+versions:
+- type: conference
+  venue: esa
+  year: 2001

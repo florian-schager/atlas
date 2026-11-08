@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "venue.schema.json",
+  "title": "Venue",
+  "description": "A conference, journal, preprint server or book series.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": { "description": "Full name, e.g. 'International Symposium on Distributed Computing'.", "type": "string" },
+    "short_name": { "description": "Abbreviation used in labels, e.g. 'DISC'.", "type": "string" },
+    "type": { "enum": ["conference", "journal", "preprint", "book"] },
+    "website": { "type": "string", "format": "uri" }
+  }
+}

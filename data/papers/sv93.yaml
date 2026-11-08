@@ -1,0 +1,11 @@
+id: sv93
+label: SV, 1993
+title: Locality based graph coloring
+authors:
+- szegedy-mario
+- vishwanathan-sundar
+public_url: https://dl.acm.org/doi/pdf/10.1145/167088.167156
+versions:
+- type: conference
+  venue: stoc
+  year: 1993

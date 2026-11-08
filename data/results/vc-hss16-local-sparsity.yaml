@@ -1,0 +1,17 @@
+id: vc-hss16-local-sparsity
+title: Local sparsity
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\sqrt{\log \Delta}) + 2^{\mathcal{O}(\sqrt{\log\log n})}
+  expr: O(sqrt(log(Delta))) + 2^(O(sqrt(log(log(n)))))
+year: 2016
+sources:
+- paper: hss16
+status: approved

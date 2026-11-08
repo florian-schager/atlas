@@ -1,0 +1,18 @@
+id: ec-bko20-relaxed-list-coloring
+title: Relaxed list edge coloring
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\log^2\log\Delta)} + \mathcal{O}(\log^{\star} n)
+  expr: 2^(O(log(log(Delta))^2)) + O(logstar(n))
+year: 2020
+sources:
+- paper: bko20
+comments: (deg(e)+1)-list edge coloring
+status: approved

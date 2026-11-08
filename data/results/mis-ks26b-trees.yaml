@@ -1,0 +1,16 @@
+id: mis-ks26b-trees
+title: MIS by faster degree reduction (trees)
+problem: mis
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: trees
+runtime:
+  latex: \mathcal{O}\left(\sqrt{\frac{\log n}{\log(\log^{\star} n)}}\right)
+  expr: O(sqrt(log(n) / log(logstar(n))))
+year: 2025
+sources:
+- paper: ks26b
+  reference: Theorem 2
+  url: https://arxiv.org/html/2505.15652v1#Thmthm2
+status: approved

@@ -1,0 +1,17 @@
+id: vc-clp18-hierarchical-decomposition
+title: Hierarchical decomposition
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log\log n})}
+  expr: 2^(O(sqrt(log(log(n)))))
+year: 2017
+sources:
+- paper: clp18
+status: approved

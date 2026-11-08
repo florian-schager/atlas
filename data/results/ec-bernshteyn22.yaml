@@ -1,0 +1,17 @@
+id: ec-bernshteyn22
+title: Vizing chains
+problem: edge-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\mathrm{poly}(\Delta) \cdot \log^{11} n)
+  expr: Otilde(poly(Delta) * log(n)^11)
+year: 2020
+sources:
+- paper: bernshteyn22
+status: approved

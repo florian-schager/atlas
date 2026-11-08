@@ -1,0 +1,17 @@
+id: ec-be11-neighborhood-independence
+title: Bounded neighborhood independence
+problem: edge-coloring
+colors:
+  latex: \mathcal{O}(\Delta^{1+\varepsilon})
+  expr: O(Delta^(1+eps))
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}\left(\log\Delta \cdot \frac{\log^{\star} \Delta}{\log\log^{\star} \Delta}\right) + \frac{1}{2}\log^{\star} n
+  expr: O(log(Delta) * logstar(Delta) / log(logstar(Delta))) + 1/2 * logstar(n)
+year: 2010
+sources:
+- paper: be11
+status: approved

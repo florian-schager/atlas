@@ -1,0 +1,14 @@
+id: bernshteyn22
+label: Bernshteyn, 2022
+title: A fast distributed algorithm for (Δ+1)-edge-coloring
+authors:
+- bernshteyn-anton
+public_url: https://arxiv.org/abs/2006.15703
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2006.15703'
+- type: journal
+  venue: jctb
+  year: 2022

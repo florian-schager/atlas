@@ -1,0 +1,17 @@
+id: ec-gkmu18-three-graphs
+title: Extracting (3)-graphs
+problem: edge-coloring
+colors:
+  latex: 3\Delta/2
+  expr: 3*Delta/2
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta^{9} \cdot \log^{5} \Delta \cdot \log^{8} n)
+  expr: O(Delta^9 * log(Delta)^5 * log(n)^8)
+year: 2017
+sources:
+- paper: gkmu18
+status: approved

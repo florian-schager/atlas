@@ -1,0 +1,15 @@
+id: gk21
+label: GK, 2021
+title: 'Deterministic distributed vertex coloring: simpler, faster, and without network decomposition'
+authors:
+- ghaffari-mohsen
+- kuhn-fabian
+public_url: https://arxiv.org/abs/2011.04511
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2011.04511'
+- type: conference
+  venue: focs
+  year: 2021

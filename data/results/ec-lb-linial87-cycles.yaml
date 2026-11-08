@@ -1,0 +1,21 @@
+id: ec-lb-linial87-cycles
+title: Linial's lower bound on the cycle
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: cycles
+runtime:
+  latex: \Omega(\log^{\star} n)
+  expr: Omega(logstar(n))
+year: 1987
+sources:
+- paper: linial87
+  reference: Proof of Theorem 2.1
+- paper: chlpu18
+  reference: Section 1.4
+comments: the line graph of a cycle is a cycle; holds for any f(Δ) colors
+status: approved

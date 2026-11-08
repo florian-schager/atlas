@@ -1,0 +1,11 @@
+id: gp87
+label: GP, 1987
+title: Parallel (Δ+1)-coloring of constant-degree graphs
+authors:
+- goldberg-andrew
+- plotkin-serge
+public_url: https://www.sciencedirect.com/science/article/pii/0020019087901694
+versions:
+- type: journal
+  venue: ipl
+  year: 1987

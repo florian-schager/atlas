@@ -1,0 +1,15 @@
+id: bn25
+label: BN, 2025
+title: Towards optimal deterministic LOCAL algorithms on trees
+authors:
+- brandt-sebastian
+- narayanan-ananth
+public_url: https://arxiv.org/abs/2505.01410
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2505.01410'
+- type: conference
+  venue: podc
+  year: 2025

@@ -1,0 +1,15 @@
+id: mm-hkp98-polylog
+title: Maximal matching in polylogarithmic time
+problem: maximal-matching
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{2}\Delta \cdot \log^{5} n)
+  expr: O(log(Delta)^2 * log(n)^5)
+year: 1998
+sources:
+- paper: hkp98
+comments: bipartite matching via spanners on ID-bit splits
+status: approved

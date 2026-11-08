@@ -1,0 +1,13 @@
+id: barenboim15
+label: Barenboim, 2015
+title: Deterministic (Δ+1)-coloring in sublinear (in Δ) time in static, dynamic and faulty networks
+authors:
+- barenboim-leonid
+public_url: https://dl.acm.org/doi/10.1145/2979675
+versions:
+- type: conference
+  venue: podc
+  year: 2015
+- type: journal
+  venue: jacm
+  year: 2016

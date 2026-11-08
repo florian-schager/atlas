@@ -1,0 +1,18 @@
+id: vc-johansson99
+title: Random color trials
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1999
+sources:
+- paper: johansson99
+comments: each uncolored node tries a random color from its palette
+status: approved

@@ -1,0 +1,18 @@
+id: mis-cv86-oriented-trees
+title: Cole–Vishkin algorithm
+problem: mis
+reduce_to: vc-cv86-oriented-trees
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+assumptions:
+- given-orientation-towards-root
+runtime:
+  latex: \log^{\star} n + \mathcal{O}(1)
+  expr: logstar(n) + O(1)
+year: 1986
+sources:
+- paper: cv86
+- paper: gps87
+status: approved

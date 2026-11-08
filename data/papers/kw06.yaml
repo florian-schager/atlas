@@ -1,0 +1,11 @@
+id: kw06
+label: KW, 2006
+title: On the complexity of distributed graph coloring
+authors:
+- kuhn-fabian
+- wattenhofer-roger
+public_url: https://dl.acm.org/doi/10.1145/1146381.1146387
+versions:
+- type: conference
+  venue: podc
+  year: 2006

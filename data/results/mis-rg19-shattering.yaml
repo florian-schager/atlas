@@ -1,0 +1,15 @@
+id: mis-rg19-shattering
+title: MIS via shattering and network decomposition
+problem: mis
+reduce_to: mis-rg19-network-decomposition
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{7}\log n)
+  expr: O(log(Delta) + log(log(n))^7)
+year: 2019
+sources:
+- paper: rg20
+status: approved

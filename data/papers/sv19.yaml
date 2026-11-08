@@ -1,0 +1,15 @@
+id: sv19
+label: SV, 2019
+title: Towards the locality of Vizing's theorem
+authors:
+- su-hsin-hao
+- vu-hoa
+public_url: https://arxiv.org/abs/1901.00479
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1901.00479'
+- type: conference
+  venue: stoc
+  year: 2019

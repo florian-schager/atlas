@@ -1,0 +1,12 @@
+id: bd23
+label: BD, 2023
+title: Fast algorithms for Vizing's theorem on bounded degree graphs
+authors:
+- bernshteyn-anton
+- dhawan-abhishek
+public_url: https://arxiv.org/abs/2303.05408
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2023
+  arxiv: '2303.05408'

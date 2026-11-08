@@ -1,0 +1,15 @@
+id: mm-pr01-forest-decomposition
+title: Maximal matching via forest decompositions
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta + \log^{\star} n)
+  expr: O(Delta + logstar(n))
+year: 2001
+sources:
+- paper: pr01
+  reference: Theorem 3.1
+status: approved

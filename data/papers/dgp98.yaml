@@ -1,0 +1,12 @@
+id: dgp98
+label: DGP, 1998
+title: Near-optimal, distributed edge colouring via the nibble method
+authors:
+- dubhashi-devdatt
+- grable-david
+- panconesi-alessandro
+public_url: https://www.sciencedirect.com/science/article/pii/S030439759800022X
+versions:
+- type: journal
+  venue: tcs
+  year: 1998

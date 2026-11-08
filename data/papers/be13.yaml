@@ -1,0 +1,12 @@
+id: be13
+label: BE, 2013
+title: 'Distributed Graph Coloring: Fundamentals and Recent Developments'
+authors:
+- barenboim-leonid
+- elkin-michael
+public_url: https://www.cs.bgu.ac.il/~elkinm/book.pdf
+versions:
+- type: book
+  venue: synthesis-lectures-dct
+  year: 2013
+  doi: 10.1007/978-3-031-02009-4

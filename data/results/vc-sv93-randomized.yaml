@@ -1,0 +1,17 @@
+id: vc-sv93-randomized
+title: Randomized color reduction
+problem: vertex-coloring
+colors:
+  latex: \mathcal{O}(\Delta^{2})
+  expr: O(Delta^2)
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \frac{1}{2}\log^{\star} n + \mathcal{O}(1)
+  expr: 1/2 * logstar(n) + O(1)
+year: 1993
+sources:
+- paper: sv93
+status: approved

@@ -1,0 +1,14 @@
+id: gghir23
+label: GGHIR, 2023
+title: Improved distributed network decomposition, hitting sets, and spanners, via derandomization
+authors:
+- ghaffari-mohsen
+- grunau-christoph
+- haeupler-bernhard
+- ilchi-saeed
+- rozhon-vaclav
+public_url: https://arxiv.org/abs/2209.11669
+versions:
+- type: conference
+  venue: soda
+  year: 2023

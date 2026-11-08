@@ -1,0 +1,19 @@
+id: ec-dgp98-nibble
+title: Rödl nibble
+problem: edge-coloring
+colors:
+  latex: (1+\varepsilon)\Delta
+  expr: (1+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-log1delta
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1998
+sources:
+- paper: dgp98
+status: approved

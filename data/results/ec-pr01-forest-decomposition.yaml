@@ -1,0 +1,18 @@
+id: ec-pr01-forest-decomposition
+title: Forest decomposition
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta + \log^{\star} n)
+  expr: O(Delta + logstar(n))
+year: 2001
+sources:
+- paper: pr01
+  reference: Theorem 3.2
+status: approved

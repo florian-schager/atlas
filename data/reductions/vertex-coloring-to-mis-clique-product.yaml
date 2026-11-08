@@ -1,0 +1,27 @@
+id: vertex-coloring-to-mis-clique-product
+title: Product with a clique
+from:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+to:
+  problem: mis
+instance:
+  graph: clique-product
+  n:
+    latex: n(\Delta + 1)
+    expr: n * (Delta + 1)
+  Delta:
+    latex: 2\Delta
+    expr: 2 * Delta
+runtime:
+  latex: T
+  expr: T
+models:
+- LOCAL
+sources:
+- paper: luby85
+year: 1985
+comments: v gets color i if its i-th copy is in the MIS
+status: approved

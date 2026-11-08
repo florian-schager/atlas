@@ -1,0 +1,11 @@
+id: ii86
+label: II, 1986
+title: A fast and simple randomized parallel algorithm for maximal matching
+authors:
+- israeli-amos
+- itai-alon
+public_url: https://doi.org/10.1016/0020-0190(86)90144-4
+versions:
+- type: journal
+  venue: ipl
+  year: 1986

@@ -1,0 +1,22 @@
+id: mm-to-mis-line-graph
+title: Line graph
+from:
+  problem: maximal-matching
+to:
+  problem: mis
+instance:
+  graph: line-graph
+  n:
+    latex: m \le n\Delta/2
+    expr: n * Delta / 2
+  Delta:
+    latex: 2\Delta - 2
+    expr: 2 * Delta - 2
+runtime:
+  latex: \mathcal{O}(T)
+  expr: O(T)
+models:
+- LOCAL
+- CONGEST
+comments: MIS of L(G) is a maximal matching of G
+status: approved

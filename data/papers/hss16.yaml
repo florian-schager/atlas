@@ -1,0 +1,16 @@
+id: hss16
+label: HSS, 2016
+title: Distributed (Δ+1)-coloring in sublogarithmic rounds
+authors:
+- harris-david
+- schneider-johannes
+- su-hsin-hao
+public_url: https://arxiv.org/abs/1603.01486
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2016
+  arxiv: '1603.01486'
+- type: conference
+  venue: stoc
+  year: 2016

@@ -1,0 +1,18 @@
+id: vc-kuhn20-recursive-list-coloring
+title: Recursive list coloring
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log\Delta})} \cdot \log n
+  expr: 2^(O(sqrt(log(Delta)))) * log(n)
+year: 2019
+sources:
+- paper: kuhn20
+comments: (deg+1)-list coloring
+status: approved

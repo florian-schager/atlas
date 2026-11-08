@@ -1,0 +1,20 @@
+id: nd-ps92-ruling-sets
+title: Better ruling sets
+problem: network-decomposition
+decomposition:
+  colors: &id001
+    latex: 2^{\sqrt{\log n}}
+    expr: 2^(sqrt(log(n)))
+  diameter: *id001
+  diameter_type: weak
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log n})}
+  expr: 2^(O(sqrt(log(n))))
+year: 1992
+sources:
+- paper: ps92
+status: approved

@@ -1,0 +1,16 @@
+id: mm-be13-arboricity
+title: Maximal matching via forests-decomposition
+problem: maximal-matching
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: bounded-arboricity
+runtime:
+  latex: \mathcal{O}(\lambda + \log n)
+  expr: O(lambda + log(n))
+year: 2013
+sources:
+- paper: be13
+  reference: Theorem 8.6
+comments: for any arboricity λ
+status: approved

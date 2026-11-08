@@ -1,0 +1,14 @@
+id: mis-gv07-growth-bounded
+title: MIS on growth-bounded graphs
+problem: mis
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: growth-bounded
+runtime:
+  latex: \mathcal{O}(\log\log n \cdot \log^{\star} n)
+  expr: O(log(log(n)) * logstar(n))
+year: 2007
+sources:
+- paper: gv07
+status: approved

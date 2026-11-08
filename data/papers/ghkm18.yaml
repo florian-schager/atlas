@@ -1,0 +1,17 @@
+id: ghkm18
+label: GHKM, 2018
+title: Improved distributed Δ-coloring
+authors:
+- ghaffari-mohsen
+- hirvonen-juho
+- kuhn-fabian
+- maus-yannic
+public_url: https://arxiv.org/abs/1803.03248
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2018
+  arxiv: '1803.03248'
+- type: conference
+  venue: podc
+  year: 2018

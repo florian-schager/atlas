@@ -1,0 +1,14 @@
+id: ghaffari16
+label: Ghaffari, 2016
+title: An Improved Distributed Algorithm for Maximal Independent Set
+authors:
+- ghaffari-mohsen
+public_url: https://arxiv.org/abs/1506.05093
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2015
+  arxiv: '1506.05093'
+- type: conference
+  venue: soda
+  year: 2016

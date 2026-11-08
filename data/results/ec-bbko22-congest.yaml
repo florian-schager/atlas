@@ -1,0 +1,17 @@
+id: ec-bbko22-congest
+title: Polylogarithmic in Δ
+problem: edge-coloring
+colors:
+  latex: (8+\varepsilon)\Delta
+  expr: (8+eps)*Delta
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-6} \cdot \log^{12}\Delta + \log^{\star} n)
+  expr: O(1/eps^6 * log(Delta)^12 + logstar(n))
+year: 2022
+sources:
+- paper: bbko22
+status: approved

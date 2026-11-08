@@ -1,0 +1,20 @@
+id: nd-rg20-strong
+title: Polylogarithmic network decomposition
+problem: network-decomposition
+decomposition:
+  colors: &id001
+    latex: \mathcal{O}(\log n)
+    expr: O(log(n))
+  diameter: *id001
+  diameter_type: strong
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{8} n)
+  expr: O(log(n)^8)
+year: 2019
+sources:
+- paper: rg20
+status: approved

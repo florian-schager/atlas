@@ -1,0 +1,19 @@
+id: ec-gkmu18-near-maximum-matchings
+title: Near-maximum matchings
+problem: edge-coloring
+colors:
+  latex: (1+\varepsilon)\Delta
+  expr: (1+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+assumptions:
+- max-degree-log
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-9} \log \varepsilon^{-1} \cdot \log^{4} \Delta \cdot \log^{3}n)
+  expr: O(1/eps^9 * log(1/eps) * log(Delta)^4 * log(n)^3)
+year: 2017
+sources:
+- paper: gkmu18
+status: approved

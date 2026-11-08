@@ -1,0 +1,29 @@
+id: vertex-coloring-to-network-decomposition-congest
+title: Cluster colors in turn, list coloring per cluster
+from:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+to:
+  problem: network-decomposition
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T + \mathcal{O}(C \cdot D \cdot \log n \cdot \log^{2}\Delta)
+  expr: T + O(C * D * log(n) * log(Delta)^2)
+models:
+- CONGEST
+year: 2020
+sources:
+- paper: ggr21
+  reference: Proof of Corollary 1.3
+- paper: bkm20
+comments: needs low-congestion Steiner trees; BKM20's list coloring in each cluster
+status: approved

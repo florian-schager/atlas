@@ -1,0 +1,19 @@
+id: vc-ps92-nice-graphs
+title: Removing pebbles
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta / \log\Delta \cdot \log^{3} n)
+  expr: O(Delta / log(Delta) * log(n)^3)
+year: 1992
+sources:
+- paper: ps95
+- paper: ps92
+comments: Δ ≥ 3, no (Δ+1)-clique
+status: approved

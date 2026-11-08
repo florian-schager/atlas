@@ -1,0 +1,16 @@
+id: fgk17
+label: FGK, 2017
+title: Deterministic distributed edge-coloring via hypergraph maximal matching
+authors:
+- fischer-manuela
+- ghaffari-mohsen
+- kuhn-fabian
+public_url: https://arxiv.org/abs/1704.02767
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1704.02767'
+- type: conference
+  venue: focs
+  year: 2017

@@ -1,0 +1,20 @@
+id: vc-gk21-constant-fraction
+title: Coloring a constant fraction of nodes
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{2}\Delta \cdot \log n)
+  expr: O(log(Delta)^2 * log(n))
+year: 2020
+sources:
+- paper: gk21
+  reference: Theorem 4.1
+  url: https://arxiv.org/html/2011.04511v2#S4.Thmtheorem1
+comments: (deg+1)-list coloring
+status: approved

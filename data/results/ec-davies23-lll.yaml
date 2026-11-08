@@ -1,0 +1,20 @@
+id: ec-davies23-lll
+title: Improved Lovász local lemma
+problem: edge-coloring
+colors:
+  latex: (1+\varepsilon)\Delta
+  expr: (1+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-constant
+runtime:
+  latex: \mathrm{poly}(\varepsilon^{-1}, \log\log n)
+  expr: poly(1/eps * log(log(n)))
+year: 2022
+sources:
+- paper: davies23
+comments: ε = ω(log^2.5 Δ / √Δ)
+status: approved

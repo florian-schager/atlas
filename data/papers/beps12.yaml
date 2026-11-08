@@ -1,0 +1,20 @@
+id: beps12
+label: BEPS, 2012
+title: The Locality of Distributed Symmetry Breaking
+authors:
+- barenboim-leonid
+- elkin-michael
+- pettie-seth
+- schneider-johannes
+public_url: https://arxiv.org/abs/1202.1983
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2012
+  arxiv: '1202.1983'
+- type: conference
+  venue: focs
+  year: 2012
+- type: journal
+  venue: jacm
+  year: 2016

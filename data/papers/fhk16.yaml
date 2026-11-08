@@ -1,0 +1,16 @@
+id: fhk16
+label: FHK, 2016
+title: Local conflict coloring
+authors:
+- fraigniaud-pierre
+- heinrich-marc
+- kosowski-adrian
+public_url: https://arxiv.org/abs/1511.01287
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2015
+  arxiv: '1511.01287'
+- type: conference
+  venue: focs
+  year: 2016

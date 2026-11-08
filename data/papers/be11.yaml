@@ -1,0 +1,18 @@
+id: be11
+label: BE, 2011
+title: Distributed deterministic edge coloring using bounded neighborhood independence
+authors:
+- barenboim-leonid
+- elkin-michael
+public_url: https://arxiv.org/abs/1010.2454
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2010
+  arxiv: '1010.2454'
+- type: conference
+  venue: podc
+  year: 2011
+- type: journal
+  venue: distributed-computing
+  year: 2013

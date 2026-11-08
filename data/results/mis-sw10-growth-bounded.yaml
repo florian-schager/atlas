@@ -1,0 +1,14 @@
+id: mis-sw10-growth-bounded
+title: MIS on growth-bounded graphs
+problem: mis
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: growth-bounded
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 2010
+sources:
+- paper: sw10
+status: approved

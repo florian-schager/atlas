@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "How to cite this project:"
+type: dataset
+title: "Atlas of Distributed Algorithms"
+abstract: >-
+  A database of upper and lower bounds for the classical symmetry-breaking
+  problems in distributed graph algorithms (maximal matching, maximal
+  independent set, vertex coloring, edge coloring and network decomposition),
+  together with the reductions between them.
+authors:
+  - family-names: Schager
+    given-names: Florian
+    affiliation: Graz University of Technology
+    orcid: "https://orcid.org/0009-0009-3923-051X"
+url: "https://florian-schager.github.io/atlas/"
+repository-code: "https://github.com/florian-schager/atlas"
+license: CC-BY-4.0
+version: "1.0"
+keywords:
+  - distributed algorithms
+  - LOCAL model
+  - CONGEST model
+  - symmetry breaking
+  - graph coloring
+  - maximal independent set
+  - maximal matching

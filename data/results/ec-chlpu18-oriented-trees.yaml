@@ -1,0 +1,21 @@
+id: ec-chlpu18-oriented-trees
+title: Path decompositions
+problem: edge-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+assumptions:
+- given-orientation-towards-root
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 2017
+sources:
+- paper: chlpu18
+  reference: Theorem 11
+  url: https://arxiv.org/html/1708.04290v3#Thmtheorem11
+status: approved

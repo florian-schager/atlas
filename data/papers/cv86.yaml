@@ -1,0 +1,11 @@
+id: cv86
+label: CV, 1986
+title: Deterministic coin tossing with applications to optimal parallel list ranking
+authors:
+- cole-richard
+- vishkin-uzi
+public_url: https://www.sciencedirect.com/science/article/pii/S0019995886800237
+versions:
+- type: journal
+  venue: information-and-control
+  year: 1986

@@ -1,0 +1,18 @@
+id: bmnsu25
+label: BMNSU, 2025
+title: On the locality of Hall's theorem
+authors:
+- brandt-sebastian
+- maus-yannic
+- narayanan-ananth
+- schager-florian
+- uitto-jara
+public_url: https://arxiv.org/abs/2501.03649
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2501.03649'
+- type: conference
+  venue: soda
+  year: 2025

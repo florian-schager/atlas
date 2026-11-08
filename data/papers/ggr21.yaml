@@ -1,0 +1,16 @@
+id: ggr21
+label: GGR, 2021
+title: Improved Deterministic Network Decomposition
+authors:
+- ghaffari-mohsen
+- grunau-christoph
+- rozhon-vaclav
+public_url: https://arxiv.org/abs/2007.08253
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2007.08253'
+- type: conference
+  venue: soda
+  year: 2021

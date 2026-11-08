@@ -1,0 +1,17 @@
+id: vc-sw10-multi-trials
+title: Multi-trials
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log \Delta + \sqrt{\log n})
+  expr: O(log(Delta) + sqrt(log(n)))
+year: 2010
+sources:
+- paper: sw10b
+status: approved

@@ -1,0 +1,15 @@
+id: gg24
+label: GG, 2024
+title: Near-Optimal Deterministic Network Decomposition and Ruling Set, and Improved MIS
+authors:
+- ghaffari-mohsen
+- grunau-christoph
+public_url: https://arxiv.org/abs/2410.19516
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2024
+  arxiv: '2410.19516'
+- type: conference
+  venue: focs
+  year: 2024

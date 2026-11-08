@@ -1,0 +1,20 @@
+id: kmw04
+label: KMW, 2004
+title: 'Local Computation: Lower and Upper Bounds'
+authors:
+- kuhn-fabian
+- moscibroda-thomas
+- wattenhofer-roger
+public_url: https://arxiv.org/abs/1011.5470
+versions:
+- type: conference
+  venue: podc
+  year: 2004
+  title: What cannot be computed locally!
+- type: preprint
+  venue: arxiv
+  year: 2010
+  arxiv: '1011.5470'
+- type: journal
+  venue: jacm
+  year: 2016

@@ -1,0 +1,17 @@
+id: vc-gps87-forest-decomposition-3delta
+title: Forest decomposition
+problem: vertex-coloring
+colors:
+  latex: 3^{\Delta}
+  expr: 3^Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \log^{\star} n + \mathcal{O}(1)
+  expr: logstar(n) + O(1)
+year: 1987
+sources:
+- paper: gps87
+status: approved

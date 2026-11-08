@@ -1,0 +1,17 @@
+id: mm-fischer17-rounding
+title: Maximal matching via rounding
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{2}\Delta \cdot \log n)
+  expr: O(log(Delta)^2 * log(n))
+year: 2017
+sources:
+- paper: fischer17
+  reference: Theorem 1.2
+  url: https://arxiv.org/html/1703.00900v2#S1.Thmtheorem2
+status: approved
+comments: O(log n)-bit messages suffice (Section 1)

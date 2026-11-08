@@ -1,0 +1,19 @@
+id: bek09
+label: BEK, 2009
+title: Distributed (Δ+1)-coloring in linear (in Δ) time
+authors:
+- barenboim-leonid
+- elkin-michael
+- kuhn-fabian
+public_url: https://arxiv.org/abs/0812.1379
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2008
+  arxiv: '0812.1379'
+- type: conference
+  venue: stoc
+  year: 2009
+- type: journal
+  venue: sicomp
+  year: 2014

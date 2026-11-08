@@ -1,0 +1,14 @@
+id: kuhn20
+label: Kuhn, 2020
+title: Faster deterministic distributed coloring through recursive list coloring
+authors:
+- kuhn-fabian
+public_url: https://arxiv.org/abs/1907.03797
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1907.03797'
+- type: conference
+  venue: soda
+  year: 2020

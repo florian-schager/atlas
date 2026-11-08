@@ -1,0 +1,22 @@
+id: vc-gg23-shattering
+title: (Δ+1)-coloring via shattering and local rounding
+problem: vertex-coloring
+reduce_to: vc-gg23-via-mis
+via: vertex-coloring-shattering-clp
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{2}\log n)
+  expr: Otilde(log(log(n))^2)
+year: 2023
+sources:
+- paper: gg23
+  reference: Corollary 1.3
+  url: https://arxiv.org/html/2303.16043v1#S1.Thmtheorem3
+comments: uses the deterministic (deg+1)-list coloring
+status: approved

@@ -1,0 +1,12 @@
+id: ks26
+label: KS, 2026
+title: No Truly Sublogarithmic-Round Algorithm for Distributed MIS in the LOCAL Model
+authors:
+- khoury-seri
+- schild-aaron
+public_url: https://arxiv.org/abs/2610.18215
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2026
+  arxiv: '2610.18215'

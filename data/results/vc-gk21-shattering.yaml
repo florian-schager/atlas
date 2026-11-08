@@ -1,0 +1,20 @@
+id: vc-gk21-shattering
+title: (Δ+1)-coloring via shattering and coloring a constant fraction of nodes
+problem: vertex-coloring
+reduce_to: vc-gk21-constant-fraction
+via: vertex-coloring-shattering-clp
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{3}\log n)
+  expr: O(log(log(n))^3)
+year: 2020
+sources:
+- paper: gk21
+comments: uses the deterministic (deg+1)-list coloring
+status: approved

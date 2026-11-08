@@ -1,0 +1,17 @@
+id: harris19
+label: Harris, 2019
+title: Distributed local approximation algorithms for maximum matchings in graphs and hypergraphs
+authors:
+- harris-david
+public_url: https://arxiv.org/abs/1807.07645
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2018
+  arxiv: '1807.07645'
+- type: conference
+  venue: focs
+  year: 2019
+- type: journal
+  venue: sicomp
+  year: 2020

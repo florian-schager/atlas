@@ -1,0 +1,12 @@
+id: fk26
+label: FK, 2026
+title: Distributed (Δ+1)-Coloring in O(√Δ + log* n) Rounds
+authors:
+- fuchs-marc
+- kuhn-fabian
+public_url: https://arxiv.org/abs/2610.16575
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2026
+  arxiv: '2610.16575'

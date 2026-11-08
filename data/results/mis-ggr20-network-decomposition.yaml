@@ -1,0 +1,17 @@
+id: mis-ggr20-network-decomposition
+title: MIS via improved network decomposition
+problem: mis
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{5} n)
+  expr: O(log(n)^5)
+year: 2020
+sources:
+- paper: ggr21
+  reference: Corollary 1.2
+  url: https://arxiv.org/html/2007.08253v1#S1.Thmtheorem2
+comments: via the CONGEST network decomposition of Theorem 1.1
+status: approved

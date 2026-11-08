@@ -1,0 +1,15 @@
+id: gg23
+label: GG, 2023
+title: Faster Deterministic Distributed MIS and Approximate Matching
+authors:
+- ghaffari-mohsen
+- grunau-christoph
+public_url: https://arxiv.org/abs/2303.16043
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2023
+  arxiv: '2303.16043'
+- type: conference
+  venue: stoc
+  year: 2023

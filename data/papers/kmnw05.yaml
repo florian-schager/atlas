@@ -1,0 +1,13 @@
+id: kmnw05
+label: KMNW, 2005
+title: Fast Deterministic Distributed Maximal Independent Set Computation on Growth-Bounded Graphs
+authors:
+- kuhn-fabian
+- moscibroda-thomas
+- nieberg-tim
+- wattenhofer-roger
+public_url: https://dl.acm.org/doi/10.1007/11561927_21
+versions:
+- type: conference
+  venue: disc
+  year: 2005

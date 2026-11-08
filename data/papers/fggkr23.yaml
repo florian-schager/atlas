@@ -1,0 +1,21 @@
+id: fggkr23
+label: FGGKR, 2023
+title: 'Local Distributed Rounding: Generalized to MIS, Matching, Set Cover, and Beyond'
+authors:
+- faour-salwa
+- ghaffari-mohsen
+- grunau-christoph
+- kuhn-fabian
+- rozhon-vaclav
+public_url: https://arxiv.org/abs/2209.11651
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2022
+  arxiv: '2209.11651'
+- type: conference
+  venue: soda
+  year: 2023
+- type: journal
+  venue: talg
+  year: 2025

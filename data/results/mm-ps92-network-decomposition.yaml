@@ -1,0 +1,16 @@
+id: mm-ps92-network-decomposition
+title: Maximal matching via network decomposition
+problem: maximal-matching
+reduce_to: nd-ps92-log-n
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log n})}
+  expr: 2^O(sqrt(log(n)))
+year: 1992
+sources:
+- paper: ps92
+  reference: Corollary 1
+status: approved

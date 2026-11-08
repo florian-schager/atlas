@@ -1,0 +1,12 @@
+id: abi86
+label: ABI, 1986
+title: A fast and simple randomized parallel algorithm for the Maximal Independent Set problem
+authors:
+- alon-noga
+- babai-laszlo
+- itai-alon
+public_url: https://www.cs.tau.ac.il/~nogaa/PDFS/Publications2/A%20fast%20and%20simple%20randomized%20parallel%20algorithm%20for%20the%20maximal%20independent%20set%20problem.pdf
+versions:
+- type: journal
+  venue: journal-of-algorithms
+  year: 1986

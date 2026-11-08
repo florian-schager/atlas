@@ -1,0 +1,17 @@
+id: mis-gg24-shattering
+title: MIS via shattering below the network decomposition barrier
+problem: mis
+reduce_to: mis-gg24-below-network-decomposition
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta) + \widetilde{\mathcal{O}}(\log^{5/3}\log n)
+  expr: O(log(Delta)) + Otilde(log(log(n))^(5/3))
+year: 2024
+sources:
+- paper: gg24
+  reference: Theorem 1.3
+  url: https://arxiv.org/html/2410.19516v1#S1.Thmtheorem3
+status: approved

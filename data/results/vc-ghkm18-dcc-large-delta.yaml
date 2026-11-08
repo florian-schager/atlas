@@ -1,0 +1,18 @@
+id: vc-ghkm18-dcc-large-delta
+title: Degree-choosable components
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta) + 2^{\mathcal{O}(\sqrt{\log\log n})}
+  expr: O(log(Delta)) + 2^(O(sqrt(log(log(n)))))
+year: 2018
+sources:
+- paper: ghkm18
+comments: Δ ≥ 4, no (Δ+1)-clique
+status: approved

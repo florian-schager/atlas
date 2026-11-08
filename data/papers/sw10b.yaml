@@ -1,0 +1,11 @@
+id: sw10b
+label: SW, 2010b
+title: A new technique for distributed symmetry breaking
+authors:
+- schneider-johannes
+- wattenhofer-roger
+public_url: https://tik-db.ee.ethz.ch/file/22a700b74fc2f37acb56d690e62c86cf/podcfp107_schneider_188.pdf
+versions:
+- type: conference
+  venue: podc
+  year: 2010

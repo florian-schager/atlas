@@ -1,0 +1,14 @@
+id: linial87
+label: Linial, 1987
+title: Locality in distributed graph algorithms
+authors:
+- linial-nathan
+public_url: https://www.cs.huji.ac.il/~nati/PAPERS/locality_dist_graph_algs.pdf
+versions:
+- type: conference
+  venue: focs
+  year: 1987
+  title: Distributive graph algorithms - global solutions from local data
+- type: journal
+  venue: sicomp
+  year: 1992

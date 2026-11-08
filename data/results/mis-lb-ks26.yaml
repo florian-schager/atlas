@@ -1,0 +1,19 @@
+id: mis-lb-ks26
+title: Round elimination on a non-treelike instance
+problem: mis
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-poly
+runtime:
+  latex: \Omega\left(\frac{\log n}{\log\log n}\right)
+  expr: Omega(log(n) / log(log(n)))
+year: 2026
+sources:
+- paper: ks26
+  reference: Theorem 1.1
+  url: https://arxiv.org/html/2610.18215v1#S1.Thmthm1
+comments: for any constant success probability
+status: approved

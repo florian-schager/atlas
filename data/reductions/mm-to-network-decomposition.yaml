@@ -1,0 +1,21 @@
+id: mm-to-network-decomposition
+title: Cluster colors in turn
+from:
+  problem: maximal-matching
+to:
+  problem: network-decomposition
+instance:
+  graph: line-graph
+  n:
+    latex: m \le n\Delta/2
+    expr: n * Delta / 2
+  Delta:
+    latex: 2\Delta - 2
+    expr: 2 * Delta - 2
+runtime:
+  latex: T + \mathcal{O}(C \cdot D)
+  expr: T + O(C * D)
+models:
+- LOCAL
+comments: decomposition of L(G)
+status: approved

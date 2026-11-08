@@ -1,0 +1,26 @@
+id: vertex-coloring-to-mm-oriented-cycle
+title: Color by position in the matched edge
+from:
+  problem: vertex-coloring
+  colors:
+    latex: '3'
+    expr: '3'
+to:
+  problem: maximal-matching
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: '2'
+    expr: '2'
+graph_class: cycles
+runtime:
+  latex: T
+  expr: T
+models:
+- LOCAL
+- CONGEST
+comments: oriented cycle; tail of a matched edge gets 1, head 2, unmatched nodes 3
+status: approved

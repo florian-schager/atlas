@@ -1,0 +1,18 @@
+id: ec-harris19-three-halves
+title: Approximate hypergraph maximum matchings
+problem: edge-coloring
+colors:
+  latex: 3\Delta/2
+  expr: 3*Delta/2
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\Delta^{4} \cdot \log^{6} n)
+  expr: Otilde(Delta^4 * log(n)^6)
+year: 2018
+sources:
+- paper: harris19
+comments: (3Δ/2)-list edge coloring
+status: approved

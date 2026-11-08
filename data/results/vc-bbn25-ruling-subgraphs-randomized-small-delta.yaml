@@ -1,0 +1,18 @@
+id: vc-bbn25-ruling-subgraphs-randomized-small-delta
+title: Ruling subgraphs
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}\left(\sqrt{\Delta \log \Delta} \cdot (\log_{\Delta}\log n \cdot \log^{\star} n + \log\log n)\right)
+  expr: O(sqrt(Delta * log(Delta)) * (log(log(n)) / log(Delta) * logstar(n) + log(log(n))))
+year: 2025
+sources:
+- paper: bbn25
+comments: Δ ≥ 3, no (Δ+1)-clique
+status: approved

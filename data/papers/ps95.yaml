@@ -1,0 +1,11 @@
+id: ps95
+label: PS, 1995
+title: The local nature of Δ-coloring and its algorithmic applications
+authors:
+- panconesi-alessandro
+- srinivasan-aravind
+public_url: https://link.springer.com/content/pdf/10.1007/BF01200759.pdf
+versions:
+- type: journal
+  venue: combinatorica
+  year: 1995

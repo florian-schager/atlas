@@ -1,0 +1,17 @@
+id: mis-ggr20-congest-randomized
+title: Randomized MIS in CONGEST via improved network decomposition
+problem: mis
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta \cdot \log\log n + \log^{6}\log n)
+  expr: O(log(Delta) * log(log(n)) + log(log(n))^6)
+year: 2020
+sources:
+- paper: ggr21
+  reference: Corollary 1.5
+  url: https://arxiv.org/html/2007.08253v1#S1.Thmtheorem5
+comments: shattering in CONGEST
+status: approved

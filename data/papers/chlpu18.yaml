@@ -1,0 +1,22 @@
+id: chlpu18
+label: CHLPU, 2018
+title: Distributed edge coloring and a special case of the constructive Lovász local lemma
+authors:
+- chang-yi-jun
+- he-qizheng
+- li-wenzheng
+- pettie-seth
+- uitto-jara
+public_url: https://arxiv.org/abs/1708.04290
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1708.04290'
+- type: conference
+  venue: soda
+  year: 2018
+  title: The complexity of distributed edge coloring with small palettes
+- type: journal
+  venue: talg
+  year: 2019

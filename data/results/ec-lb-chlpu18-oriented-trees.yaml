@@ -1,0 +1,21 @@
+id: ec-lb-chlpu18-oriented-trees
+title: Parity of the colors at the leaves
+problem: edge-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: trees
+assumptions:
+- given-orientation-towards-root
+runtime:
+  latex: \Omega(\log_{\Delta} n)
+  expr: Omega(log(n) / log(Delta))
+year: 2017
+sources:
+- paper: chlpu18
+  reference: Theorem 12
+  url: https://arxiv.org/html/1708.04290v3#Thmtheorem12
+status: approved

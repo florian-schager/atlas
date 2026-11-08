@@ -1,0 +1,14 @@
+id: mis-pr01-forest-decomposition
+title: MIS via forest decompositions
+problem: mis
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta^{2} + \log^{\star} n)
+  expr: O(Delta^2 + logstar(n))
+year: 2001
+sources:
+- paper: pr01
+status: approved

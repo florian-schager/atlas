@@ -1,0 +1,12 @@
+id: gps87
+label: GPS, 1987
+title: Parallel symmetry-breaking in sparse graphs
+authors:
+- goldberg-andrew
+- plotkin-serge
+- shannon-gregory
+public_url: https://dl.acm.org/doi/10.1145/28395.28429
+versions:
+- type: conference
+  venue: stoc
+  year: 1987

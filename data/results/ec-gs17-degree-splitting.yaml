@@ -1,0 +1,19 @@
+id: ec-gs17-degree-splitting
+title: Degree splitting
+problem: edge-coloring
+colors:
+  latex: (2+\varepsilon)\Delta
+  expr: (2+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-3} \cdot \log^{11}n)
+  expr: O(1/eps^3 * log(n)^11)
+year: 2016
+sources:
+- paper: gs17
+  reference: Theorem 3.1
+  url: https://arxiv.org/html/1608.03220v1#S3.Thmtheorem1
+status: approved

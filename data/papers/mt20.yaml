@@ -1,0 +1,15 @@
+id: mt20
+label: MT, 2020
+title: 'Local conflict coloring revisited: Linial for lists'
+authors:
+- maus-yannic
+- tonoyan-tigran
+public_url: https://arxiv.org/abs/2007.15251
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2007.15251'
+- type: conference
+  venue: disc
+  year: 2020

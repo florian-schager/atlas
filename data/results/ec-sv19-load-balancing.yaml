@@ -1,0 +1,17 @@
+id: ec-sv19-load-balancing
+title: Load-balancing Vizing chains
+problem: edge-coloring
+colors:
+  latex: \Delta + \mathcal{O}(\log n / \log\log n)
+  expr: Delta + O(log(n)/log(log(n)))
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta^{6} \cdot \mathrm{poly}(\log n))
+  expr: O(Delta^6 * poly(log(n)))
+year: 2019
+sources:
+- paper: sv19
+status: approved

@@ -1,0 +1,17 @@
+id: bmv26
+label: BMV, 2026
+title: Deterministic edge coloring with few colors in CONGEST
+authors:
+- blikstad-joakim
+- maus-yannic
+- de-vos-tijn
+public_url: https://arxiv.org/abs/2603.02689
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2026
+  arxiv: '2603.02689'
+- type: conference
+  venue: podc
+  year: 2026
+  title: 'Brief Announcement: Deterministic Edge Coloring with few Colors in CONGEST'

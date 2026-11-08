@@ -1,0 +1,16 @@
+id: bbn25
+label: BBN, 2025
+title: Faster distributed Δ-coloring via ruling subgraphs
+authors:
+- bourreau-yann
+- brandt-sebastian
+- nolin-alexandre
+public_url: https://arxiv.org/abs/2503.04320
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2503.04320'
+- type: conference
+  venue: stoc
+  year: 2025

@@ -1,0 +1,30 @@
+id: vertex-coloring-to-mis-oriented-cycle
+title: MIS nodes first, then by predecessor
+from:
+  problem: vertex-coloring
+  colors:
+    latex: '3'
+    expr: '3'
+to:
+  problem: mis
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: '2'
+    expr: '2'
+graph_class: cycles
+runtime:
+  latex: T + 1
+  expr: T + 1
+models:
+- LOCAL
+- CONGEST
+year: 1987
+sources:
+- paper: linial87
+  reference: Proof of Theorem 2.1
+comments: oriented cycle; MIS gets 1, the rest 2 or 3 by their predecessor
+status: approved

@@ -1,0 +1,22 @@
+id: bbhors19
+label: BBHORS, 2019
+title: Lower Bounds for Maximal Matchings and Maximal Independent Sets
+authors:
+- balliu-alkida
+- brandt-sebastian
+- hirvonen-juho
+- olivetti-dennis
+- rabie-mikael
+- suomela-jukka
+public_url: https://arxiv.org/abs/1901.02441
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1901.02441'
+- type: conference
+  venue: focs
+  year: 2019
+- type: journal
+  venue: jacm
+  year: 2021

@@ -1,0 +1,15 @@
+id: mm-hkp01-polylog-improved
+title: Maximal matching in polylogarithmic time (improved)
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{4} n)
+  expr: O(log(n)^4)
+year: 2001
+sources:
+- paper: hkp98
+comments: result from the journal version; CONGEST per BEPS, Theorem 4.4
+status: approved

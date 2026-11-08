@@ -1,0 +1,16 @@
+id: mis-be08-small-arboricity
+title: MIS via forests-decomposition coloring (small arboricity)
+problem: mis
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: bounded-arboricity
+runtime:
+  latex: \mathcal{O}\left(\frac{\log n}{\log\log n}\right)
+  expr: O(log(n) / log(log(n)))
+year: 2008
+sources:
+- paper: be08
+  reference: Theorem 6.3
+comments: for arboricity O(log^(1/2−δ) n)
+status: approved

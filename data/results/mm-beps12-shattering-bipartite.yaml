@@ -1,0 +1,19 @@
+id: mm-beps12-shattering-bipartite
+title: Maximal matching via shattering (bipartite)
+problem: maximal-matching
+reduce_to: mm-hkp01-bipartite
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: bipartite
+assumptions:
+- given-2-coloring
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{3}\log n)
+  expr: O(log(Delta) + log(log(n))^3)
+year: 2012
+sources:
+- paper: beps12
+  reference: Theorem 4.4
+  url: https://arxiv.org/html/1202.1983v3#S4.Thmtheorem4
+status: approved

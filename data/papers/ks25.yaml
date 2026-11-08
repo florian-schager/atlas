@@ -1,0 +1,15 @@
+id: ks25
+label: KS, 2025
+title: 'Round Elimination via Self-Reduction: Closing Gaps for Distributed Maximal Matching'
+authors:
+- khoury-seri
+- schild-aaron
+public_url: https://arxiv.org/abs/2505.15654
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2505.15654'
+- type: conference
+  venue: focs
+  year: 2025

@@ -1,0 +1,35 @@
+id: vertex-coloring-shattering-degree-reduction
+title: Shattering after O(log Δ) rounds
+from:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+to:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+randomness: randomized
+instance:
+  graph: components
+  n:
+    latex: \mathrm{poly}(\log n)
+    expr: poly(log(n))
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: \mathcal{O}(\log\Delta) + T
+  expr: O(log(Delta)) + T
+models:
+- LOCAL
+- CONGEST
+year: 2012
+sources:
+- paper: beps12
+- paper: ggr21
+  reference: Corollary 1.6
+  url: https://arxiv.org/html/2007.08253v1#S1.Thmtheorem6
+comments: random color trials, then a deterministic (deg+1)-list coloring per component
+status: approved

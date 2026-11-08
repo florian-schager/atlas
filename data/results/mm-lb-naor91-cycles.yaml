@@ -1,0 +1,17 @@
+id: mm-lb-naor91-cycles
+title: Naor's lower bound on the cycle
+problem: maximal-matching
+reduce_to: vc-lb-naor91-cycles
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: cycles
+runtime:
+  latex: \tfrac{1}{2}\log^{\star} n - 2
+  expr: Omega(1/2 * logstar(n) - 2)
+year: 1991
+sources:
+- paper: naor91
+  reference: Theorem 2.1
+comments: success probability at least 1/2
+status: approved

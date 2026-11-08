@@ -1,0 +1,27 @@
+id: mm-to-mm-rake-compress-trees
+title: Rake and compress
+from:
+  problem: maximal-matching
+to:
+  problem: maximal-matching
+instance:
+  graph: components
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: g(n) \text{ with } g(n)^{f(g(n))} = n
+    expr: g(n)
+graph_class: trees
+runtime:
+  latex: \mathcal{O}(T + \log^{\star} n)
+  expr: O(T + logstar(n))
+models:
+- LOCAL
+year: 2025
+sources:
+- paper: bn25
+  reference: Theorem 15
+  url: https://arxiv.org/html/2505.01410v2#S4
+comments: T = O(f(Δ) + log* n) on semi-graphs of degree Δ
+status: approved

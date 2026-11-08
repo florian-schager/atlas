@@ -1,0 +1,17 @@
+id: bbko22
+label: BBKO, 2022
+title: Distributed edge coloring in time polylogarithmic in Δ
+authors:
+- balliu-alkida
+- brandt-sebastian
+- kuhn-fabian
+- olivetti-dennis
+public_url: https://arxiv.org/abs/2206.00976
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2022
+  arxiv: '2206.00976'
+- type: conference
+  venue: podc
+  year: 2022

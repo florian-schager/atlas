@@ -1,0 +1,16 @@
+id: ks26b
+label: KS, 2026b
+title: Breaking Barriers for Distributed MIS by Faster Degree Reduction
+authors:
+- khoury-seri
+- schild-aaron
+public_url: https://arxiv.org/abs/2505.15652
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2505.15652'
+- type: conference
+  venue: stoc
+  year: 2026
+  doi: 10.1145/3798129.3800816

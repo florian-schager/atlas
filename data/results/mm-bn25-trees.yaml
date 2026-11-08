@@ -1,0 +1,18 @@
+id: mm-bn25-trees
+title: Maximal matching on trees via decomposition
+problem: maximal-matching
+reduce_to: mm-pr01-forest-decomposition
+via: mm-to-mm-rake-compress-trees
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+runtime:
+  latex: \mathcal{O}\left(\frac{\log n}{\log\log n}\right)
+  expr: O(log(n) / log(log(n)))
+year: 2025
+sources:
+- paper: bn25
+  reference: Section 5.2
+  url: https://arxiv.org/html/2505.01410v2#S5.SS2
+status: approved

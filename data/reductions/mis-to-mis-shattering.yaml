@@ -1,0 +1,28 @@
+id: mis-to-mis-shattering
+title: Shattering
+from:
+  problem: mis
+to:
+  problem: mis
+randomness: randomized
+instance:
+  graph: components
+  n:
+    latex: \mathcal{O}(\log n)
+    expr: O(log(n))
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: \mathcal{O}(\log\Delta) + T
+  expr: O(log(Delta)) + T
+models:
+- LOCAL
+year: 2012
+sources:
+- paper: beps12
+  reference: Section 3.2
+- paper: ghaffari16
+  reference: Section 4
+comments: components of O(Δ⁴ log n) nodes, contracted to O(log n) nodes
+status: approved

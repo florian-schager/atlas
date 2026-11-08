@@ -1,0 +1,25 @@
+id: mm-to-edge-coloring
+title: Color classes in turn
+from:
+  problem: maximal-matching
+to:
+  problem: edge-coloring
+  colors:
+    latex: c
+    expr: c
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T + \mathcal{O}(c)
+  expr: T + O(c)
+models:
+- LOCAL
+- CONGEST
+comments: color class i joins greedily in phase i
+status: approved

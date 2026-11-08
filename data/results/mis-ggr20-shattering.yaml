@@ -1,0 +1,15 @@
+id: mis-ggr20-shattering
+title: MIS via shattering and improved network decomposition
+problem: mis
+reduce_to: mis-ggr20-network-decomposition
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{5}\log n)
+  expr: O(log(Delta) + log(log(n))^5)
+year: 2020
+sources:
+- paper: ggr21
+status: approved

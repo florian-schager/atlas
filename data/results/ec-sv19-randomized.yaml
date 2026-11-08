@@ -1,0 +1,17 @@
+id: ec-sv19-randomized
+title: One color above Vizing
+problem: edge-coloring
+colors:
+  latex: \Delta + 2
+  expr: Delta + 2
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathrm{poly}(\Delta) \cdot \log^{3} n
+  expr: poly(Delta) * log(n)^3
+year: 2019
+sources:
+- paper: sv19
+status: approved

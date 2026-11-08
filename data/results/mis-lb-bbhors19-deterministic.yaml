@@ -1,0 +1,17 @@
+id: mis-lb-bbhors19-deterministic
+title: Round elimination lower bound
+problem: mis
+reduce_to: mm-lb-bbhors19-deterministic
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \Omega\left(\min\left\{\Delta, \frac{\log n}{\log\log n}\right\}\right)
+  expr: Omega(min(Delta, log(n) / log(log(n))))
+year: 2019
+sources:
+- paper: bbhors19
+  reference: Corollary 4.21
+  url: https://arxiv.org/html/1901.02441v3#S4.Thmtheorem21
+status: approved

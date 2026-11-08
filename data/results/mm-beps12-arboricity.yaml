@@ -1,0 +1,17 @@
+id: mm-beps12-arboricity
+title: Maximal matching via arboricity-based degree reduction
+problem: maximal-matching
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: bounded-arboricity
+runtime:
+  latex: \mathcal{O}(\min\{\log\lambda + \sqrt{\log n},\ \log\Delta + \lambda + \log\log n\})
+  expr: O(min(log(lambda) + sqrt(log(n)), log(Delta) + lambda + log(log(n))))
+year: 2012
+sources:
+- paper: beps12
+  reference: Theorem 7.3
+  url: https://arxiv.org/html/1202.1983v3#S7.Thmtheorem3
+comments: for any arboricity λ
+status: approved

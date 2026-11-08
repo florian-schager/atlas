@@ -1,0 +1,19 @@
+id: ec-ps97-bipartite
+title: Bipartite subgraphs
+problem: edge-coloring
+colors:
+  latex: 1.6\Delta + \mathcal{O}(\log^{1+\delta} n)
+  expr: 1.6*Delta + O(log(n)^(1+delta))
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-log1delta
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1997
+sources:
+- paper: ps97
+status: approved

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edge coloring · Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css?v=4df3bfe648">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body data-problem="edge-coloring">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="problem-nav" aria-label="Problems">
+        <a href="maximal-matching.html">Maximal matching</a>
+        <a href="mis.html">MIS</a>
+        <a href="vertex-coloring.html">Vertex coloring</a>
+        <a class="active" href="edge-coloring.html" aria-current="page">Edge coloring</a>
+        <a href="network-decomposition.html">Network decomposition</a>
+        <a class="nav-secondary" href="reductions.html">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="problem">
+      <div class="problem-text" id="problem-text">
+        <p class="eyebrow">Problem</p>
+        <h1>Edge coloring</h1>
+        <p>
+          A <em>proper $c$-edge coloring</em> of a graph $G = (V, E)$ assigns each edge one of $c$ colors so that
+          edges sharing an endpoint get different colors. Every edge is adjacent to at most $2\Delta - 2$ others,
+          so coloring greedily never needs more than $2\Delta - 1$ colors; this is the classical
+          symmetry-breaking variant, and the same as $(\Delta+1)$-vertex coloring the line graph $L(G)$.
+        </p>
+        <p>
+          With fewer colors the problem gets harder: at least $\Delta$ colors are always needed, and by
+          Vizing's theorem $\Delta + 1$ colors always suffice. Palettes between these bounds, such as
+          $3\Delta/2$ or $(1+\varepsilon)\Delta$, are studied in their own right.
+        </p>
+        <p class="params">
+          Runtimes are given in rounds, in terms of the number of nodes $n$ and the maximum degree $\Delta$;
+          $\varepsilon$, $\delta$ and $\gamma$ are fixed constants.
+        </p>
+      </div>
+
+      <figure class="illustration">
+        <svg viewBox="0 0 480 310" role="img" aria-labelledby="fig-title fig-desc">
+          <title id="fig-title">A proper edge coloring</title>
+          <desc id="fig-desc">The three-dimensional cube graph, in which every node has degree three, with its edges colored by direction using three colors: the edges at every node have different colors.</desc>
+          <g class="colored-edges">
+            <line class="color-1" x1="60" y1="40" x2="420" y2="40"/>
+            <line class="color-1" x1="60" y1="270" x2="420" y2="270"/>
+            <line class="color-1" x1="170" y1="115" x2="310" y2="115"/>
+            <line class="color-1" x1="170" y1="195" x2="310" y2="195"/>
+            <line class="color-2" x1="60" y1="40" x2="60" y2="270"/>
+            <line class="color-2" x1="420" y1="40" x2="420" y2="270"/>
+            <line class="color-2" x1="170" y1="115" x2="170" y2="195"/>
+            <line class="color-2" x1="310" y1="115" x2="310" y2="195"/>
+            <line class="color-3" x1="60" y1="40" x2="170" y2="115"/>
+            <line class="color-3" x1="420" y1="40" x2="310" y2="115"/>
+            <line class="color-3" x1="60" y1="270" x2="170" y2="195"/>
+            <line class="color-3" x1="420" y1="270" x2="310" y2="195"/>
+          </g>
+          <g class="nodes">
+            <circle class="free" cx="60" cy="40" r="9"/>
+            <circle class="free" cx="420" cy="40" r="9"/>
+            <circle class="free" cx="60" cy="270" r="9"/>
+            <circle class="free" cx="420" cy="270" r="9"/>
+            <circle class="free" cx="170" cy="115" r="9"/>
+            <circle class="free" cx="310" cy="115" r="9"/>
+            <circle class="free" cx="170" cy="195" r="9"/>
+            <circle class="free" cx="310" cy="195" r="9"/>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="caption-text">
+            The edges at every node have different colors. Here $\Delta = 3$ colors suffice; greedy coloring may use up to $2\Delta - 1 = 5$.
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="results" id="results"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" id="footer-text"></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="data.js?v=14f1bbec5e"></script>
+  <script src="asymptotics.js?v=53c6b7580c"></script>
+  <script src="app.js?v=66ccb270ce"></script>
+</body>
+</html>

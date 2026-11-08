@@ -1,0 +1,17 @@
+id: mm-lb-ks25-trees
+title: Round elimination via self-reduction
+problem: maximal-matching
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: trees
+runtime:
+  latex: \Omega(\min\{\log\Delta, \sqrt{\log n}\})
+  expr: Omega(min(log(Delta), sqrt(log(n))))
+year: 2025
+sources:
+- paper: ks25
+  reference: Theorem 1
+  url: https://arxiv.org/html/2505.15654v1#Thmthm1
+comments: Δ-ary trees and Δ-regular graphs
+status: approved

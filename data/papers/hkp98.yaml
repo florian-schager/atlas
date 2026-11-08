@@ -1,0 +1,16 @@
+id: hkp98
+label: HKP, 1998
+title: On the distributed complexity of computing maximal matchings
+authors:
+- hanckowiak-michal
+- karonski-michal
+- panconesi-alessandro
+public_url: https://www.brics.dk/RS/97/38/BRICS-RS-97-38.pdf
+versions:
+- type: conference
+  venue: soda
+  year: 1998
+- type: journal
+  venue: sidma
+  year: 2001
+  doi: 10.1137/S0895480100373121

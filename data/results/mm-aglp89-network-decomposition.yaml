@@ -1,0 +1,15 @@
+id: mm-aglp89-network-decomposition
+title: Maximal matching via network decomposition
+problem: maximal-matching
+reduce_to: nd-aglp89
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log n \cdot \log\log n})}
+  expr: 2^(O(sqrt(log(n) * log(log(n)))))
+year: 1989
+sources:
+- paper: aglp89
+status: approved

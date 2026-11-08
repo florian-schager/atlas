@@ -1,0 +1,16 @@
+id: hmn22
+label: HMN, 2022
+title: Fast distributed vertex splitting with applications
+authors:
+- halldorsson-magnus
+- maus-yannic
+- nolin-alexandre
+public_url: https://arxiv.org/abs/2208.08119
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2022
+  arxiv: '2208.08119'
+- type: conference
+  venue: disc
+  year: 2022

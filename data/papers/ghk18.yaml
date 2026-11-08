@@ -1,0 +1,16 @@
+id: ghk18
+label: GHK, 2018
+title: On derandomizing local distributed algorithms
+authors:
+- ghaffari-mohsen
+- harris-david
+- kuhn-fabian
+public_url: https://arxiv.org/abs/1711.02194
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1711.02194'
+- type: conference
+  venue: focs
+  year: 2018

@@ -1,0 +1,11 @@
+id: sw10
+label: SW, 2010
+title: An optimal maximal independent set algorithm for bounded-independence graphs
+authors:
+- schneider-johannes
+- wattenhofer-roger
+public_url: https://link.springer.com/article/10.1007/s00446-010-0097-1
+versions:
+- type: journal
+  venue: distributed-computing
+  year: 2010

@@ -1,0 +1,17 @@
+id: mm-gg23-shattering
+title: Maximal matching via shattering and local rounding
+problem: maximal-matching
+reduce_to: mm-gg23-local-rounding-network-decomposition
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta) + \widetilde{\mathcal{O}}(\log^{2}\log n)
+  expr: O(log(Delta)) + Otilde(log(log(n))^2)
+year: 2023
+sources:
+- paper: gg23
+  reference: Theorem 1.1
+  url: https://arxiv.org/html/2303.16043v1#S1.Thmtheorem1
+status: approved

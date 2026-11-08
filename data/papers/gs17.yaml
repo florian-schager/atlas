@@ -1,0 +1,15 @@
+id: gs17
+label: GS, 2017
+title: Distributed degree splitting, edge coloring, and orientations
+authors:
+- ghaffari-mohsen
+- su-hsin-hao
+public_url: https://arxiv.org/abs/1608.03220
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2016
+  arxiv: '1608.03220'
+- type: conference
+  venue: soda
+  year: 2017

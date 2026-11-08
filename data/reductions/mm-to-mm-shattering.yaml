@@ -1,0 +1,28 @@
+id: mm-to-mm-shattering
+title: Shattering
+from:
+  problem: maximal-matching
+to:
+  problem: maximal-matching
+randomness: randomized
+instance:
+  graph: components
+  n:
+    latex: \mathcal{O}(\log^{9} n)
+    expr: O(log(n)^9)
+  Delta:
+    latex: \mathcal{O}(\log^{2} n)
+    expr: O(log(n)^2)
+runtime:
+  latex: \mathcal{O}(\log\Delta) + T
+  expr: O(log(Delta)) + T
+models:
+- LOCAL
+- CONGEST
+year: 2012
+sources:
+- paper: beps12
+  reference: Theorem 4.4
+  url: https://arxiv.org/html/1202.1983v3#S4.Thmtheorem4
+comments: randomized Phase I, then a deterministic algorithm on each component
+status: approved

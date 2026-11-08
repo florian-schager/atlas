@@ -1,0 +1,20 @@
+id: vc-hkmt21-congest
+title: Randomized (Δ+1)-list coloring in CONGEST
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{5}\log n)
+  expr: O(log(log(n))^5)
+year: 2020
+sources:
+- paper: hkmt21
+  reference: Theorem 1.1
+  url: https://arxiv.org/html/2012.14169v2#S1.Thmtheorem1
+comments: also (Δ+1)-list coloring
+status: approved

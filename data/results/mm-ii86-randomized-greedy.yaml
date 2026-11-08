@@ -1,0 +1,15 @@
+id: mm-ii86-randomized-greedy
+title: Randomized greedy maximal matching
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1986
+sources:
+- paper: ii86
+comments: stated for CRCW-PRAM
+status: approved

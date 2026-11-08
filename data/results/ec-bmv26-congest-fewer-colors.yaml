@@ -1,0 +1,17 @@
+id: ec-bmv26-congest-fewer-colors
+title: Few colors in CONGEST
+problem: edge-coloring
+colors:
+  latex: (1+\varepsilon)\Delta + \mathcal{O}(\sqrt{\log n})
+  expr: (1+eps)*Delta + O(sqrt(log(n)))
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{2.5} n + \log^{2}\Delta \cdot \log n)
+  expr: Otilde(log(n)^2.5 + log(Delta)^2 * log(n))
+year: 2026
+sources:
+- paper: bmv26
+status: approved

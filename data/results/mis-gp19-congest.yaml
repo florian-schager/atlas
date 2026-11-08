@@ -1,0 +1,17 @@
+id: mis-gp19-congest
+title: Randomized MIS in CONGEST via small-message network decomposition
+problem: mis
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta \cdot \sqrt{\log\log n}) + 2^{\mathcal{O}(\sqrt{\log\log n})}
+  expr: O(log(Delta) * sqrt(log(log(n)))) + 2^O(sqrt(log(log(n))))
+year: 2019
+sources:
+- paper: gp19
+  reference: Theorem 1.2
+  url: https://arxiv.org/html/1908.03500v1#S1.Thmtheorem2
+comments: shattering; CONGEST version of [[mis-ps92-network-decomposition]]
+status: approved

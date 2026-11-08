@@ -1,0 +1,17 @@
+id: vc-gp87
+title: Cole–Vishkin generalization
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta^{2\Delta + 1}) + \log^{\star} n
+  expr: O(Delta^(2 * Delta + 1)) + logstar(n)
+year: 1987
+sources:
+- paper: gp87
+status: approved

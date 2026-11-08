@@ -1,0 +1,17 @@
+id: mis-lb-bbko22b-deterministic
+title: Round elimination lower bound for MIS on trees
+problem: mis
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+runtime:
+  latex: \Omega(\min\{\Delta, \log_{\Delta} n\})
+  expr: Omega(min(Delta, log(n) / log(Delta)))
+year: 2021
+sources:
+- paper: bbko22b
+  reference: Theorem 8.11
+  url: https://arxiv.org/html/2110.00643v3#S8.Thmtheorem11
+comments: gives Ω(log n / log log n) on trees, which is tight
+status: approved

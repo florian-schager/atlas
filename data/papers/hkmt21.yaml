@@ -1,0 +1,17 @@
+id: hkmt21
+label: HKMT, 2021
+title: Efficient Randomized Distributed Coloring in CONGEST
+authors:
+- halldorsson-magnus
+- kuhn-fabian
+- maus-yannic
+- tonoyan-tigran
+public_url: https://arxiv.org/abs/2012.14169
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2012.14169'
+- type: conference
+  venue: stoc
+  year: 2021

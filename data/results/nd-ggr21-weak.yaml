@@ -1,0 +1,22 @@
+id: nd-ggr21-weak
+title: Improved network decomposition
+problem: network-decomposition
+decomposition:
+  colors:
+    latex: \mathcal{O}(\log n)
+    expr: O(log(n))
+  diameter:
+    latex: \mathcal{O}(\log^{2} n)
+    expr: O(log(n)^2)
+  diameter_type: weak
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{5} n)
+  expr: O(log(n)^5)
+year: 2020
+sources:
+- paper: ggr21
+status: approved

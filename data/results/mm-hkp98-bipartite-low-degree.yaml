@@ -1,0 +1,18 @@
+id: mm-hkp98-bipartite-low-degree
+title: Maximal matching in 2-colored bipartite graphs by proposals
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: bipartite
+assumptions:
+- given-2-coloring
+runtime:
+  latex: \mathcal{O}(\Delta)
+  expr: O(Delta)
+year: 1998
+sources:
+- paper: hkp98
+  reference: Section 2 (LowDegreeMatch)
+comments: one side proposes, the other accepts, one edge per round
+status: approved

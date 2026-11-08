@@ -1,0 +1,25 @@
+id: mis-to-vertex-coloring
+title: Color classes in turn
+from:
+  problem: mis
+to:
+  problem: vertex-coloring
+  colors:
+    latex: c
+    expr: c
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T + c
+  expr: T + c
+models:
+- LOCAL
+- CONGEST
+comments: color class i joins greedily in round i
+status: approved

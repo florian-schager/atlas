@@ -1,0 +1,17 @@
+id: gkmu18
+label: GKMU, 2018
+title: Deterministic distributed edge-coloring with fewer colors
+authors:
+- ghaffari-mohsen
+- kuhn-fabian
+- maus-yannic
+- uitto-jara
+public_url: https://arxiv.org/abs/1711.05469
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1711.05469'
+- type: conference
+  venue: stoc
+  year: 2018

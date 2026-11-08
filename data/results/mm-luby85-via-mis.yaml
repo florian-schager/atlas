@@ -1,0 +1,15 @@
+id: mm-luby85-via-mis
+title: Maximal matching via Luby's MIS algorithm
+problem: maximal-matching
+reduce_to: mis-luby85
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1985
+sources:
+- paper: luby85
+status: approved

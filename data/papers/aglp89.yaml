@@ -1,0 +1,13 @@
+id: aglp89
+label: AGLP, 1989
+title: Network decomposition and locality in distributed computation
+authors:
+- awerbuch-baruch
+- goldberg-andrew
+- luby-michael
+- plotkin-serge
+public_url: https://www.researchgate.net/profile/Michael-Luby-2/publication/3501899_Network_decomposition_and_locality_in_distributed_computation/links/02bfe50f19d7746a53000000/Network-decomposition-and-locality-in-distributed-computation.pdf
+versions:
+- type: conference
+  venue: focs
+  year: 1989

@@ -1,0 +1,17 @@
+id: vc-kw06-randomized
+title: One-round color reductions
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta \cdot \log\log n)
+  expr: O(Delta * log(log(n)))
+year: 2006
+sources:
+- paper: kw06
+status: approved

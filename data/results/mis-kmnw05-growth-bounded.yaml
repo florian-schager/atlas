@@ -1,0 +1,14 @@
+id: mis-kmnw05-growth-bounded
+title: MIS on growth-bounded graphs
+problem: mis
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: growth-bounded
+runtime:
+  latex: \mathcal{O}(\log\Delta \cdot \log^{\star} n)
+  expr: O(log(Delta) * logstar(n))
+year: 2005
+sources:
+- paper: kmnw05
+status: approved

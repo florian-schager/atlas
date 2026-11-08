@@ -1,0 +1,24 @@
+id: vertex-coloring-to-network-decomposition
+title: Cluster colors in turn
+from:
+  problem: vertex-coloring
+  colors:
+    latex: \Delta + 1
+    expr: Delta + 1
+to:
+  problem: network-decomposition
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T + \mathcal{O}(C \cdot D)
+  expr: T + O(C * D)
+models:
+- LOCAL
+comments: weak diameter suffices
+status: approved

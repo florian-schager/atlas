@@ -1,0 +1,16 @@
+id: bko20
+label: BKO, 2020
+title: Distributed edge coloring in time quasi-polylogarithmic in Δ
+authors:
+- balliu-alkida
+- kuhn-fabian
+- olivetti-dennis
+public_url: https://arxiv.org/abs/2002.10780
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2020
+  arxiv: '2002.10780'
+- type: conference
+  venue: podc
+  year: 2020

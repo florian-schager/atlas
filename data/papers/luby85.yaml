@@ -1,0 +1,13 @@
+id: luby85
+label: Luby, 1985
+title: A simple parallel algorithm for the Maximal Independent Set Problem
+authors:
+- luby-michael
+public_url: https://dl.acm.org/doi/10.1145/22145.22146
+versions:
+- type: conference
+  venue: stoc
+  year: 1985
+- type: journal
+  venue: sicomp
+  year: 1986

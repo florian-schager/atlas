@@ -1,0 +1,17 @@
+id: mm-hkp01-bipartite
+title: Maximal matching in 2-colored bipartite graphs
+problem: maximal-matching
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: bipartite
+assumptions:
+- given-2-coloring
+runtime:
+  latex: \mathcal{O}(\log^{3} n)
+  expr: O(log(n)^3)
+year: 2001
+sources:
+- paper: hkp98
+comments: journal version
+status: approved

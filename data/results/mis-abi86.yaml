@@ -1,0 +1,14 @@
+id: mis-abi86
+title: MIS via marking vertices randomly
+problem: mis
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log n)
+  expr: O(log(n))
+year: 1986
+sources:
+- paper: abi86
+status: approved

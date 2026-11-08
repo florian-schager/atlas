@@ -1,0 +1,18 @@
+id: ec-fgk17-hypergraph-matching
+title: Hypergraph maximal matching
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{8} \Delta \cdot \log n)
+  expr: O(log(Delta)^8 * log(n))
+year: 2017
+sources:
+- paper: fgk17
+comments: (deg(e)+1)-list edge coloring
+status: approved

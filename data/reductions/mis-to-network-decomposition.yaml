@@ -1,0 +1,21 @@
+id: mis-to-network-decomposition
+title: Cluster colors in turn
+from:
+  problem: mis
+to:
+  problem: network-decomposition
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T + \mathcal{O}(C \cdot D)
+  expr: T + O(C * D)
+models:
+- LOCAL
+comments: weak diameter suffices
+status: approved

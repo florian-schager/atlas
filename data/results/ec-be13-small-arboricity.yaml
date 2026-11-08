@@ -1,0 +1,19 @@
+id: ec-be13-small-arboricity
+title: (2Δ−1)-edge coloring via forests-decomposition (small arboricity)
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: bounded-arboricity
+runtime:
+  latex: \mathcal{O}\left(\frac{\log n}{\log\log n}\right)
+  expr: O(log(n) / log(log(n)))
+year: 2013
+sources:
+- paper: be13
+  reference: Theorem 8.6
+comments: for arboricity at most log^(1−δ) n
+status: approved

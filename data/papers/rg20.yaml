@@ -1,0 +1,15 @@
+id: rg20
+label: RG, 2020
+title: Polylogarithmic-Time Deterministic Network Decomposition and Distributed Derandomization
+authors:
+- rozhon-vaclav
+- ghaffari-mohsen
+public_url: https://arxiv.org/abs/1907.10937
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1907.10937'
+- type: conference
+  venue: stoc
+  year: 2020

@@ -1,0 +1,17 @@
+id: vc-linial87
+title: Linial's algorithm
+problem: vertex-coloring
+colors:
+  latex: \mathcal{O}(\Delta^{2})
+  expr: O(Delta^2)
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 1987
+sources:
+- paper: linial87
+status: approved

@@ -1,0 +1,11 @@
+id: pr01
+label: PR, 2001
+title: Some simple distributed algorithms for sparse networks
+authors:
+- panconesi-alessandro
+- rizzi-romeo
+public_url: https://link.springer.com/article/10.1007/PL00008932
+versions:
+- type: journal
+  venue: distributed-computing
+  year: 2001

@@ -1,0 +1,20 @@
+id: nd-aglp89
+title: Network decomposition
+problem: network-decomposition
+decomposition:
+  colors: &id001
+    latex: 2^{\mathcal{O}(\sqrt{\log n \cdot \log\log n})}
+    expr: 2^(O(sqrt(log(n) * log(log(n)))))
+  diameter: *id001
+  diameter_type: weak
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log n \cdot \log\log n})}
+  expr: 2^(O(sqrt(log(n) * log(log(n)))))
+year: 1989
+sources:
+- paper: aglp89
+status: approved

@@ -1,0 +1,15 @@
+id: be08
+label: BE, 2008
+title: Sublogarithmic distributed MIS algorithm for sparse graphs using Nash-Williams decomposition
+authors:
+- barenboim-leonid
+- elkin-michael
+public_url: https://www.cs.bgu.ac.il/~elkinm/arb_mis.pdf
+versions:
+- type: conference
+  venue: podc
+  year: 2008
+- type: journal
+  venue: distributed-computing
+  year: 2010
+  doi: 10.1007/s00446-009-0088-2

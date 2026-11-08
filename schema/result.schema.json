@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "result.schema.json",
+  "title": "Result",
+  "description": "One upper or lower bound for one problem in one model. Results that follow from other results via reductions are not stored; they are derived on demand.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "problem", "bound", "model", "randomness", "graph_class", "runtime", "year", "sources", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "title": { "description": "Short descriptive name, e.g. 'Maximal matching via rounding'.", "type": "string" },
+    "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition"] },
+    "reduce_to": {
+      "description": "Id of the result this one is obtained from by a reduction (see data/reductions/), e.g. a maximal matching algorithm from an MIS algorithm on the line graph. Left out for algorithms that solve the problem directly.",
+      "type": "string"
+    },
+    "decomposition": {
+      "description": "Output parameters, for network decomposition: number of cluster colors, cluster diameter, and whether the diameter is weak (measured in G) or strong (inside the cluster).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["colors", "diameter", "diameter_type"],
+      "properties": {
+        "colors": { "$ref": "#/$defs/expression" },
+        "diameter": { "$ref": "#/$defs/expression" },
+        "diameter_type": { "enum": ["weak", "strong"] }
+      }
+    },
+    "colors": {
+      "description": "Number of colors, for coloring problems. Same format as runtime.",
+      "$ref": "#/$defs/expression"
+    },
+    "via": {
+      "description": "Id of the reduction used to obtain this result from reduce_to, when several reductions connect the same two problems (e.g. two kinds of shattering).",
+      "type": "string"
+    },
+    "bound": { "enum": ["upper", "lower"] },
+    "model": { "enum": ["LOCAL", "CONGEST"] },
+    "randomness": { "enum": ["deterministic", "randomized"] },
+    "graph_class": {
+      "description": "Most general graph class the result holds for.",
+      "enum": ["general", "bounded-degree", "growth-bounded", "bounded-arboricity", "girth-7", "bipartite", "trees", "paths", "cycles"]
+    },
+    "assumptions": {
+      "description": "Extra input or knowledge the algorithm relies on.",
+      "type": "array",
+      "items": { "enum": ["given-2-coloring", "given-orientation-towards-root", "max-degree-log21", "min-degree-log7", "max-degree-log", "max-degree-log1delta", "max-degree-constant", "max-degree-poly"] },
+      "uniqueItems": true
+    },
+    "runtime": { "$ref": "#/$defs/expression" },
+    "year": { "description": "Year of the earliest publication of the result (including preprints).", "type": "integer", "minimum": 1900, "maximum": 2100 },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["paper"],
+        "properties": {
+          "paper": { "description": "Paper id.", "type": "string" },
+          "reference": { "description": "Where in the paper, e.g. 'Theorem 3.3'.", "type": "string" },
+          "url": { "description": "Link to the referenced theorem, e.g. in the HTML version on arXiv (see scripts/link_theorems.py).", "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "comments": { "description": "Short note, not a full sentence, e.g. 'reduction to MIS'. [[result-id]] links a result, e.g. 'Theorem 15 applied to [[mm-pr01-forest-decomposition]]'; [[paper-id]] links a paper.", "type": "string", "maxLength": 80 },
+    "status": { "enum": ["pending", "approved", "rejected"] }
+  },
+  "$defs": {
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latex", "expr"],
+      "properties": {
+        "latex": { "description": "Display form, as written in the paper.", "type": "string" },
+        "expr": {
+          "description": "Machine-readable form. Variables: n, Delta, D (the diameter; runtimes with D are not compared). Functions: log, logstar, sqrt, poly, O, Otilde, Omega, Theta, and min with several arguments. Constants: eps, delta, gamma, lambda (fixed constants of a result; lambda is the arboricity, for bounded-arboricity graphs). Operators: + - * / ^ and parentheses. Example: 'O(log(Delta)^2 * log(n))'.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

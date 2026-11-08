@@ -1,0 +1,18 @@
+id: ec-eps15
+title: Rödl nibble and shattering
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log\log n})}
+  expr: 2^(O(sqrt(log(log(n)))))
+year: 2015
+sources:
+- paper: eps15
+  reference: Corollary 2.1
+status: approved

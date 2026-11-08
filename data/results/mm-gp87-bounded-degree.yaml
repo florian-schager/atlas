@@ -1,0 +1,15 @@
+id: mm-gp87-bounded-degree
+title: Maximal matching for constant-degree graphs via MIS
+problem: maximal-matching
+reduce_to: mis-gp87-bounded-degree
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: bounded-degree
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 1987
+sources:
+- paper: gp87
+status: approved

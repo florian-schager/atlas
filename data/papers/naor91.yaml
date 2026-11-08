@@ -1,0 +1,11 @@
+id: naor91
+label: Naor, 1991
+title: A lower bound on probabilistic algorithms for distributive ring coloring
+authors:
+- naor-moni
+public_url: https://www.wisdom.weizmann.ac.il/~/naor/PAPERS/local_coloring.pdf
+versions:
+- type: journal
+  venue: sidma
+  year: 1991
+  doi: 10.1137/0404036

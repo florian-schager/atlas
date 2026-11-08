@@ -1,0 +1,20 @@
+id: ec-cd26-introvert-clustering-randomized
+title: Introvert clustering
+problem: edge-coloring
+colors:
+  latex: (3/2+\varepsilon)\Delta
+  expr: (3/2+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-constant
+runtime:
+  latex: \mathcal{O}(\log^2 n)
+  expr: O(log(n)^2)
+year: 2026
+sources:
+- paper: cd26
+comments: list; all Δ for bipartite graphs
+status: approved

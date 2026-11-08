@@ -1,0 +1,17 @@
+id: mis-lb-ks25
+title: Round elimination via self-reduction
+problem: mis
+reduce_to: mm-lb-ks25-trees
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \Omega(\min\{\log\Delta, \sqrt{\log n}\})
+  expr: Omega(min(log(Delta), sqrt(log(n))))
+year: 2025
+sources:
+- paper: ks25
+  reference: Section 1
+comments: on line graphs of trees, which are not trees
+status: approved

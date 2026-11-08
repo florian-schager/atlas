@@ -1,0 +1,11 @@
+id: ps97
+label: PS, 1997
+title: Randomized distributed edge coloring via an extension of the Chernoff–Hoeffding bounds
+authors:
+- panconesi-alessandro
+- srinivasan-aravind
+public_url: https://obj.umiacs.umd.edu/aravind/3ab3e938d34aeca99d463463d58a863ee97e.pdf
+versions:
+- type: journal
+  venue: sicomp
+  year: 1997

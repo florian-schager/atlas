@@ -1,0 +1,18 @@
+id: ec-harris19-hypergraph-matchings
+title: Approximate hypergraph maximum matchings
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{2} \Delta \cdot \log n)
+  expr: Otilde(log(Delta)^2 * log(n))
+year: 2018
+sources:
+- paper: harris19
+comments: (2Δ−1)-list edge coloring
+status: approved

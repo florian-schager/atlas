@@ -1,0 +1,20 @@
+id: cps17
+label: CPS, 2017
+title: Derandomizing Local Distributed Algorithms under Bandwidth Restrictions
+authors:
+- censor-hillel-keren
+- parter-merav
+- schwartzman-gregory
+public_url: https://arxiv.org/abs/1608.01689
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2016
+  arxiv: '1608.01689'
+- type: conference
+  venue: disc
+  year: 2017
+- type: journal
+  venue: distributed-computing
+  year: 2020
+  doi: 10.1007/s00446-020-00376-1

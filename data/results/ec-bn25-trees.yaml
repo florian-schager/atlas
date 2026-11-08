@@ -1,0 +1,18 @@
+id: ec-bn25-trees
+title: Optimal algorithms on trees
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+runtime:
+  latex: \mathcal{O}(\log^{12/13} n)
+  expr: O(log(n)^(12/13))
+year: 2025
+sources:
+- paper: bn25
+comments: (deg(e)+1)-edge coloring
+status: approved

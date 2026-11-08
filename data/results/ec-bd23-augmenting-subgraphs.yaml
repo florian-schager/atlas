@@ -1,0 +1,17 @@
+id: ec-bd23-augmenting-subgraphs
+title: Augmenting subgraphs
+problem: edge-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\Delta^{84} \cdot \log^{5} n)
+  expr: Otilde(Delta^84 * log(n)^5)
+year: 2023
+sources:
+- paper: bd23
+status: approved

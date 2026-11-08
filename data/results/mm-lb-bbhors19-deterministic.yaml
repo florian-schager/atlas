@@ -1,0 +1,16 @@
+id: mm-lb-bbhors19-deterministic
+title: Round elimination lower bound
+problem: maximal-matching
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+runtime:
+  latex: \Omega\left(\min\left\{\Delta, \frac{\log n}{\log\log n}\right\}\right)
+  expr: Omega(min(Delta, log(n) / log(log(n))))
+year: 2019
+sources:
+- paper: bbhors19
+  reference: Corollary 4.19
+  url: https://arxiv.org/html/1901.02441v3#S4.Thmtheorem19
+status: approved

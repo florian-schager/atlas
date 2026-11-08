@@ -1,0 +1,18 @@
+id: vc-bbn25-ruling-subgraphs-randomized
+title: Ruling subgraphs
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}((\log\log n)^{8/3})
+  expr: Otilde(log(log(n))^(8/3))
+year: 2025
+sources:
+- paper: bbn25
+comments: Δ ≥ 3, no (Δ+1)-clique
+status: approved

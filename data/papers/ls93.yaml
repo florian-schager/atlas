@@ -1,0 +1,11 @@
+id: ls93
+label: LS, 1993
+title: Low diameter graph decompositions
+authors:
+- linial-nathan
+- saks-michael
+public_url: https://www.cs.huji.ac.il/~nati/PAPERS/low_diam_dcmps.pdf
+versions:
+- type: journal
+  venue: combinatorica
+  year: 1993

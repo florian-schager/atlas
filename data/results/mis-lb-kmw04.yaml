@@ -1,0 +1,18 @@
+id: mis-lb-kmw04
+title: KMW lower bound
+problem: mis
+reduce_to: mm-lb-kmw04
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \Omega\left(\min\left\{\sqrt{\frac{\log n}{\log\log n}}, \frac{\log\Delta}{\log\log\Delta}\right\}\right)
+  expr: Omega(min(sqrt(log(n) / log(log(n))), log(Delta) / log(log(Delta))))
+year: 2004
+sources:
+- paper: kmw04
+  reference: Theorem 23
+  url: https://arxiv.org/html/1011.5470v2#Thmtheorem23
+comments: expected runtime
+status: approved

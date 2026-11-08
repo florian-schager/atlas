@@ -1,0 +1,20 @@
+id: vc-fhm23-brooks
+title: Fast distributed Brooks' theorem
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+assumptions:
+- max-degree-log21
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 2022
+sources:
+- paper: fhm23
+comments: Δ ≥ 3, no (Δ+1)-clique
+status: approved

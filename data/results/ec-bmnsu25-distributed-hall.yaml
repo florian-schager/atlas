@@ -1,0 +1,17 @@
+id: ec-bmnsu25-distributed-hall
+title: Distributed Hall
+problem: edge-coloring
+colors:
+  latex: 3\Delta/2
+  expr: 3*Delta/2
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\Delta^{2} \cdot \log n)
+  expr: O(Delta^2 * log(n))
+year: 2025
+sources:
+- paper: bmnsu25
+status: approved

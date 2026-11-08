@@ -1,0 +1,22 @@
+id: nd-gghir23
+title: Derandomized clustering
+problem: network-decomposition
+decomposition:
+  colors:
+    latex: \mathcal{O}(\log n)
+    expr: O(log(n))
+  diameter:
+    latex: \mathcal{O}(\log n \cdot \log\log\log n)
+    expr: O(log(n) * log(log(log(n))))
+  diameter_type: strong
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{3} n)
+  expr: Otilde(log(n)^3)
+year: 2023
+sources:
+- paper: gghir23
+status: approved

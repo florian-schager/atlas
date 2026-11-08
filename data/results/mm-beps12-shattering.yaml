@@ -1,0 +1,17 @@
+id: mm-beps12-shattering
+title: Maximal matching via shattering
+problem: maximal-matching
+reduce_to: mm-hkp01-polylog-improved
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + \log^{4}\log n)
+  expr: O(log(Delta) + log(log(n))^4)
+year: 2012
+sources:
+- paper: beps12
+  reference: Theorem 4.4
+  url: https://arxiv.org/html/1202.1983v3#S4.Thmtheorem4
+status: approved

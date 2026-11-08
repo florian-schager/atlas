@@ -1,0 +1,20 @@
+id: nd-ggr21-strong
+title: Improved network decomposition
+problem: network-decomposition
+decomposition:
+  colors: &id001
+    latex: \mathcal{O}(\log n)
+    expr: O(log(n))
+  diameter: *id001
+  diameter_type: strong
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{6} n)
+  expr: O(log(n)^6)
+year: 2020
+sources:
+- paper: ggr21
+status: approved

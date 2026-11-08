@@ -1,0 +1,19 @@
+id: vc-ghaffari15-list-coloring
+title: Shattering
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log\Delta + 2^{\mathcal{O}(\sqrt{\log\log n})})
+  expr: O(log(Delta) + 2^(O(sqrt(log(log(n))))))
+year: 2015
+sources:
+- paper: ghaffari16
+  reference: Theorem 23
+comments: (deg+1)-list coloring
+status: approved

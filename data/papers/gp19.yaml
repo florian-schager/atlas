@@ -1,0 +1,16 @@
+id: gp19
+label: GP, 2019
+title: Improved Network Decompositions using Small Messages with Applications on MIS, Neighborhood Covers, and Beyond
+authors:
+- ghaffari-mohsen
+- portmann-julian
+public_url: https://arxiv.org/abs/1908.03500
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2019
+  arxiv: '1908.03500'
+- type: conference
+  venue: disc
+  year: 2019
+  doi: 10.4230/LIPIcs.DISC.2019.18

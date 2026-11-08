@@ -1,0 +1,25 @@
+id: nd-fg17-tradeoff
+title: Few colors
+problem: network-decomposition
+decomposition:
+  colors:
+    latex: \lambda
+    expr: lambda
+  diameter:
+    latex: n^{1/\lambda} \cdot \log n
+    expr: n^(1/lambda) * log(n)
+  diameter_type: weak
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \lambda \cdot n^{1/\lambda} \cdot 2^{\mathcal{O}(\sqrt{\log n})}
+  expr: lambda * n^(1/lambda) * 2^(O(sqrt(log(n))))
+year: 2017
+sources:
+- paper: fg17
+  reference: Lemma 2.2
+  url: https://arxiv.org/html/1705.04840v2#S2.Thmtheorem2
+comments: for any λ ≥ 1
+status: approved

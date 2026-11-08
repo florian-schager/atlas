@@ -1,0 +1,17 @@
+id: mis-ks26b-girth-7
+title: MIS by faster degree reduction (girth at least 7)
+problem: mis
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: girth-7
+runtime:
+  latex: \mathcal{O}\left(\frac{\log\Delta}{\log(\log^{\star}\Delta)} + \mathrm{poly}(\log\log n)\right)
+  expr: O(log(Delta) / log(logstar(Delta)) + poly(log(log(n))))
+year: 2025
+sources:
+- paper: ks26b
+  reference: Theorem 1
+  url: https://arxiv.org/html/2505.15652v1#Thmthm1
+comments: graphs without cycles of length at most 6
+status: approved

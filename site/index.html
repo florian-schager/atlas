@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="style.css?v=4df3bfe648">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="problem-nav" aria-label="Problems">
+        <a href="maximal-matching.html">Maximal matching</a>
+        <a href="mis.html">MIS</a>
+        <a href="vertex-coloring.html">Vertex coloring</a>
+        <a href="edge-coloring.html">Edge coloring</a>
+        <a href="network-decomposition.html">Network decomposition</a>
+        <a class="nav-secondary" href="reductions.html">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap landing">
+    <p class="eyebrow">Overview</p>
+    <h1>The state of the art in distributed symmetry breaking</h1>
+    <p class="lede">
+      Known upper bounds for the four classical symmetry-breaking problems in distributed graph algorithms,
+      with the state of the art highlighted for every range of the maximum degree.
+    </p>
+
+    <div class="problem-cards">
+      <a class="problem-card" href="maximal-matching.html">
+        <span class="card-title">Maximal matching</span>
+        <span class="card-desc">A set of disjoint edges that cannot be extended.</span>
+        <span class="card-count" data-count="maximal-matching"></span>
+      </a>
+      <a class="problem-card" href="mis.html">
+        <span class="card-title">Maximal independent set</span>
+        <span class="card-desc">A set of pairwise non-adjacent nodes that cannot be extended.</span>
+        <span class="card-count" data-count="mis"></span>
+      </a>
+      <a class="problem-card" href="vertex-coloring.html">
+        <span class="card-title">Vertex coloring</span>
+        <span class="card-desc">Colors for the nodes so that adjacent nodes differ.</span>
+        <span class="card-count" data-count="vertex-coloring"></span>
+      </a>
+      <a class="problem-card" href="edge-coloring.html">
+        <span class="card-title">Edge coloring</span>
+        <span class="card-desc">Colors for the edges so that adjacent edges differ.</span>
+        <span class="card-count" data-count="edge-coloring"></span>
+      </a>
+      <a class="problem-card" href="network-decomposition.html">
+        <span class="card-title">Network decomposition</span>
+        <span class="card-desc">Low-diameter clusters, colored so that adjacent clusters differ.</span>
+        <span class="card-count" data-count="network-decomposition"></span>
+      </a>
+    </div>
+  </main>
+
+  <script src="data.js?v=14f1bbec5e"></script>
+  <script src="app.js?v=66ccb270ce"></script>
+</body>
+</html>

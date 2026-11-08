@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reductions · Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css?v=4df3bfe648">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body data-page="reductions">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="problem-nav" aria-label="Problems">
+        <a href="maximal-matching.html">Maximal matching</a>
+        <a href="mis.html">MIS</a>
+        <a href="vertex-coloring.html">Vertex coloring</a>
+        <a href="edge-coloring.html">Edge coloring</a>
+        <a href="network-decomposition.html">Network decomposition</a>
+        <a class="active nav-secondary" href="reductions.html" aria-current="page">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="problem">
+      <div class="problem-text" id="problem-text">
+        <h1>Reductions</h1>
+        <p>
+          A reduction solves a problem $A$ with an algorithm for a problem $B$, which runs on an instance built
+          from the input graph $G$. If the algorithm for $B$ takes $T$ rounds on that instance, the reduction
+          solves $A$ in the number of rounds given below.
+        </p>
+        <dl class="notation">
+          <dt>$n', \Delta'$</dt>
+          <dd>Number of nodes and maximum degree of the instance.</dd>
+          <dt>$L(G)$</dt>
+          <dd>Line graph: one node per edge of $G$, adjacent if the edges share an endpoint.</dd>
+          <dt>$G \times K_{\Delta+1}$</dt>
+          <dd>$\Delta+1$ copies of every node; the copies of a node form a clique, and the $i$-th copies of adjacent nodes are adjacent.</dd>
+          <dt>$(C, D)$-ND</dt>
+          <dd>Network decomposition: clusters of diameter at most $D$, colored with $C$ colors so that adjacent clusters get different colors.</dd>
+          <dt>$c$</dt>
+          <dd>Number of colors of a given coloring.</dd>
+        </dl>
+      </div>
+
+      <figure class="illustration">
+        <svg class="reduction-map" id="reduction-map" viewBox="0 0 580 340" role="img" aria-labelledby="map-title">
+          <title id="map-title">Reductions between the problems</title>
+        </svg>
+        <figcaption>
+          <span class="caption-text">
+            An arrow from $A$ to $B$: $A$ reduces to $B$, labelled with the instance if it is not $G$ itself.
+            Click an arrow to see the reduction.
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="results" aria-labelledby="reductions-title">
+      <div class="results-head">
+        <h2 id="reductions-title">All reductions</h2>
+        <p class="count" id="reduction-count" aria-live="polite"></p>
+      </div>
+      <div class="filters">
+        <div class="filter-group filter-classes" role="group" aria-label="Problem">
+          <span class="filter-label">Problem</span>
+          <div class="pills" id="reduction-filter"></div>
+        </div>
+      </div>
+      <div class="table-scroll reductions-scroll">
+        <table class="results-table reductions-table">
+          <thead>
+            <tr>
+              <th scope="col">From</th>
+              <th scope="col" class="th-wrap">With runtime</th>
+              <th scope="col">To</th>
+              <th scope="col">Runtime</th>
+              <th scope="col">Instance</th>
+              <th scope="col">Models</th>
+              <th scope="col">Source</th>
+              <th scope="col">Technique</th>
+            </tr>
+          </thead>
+          <tbody id="reductions-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Runtimes are in rounds and hold in the listed models. Results obtained by applying these reductions
+      (and chains of them) to the algorithms in the database will be derived automatically.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="data.js?v=14f1bbec5e"></script>
+  <script src="app.js?v=66ccb270ce"></script>
+</body>
+</html>

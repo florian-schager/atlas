@@ -1,0 +1,19 @@
+id: vc-lb-linial87-cycles
+title: Linial's lower bound on the cycle
+problem: vertex-coloring
+colors:
+  latex: '3'
+  expr: '3'
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: cycles
+runtime:
+  latex: \tfrac{1}{2}(\log^{\star} n - 1)
+  expr: Omega(1/2 * (logstar(n) - 1))
+year: 1987
+sources:
+- paper: linial87
+  reference: Proof of Theorem 2.1
+comments: the statement swaps the MIS and 3-coloring constants
+status: approved

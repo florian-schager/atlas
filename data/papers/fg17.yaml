@@ -1,0 +1,11 @@
+id: fg17
+label: FG, 2017
+title: Sublogarithmic distributed algorithms for Lovász local lemma, and the complexity hierarchy
+authors:
+- fischer-manuela
+- ghaffari-mohsen
+public_url: https://arxiv.org/abs/1705.04840
+versions:
+- type: conference
+  venue: disc
+  year: 2017

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Network decomposition · Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css?v=4df3bfe648">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body data-problem="network-decomposition">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="problem-nav" aria-label="Problems">
+        <a href="maximal-matching.html">Maximal matching</a>
+        <a href="mis.html">MIS</a>
+        <a href="vertex-coloring.html">Vertex coloring</a>
+        <a href="edge-coloring.html">Edge coloring</a>
+        <a class="active" href="network-decomposition.html" aria-current="page">Network decomposition</a>
+        <a class="nav-secondary" href="reductions.html">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="problem">
+      <div class="problem-text" id="problem-text">
+        <p class="eyebrow">Problem</p>
+        <h1>Network decomposition</h1>
+        <p>
+          A <em>$(C, D)$-network decomposition</em> of a graph $G = (V, E)$ partitions the nodes into clusters
+          of diameter at most $D$ and colors the clusters with $C$ colors so that adjacent clusters get different
+          colors. The diameter is <em>weak</em> if it is measured in $G$ and <em>strong</em> if it is measured inside
+          the cluster.
+        </p>
+        <p>
+          Every graph has a decomposition with $C = \mathcal{O}(\log n)$ and $D = \mathcal{O}(\log n)$. Given one,
+          MIS, $(\Delta+1)$-coloring and many other problems can be solved in $\mathcal{O}(C \cdot D)$ rounds by
+          going through the colors one by one (see the <a href="reductions.html">reductions</a>).
+        </p>
+        <p class="params">
+          Runtimes are given in rounds, in terms of the number of nodes $n$.
+        </p>
+      </div>
+
+      <figure class="illustration">
+        <svg viewBox="0 0 480 310" role="img" aria-labelledby="fig-title fig-desc">
+          <title id="fig-title">A network decomposition</title>
+          <desc id="fig-desc">A graph with twelve nodes in four clusters of three nodes each. Diagonally opposite clusters share a color, so adjacent clusters always have different colors.</desc>
+          <g class="clusters">
+            <ellipse class="color-1" cx="120" cy="85" rx="78" ry="62"/>
+            <ellipse class="color-2" cx="360" cy="85" rx="78" ry="62"/>
+            <ellipse class="color-2" cx="120" cy="238" rx="78" ry="62"/>
+            <ellipse class="color-1" cx="360" cy="238" rx="78" ry="62"/>
+          </g>
+          <g class="edges">
+            <line x1="85" y1="70" x2="150" y2="60"/>
+            <line x1="150" y1="60" x2="125" y2="115"/>
+            <line x1="125" y1="115" x2="85" y2="70"/>
+            <line x1="325" y1="65" x2="395" y2="60"/>
+            <line x1="395" y1="60" x2="360" y2="115"/>
+            <line x1="360" y1="115" x2="325" y2="65"/>
+            <line x1="85" y1="230" x2="155" y2="215"/>
+            <line x1="155" y1="215" x2="120" y2="270"/>
+            <line x1="120" y1="270" x2="85" y2="230"/>
+            <line x1="330" y1="215" x2="395" y2="225"/>
+            <line x1="395" y1="225" x2="360" y2="270"/>
+            <line x1="360" y1="270" x2="330" y2="215"/>
+            <line x1="150" y1="60" x2="325" y2="65"/>
+            <line x1="125" y1="115" x2="155" y2="215"/>
+            <line x1="360" y1="115" x2="330" y2="215"/>
+            <line x1="155" y1="215" x2="330" y2="215"/>
+            <line x1="120" y1="270" x2="360" y2="270"/>
+          </g>
+          <g class="nodes">
+            <circle cx="85" cy="70" r="8"/><circle cx="150" cy="60" r="8"/><circle cx="125" cy="115" r="8"/>
+            <circle cx="325" cy="65" r="8"/><circle cx="395" cy="60" r="8"/><circle cx="360" cy="115" r="8"/>
+            <circle cx="85" cy="230" r="8"/><circle cx="155" cy="215" r="8"/><circle cx="120" cy="270" r="8"/>
+            <circle cx="330" cy="215" r="8"/><circle cx="395" cy="225" r="8"/><circle cx="360" cy="270" r="8"/>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="caption-text">
+            Four clusters of diameter 1, colored so that adjacent clusters differ: a $(2, 1)$-network decomposition.
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="results" id="results"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" id="footer-text"></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="data.js?v=14f1bbec5e"></script>
+  <script src="asymptotics.js?v=53c6b7580c"></script>
+  <script src="app.js?v=66ccb270ce"></script>
+</body>
+</html>

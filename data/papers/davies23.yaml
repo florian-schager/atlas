@@ -1,0 +1,14 @@
+id: davies23
+label: Davies, 2023
+title: Improved distributed algorithms for the Lovász local lemma and edge coloring
+authors:
+- davies-peck-peter
+public_url: https://arxiv.org/abs/2208.08701
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2022
+  arxiv: '2208.08701'
+- type: conference
+  venue: soda
+  year: 2023

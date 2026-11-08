@@ -1,0 +1,12 @@
+id: eps15
+label: EPS, 2015
+title: (2Δ-1)-edge-coloring is much easier than maximal matching in the distributed setting
+authors:
+- elkin-michael
+- pettie-seth
+- su-hsin-hao
+public_url: https://dl.acm.org/doi/10.5555/2722129.2722155
+versions:
+- type: conference
+  venue: soda
+  year: 2015

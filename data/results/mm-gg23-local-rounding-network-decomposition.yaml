@@ -1,0 +1,17 @@
+id: mm-gg23-local-rounding-network-decomposition
+title: Maximal matching via local rounding and network decomposition
+problem: maximal-matching
+reduce_to: mis-gg23-local-rounding-network-decomposition
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \widetilde{\mathcal{O}}(\log^{2} n)
+  expr: Otilde(log(n)^2)
+year: 2023
+sources:
+- paper: gg23
+  reference: Theorem 1.1
+  url: https://arxiv.org/html/2303.16043v1#S1.Thmtheorem1
+status: approved

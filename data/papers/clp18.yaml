@@ -1,0 +1,16 @@
+id: clp18
+label: CLP, 2018
+title: An optimal distributed (Δ+1)-coloring algorithm?
+authors:
+- chang-yi-jun
+- li-wenzheng
+- pettie-seth
+public_url: https://arxiv.org/abs/1711.01361
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2017
+  arxiv: '1711.01361'
+- type: conference
+  venue: stoc
+  year: 2018

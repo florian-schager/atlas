@@ -1,0 +1,20 @@
+id: vc-hknt22-high-min-degree
+title: Degree+1 coloring
+problem: vertex-coloring
+colors:
+  latex: \Delta + 1
+  expr: Delta + 1
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+assumptions:
+- min-degree-log7
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 2021
+sources:
+- paper: hknt22
+comments: (deg+1)-list coloring
+status: approved

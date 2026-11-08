@@ -1,0 +1,18 @@
+id: ec-kuhn20-recursive-list-coloring
+title: Recursive list coloring
+problem: edge-coloring
+colors:
+  latex: 2\Delta - 1
+  expr: 2*Delta - 1
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: 2^{\mathcal{O}(\sqrt{\log\Delta})} + \mathcal{O}(\log^{\star} n)
+  expr: 2^(O(sqrt(log(Delta)))) + O(logstar(n))
+year: 2019
+sources:
+- paper: kuhn20
+comments: list edge coloring
+status: approved

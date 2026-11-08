@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paper.schema.json",
+  "title": "Paper",
+  "description": "One scientific work. Conference, journal, preprint and book versions of the same work are grouped as versions of one paper.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "label", "title", "authors", "versions"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "label": { "description": "Short citation label, e.g. 'BEPS, 2012'.", "type": "string" },
+    "title": { "type": "string" },
+    "authors": {
+      "description": "Author ids, in the order of the paper.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "public_url": {
+      "description": "Link to a freely accessible version of the paper, preferably arXiv. Omit if none is known.",
+      "type": "string",
+      "format": "uri"
+    },
+    "versions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "venue", "year"],
+        "properties": {
+          "type": { "enum": ["conference", "journal", "preprint", "book"] },
+          "venue": { "description": "Venue id.", "type": "string" },
+          "year": { "type": "integer", "minimum": 1900, "maximum": 2100 },
+          "title": { "description": "Only if this version's title differs from the paper title.", "type": "string" },
+          "doi": { "type": "string", "pattern": "^10\\.\\S+/\\S+$" },
+          "arxiv": { "description": "arXiv identifier, for preprint versions.", "type": "string" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}
