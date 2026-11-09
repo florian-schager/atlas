@@ -9,7 +9,7 @@
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
     "title": { "description": "Short descriptive name, e.g. 'Maximal matching via rounding'.", "type": "string" },
-    "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition"] },
+    "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition", "degree-splitting"] },
     "reduce_to": {
       "description": "Id of the result this one is obtained from by a reduction (see data/reductions/), e.g. a maximal matching algorithm from an MIS algorithm on the line graph. Left out for algorithms that solve the problem directly.",
       "type": "string"
@@ -29,6 +29,14 @@
       "description": "Number of colors, for coloring problems. Same format as runtime.",
       "$ref": "#/$defs/expression"
     },
+    "variant": {
+      "description": "For degree splitting: 'directed' (orient the edges so that in- and out-degree are balanced) or 'undirected' (color the edges red and blue so that both colors are balanced).",
+      "enum": ["directed", "undirected"]
+    },
+    "discrepancy": {
+      "description": "Maximum discrepancy at a node, for degree splitting: the difference between in- and out-degree (directed) or between red and blue degree (undirected). Same format as runtime.",
+      "$ref": "#/$defs/expression"
+    },
     "via": {
       "description": "Id of the reduction used to obtain this result from reduce_to, when several reductions connect the same two problems (e.g. two kinds of shattering).",
       "type": "string"
@@ -43,7 +51,7 @@
     "assumptions": {
       "description": "Extra input or knowledge the algorithm relies on.",
       "type": "array",
-      "items": { "enum": ["given-2-coloring", "given-orientation-towards-root", "max-degree-log21", "min-degree-log7", "max-degree-log", "max-degree-log1delta", "max-degree-constant", "max-degree-poly", "eps-greater-inverse-delta"] },
+      "items": { "enum": ["given-2-coloring", "given-orientation-towards-root", "max-degree-log21", "min-degree-log7", "max-degree-log", "max-degree-log1delta", "max-degree-constant", "max-degree-poly", "eps-greater-inverse-delta", "max-degree-log-eps2", "eps-greater-log-over-delta", "eps4-greater-log-delta-over-delta", "eps4-greater-log-delta-loglog2-over-delta"] },
       "uniqueItems": true
     },
     "runtime": { "$ref": "#/$defs/expression" },

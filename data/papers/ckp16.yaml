@@ -1,0 +1,19 @@
+id: ckp16
+label: CKP, 2016
+title: An exponential separation between randomized and deterministic complexity in the LOCAL model
+authors:
+- chang-yi-jun
+- kopelowitz-tsvi
+- pettie-seth
+public_url: https://arxiv.org/abs/1602.08166
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2016
+  arxiv: '1602.08166'
+- type: conference
+  venue: focs
+  year: 2016
+- type: journal
+  venue: sicomp
+  year: 2019

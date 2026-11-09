@@ -17,6 +17,7 @@
         <a href="vertex-coloring.html">Vertex coloring</a>
         <a href="edge-coloring.html">Edge coloring</a>
         <a href="network-decomposition.html">Network decomposition</a>
+        <a href="degree-splitting.html">Degree splitting</a>
         <a class="nav-secondary" href="reductions.html">Reductions</a>
         <a href="bibliography.html">Bibliography</a>
       </nav>
@@ -27,7 +28,7 @@
     <p class="eyebrow">Overview</p>
     <h1>The state of the art in distributed symmetry breaking</h1>
     <p class="lede">
-      A curated database of algorithms and lower bounds for five fundamental problems in distributed graph
+      A curated database of algorithms and lower bounds for six fundamental problems in distributed graph
       algorithms, in the LOCAL and CONGEST models, deterministic and randomized. For every range of the
       maximum degree Δ, the atlas highlights which results are the state of the art.
     </p>
@@ -119,6 +120,24 @@
         <span class="card-desc">Low-diameter clusters, colored so that adjacent clusters differ.</span>
         <span class="card-count" data-count="network-decomposition"></span>
       </a>
+      <a class="problem-card" href="degree-splitting.html">
+        <!-- Degree splitting: red and blue edges, balanced at every node. -->
+        <svg class="card-map" viewBox="560 100 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-ds" class="map-land" d="M572 150 C570 124 598 110 630 112 C664 114 690 130 688 152 C686 178 660 192 628 190 C596 188 574 174 572 150 Z"/>
+          <use class="map-shore" href="#isl-ds" transform="translate(630 151) scale(.84) translate(-630 -151)"/>
+          <g class="map-graph">
+            <path class="edge e1" d="M630 124 L656 138 M656 164 L630 178 M604 164 L604 138 M630 151 L630 124 M630 151 L656 164 M630 151 L604 164"/>
+            <path class="edge e2" d="M656 138 L656 164 M630 178 L604 164 M604 138 L630 124 M630 151 L656 138 M630 151 L630 178 M630 151 L604 138"/>
+            <circle class="node" cx="630" cy="151" r="5"/>
+            <circle class="node" cx="630" cy="124" r="5"/><circle class="node" cx="656" cy="138" r="5"/>
+            <circle class="node" cx="656" cy="164" r="5"/><circle class="node" cx="630" cy="178" r="5"/>
+            <circle class="node" cx="604" cy="164" r="5"/><circle class="node" cx="604" cy="138" r="5"/>
+          </g>
+        </svg>
+        <span class="card-title">Degree splitting</span>
+        <span class="card-desc">Two colors or an orientation for the edges, balanced at every node.</span>
+        <span class="card-count" data-count="degree-splitting"></span>
+      </a>
     </div>
 
     <div class="landing-more">
@@ -139,7 +158,7 @@
     </a>
   </main>
 
-  <script src="data.js?v=858a676f38"></script>
-  <script src="app.js?v=e46a287f44"></script>
+  <script src="data.js?v=a004a42cc2"></script>
+  <script src="app.js?v=f056425f85"></script>
 </body>
 </html>

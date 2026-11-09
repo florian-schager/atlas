@@ -1,0 +1,21 @@
+id: ds-gs17-undirected-randomized
+title: Augmenting paths
+problem: degree-splitting
+variant: undirected
+discrepancy:
+  latex: \varepsilon\Delta
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-2} \cdot \Delta^{2} \log^{4} n)
+  expr: O(1/eps^2 * Delta^2 * log(n)^4)
+year: 2016
+sources:
+- paper: gs17
+  reference: Theorem C.1
+  url: https://arxiv.org/html/1608.03220v1#A3.Thmtheorem1
+comments: each color class has degree ≤ (1+ε)Δ/2
+status: approved

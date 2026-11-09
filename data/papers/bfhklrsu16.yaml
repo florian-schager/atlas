@@ -1,0 +1,21 @@
+id: bfhklrsu16
+label: BFHKLRSU, 2016
+title: A lower bound for the distributed Lovász local lemma
+authors:
+- brandt-sebastian
+- fischer-orr
+- hirvonen-juho
+- keller-barbara
+- lempiainen-tuomo
+- rybicki-joel
+- suomela-jukka
+- uitto-jara
+public_url: https://arxiv.org/abs/1511.00900
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2015
+  arxiv: '1511.00900'
+- type: conference
+  venue: stoc
+  year: 2016

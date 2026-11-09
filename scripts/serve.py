@@ -91,6 +91,8 @@ def check_result(result, rid, current):
         errors.append("coloring results need colors")
     if result.get("problem") == "network-decomposition" and "decomposition" not in result:
         errors.append("network decomposition results need colors and diameter")
+    if result.get("problem") == "degree-splitting" and not ("discrepancy" in result and "variant" in result):
+        errors.append("degree splitting results need a discrepancy and a variant")
     papers = load("papers")
     years = []
     for s in result.get("sources", []):

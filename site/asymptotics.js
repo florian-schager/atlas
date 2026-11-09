@@ -7,8 +7,8 @@
  * A term is a product of growth factors, kept as an exponent vector ordered from the
  * fastest-growing scale to the slowest:
  *
- *   [ n^c, n^(i/k), 2^(log^e n · loglog^f n), log n, 2^(loglog^e n · logloglog^f n), log log n, ..., log* n,
- *     log log* n ]
+ *   [ n^c, n^(i/k), 2^(log^e n · loglog^f n), log n, 2^(loglog^e n · logloglog^f n), log log n, ...,
+ *     2^(log* n), log* n, log log* n ]
  *
  * (the exponential factor at each level has two exponents e and f, so that bounds like
  * 2^O(sqrt(log n · log log n)) are representable).
@@ -27,7 +27,8 @@
   const X = (k) => 3 * k - 1;         // 2^((log^(k) n)^e · ...): exponent e
   const XP = (k) => 3 * k;            //   ... · (log^(k+1) n)^f): exponent f
   const L = (k) => 3 * k + 1;         // (log^(k) n)^e
-  const LSTAR = 3 * LEVELS + 2;       // log* n
+  const XSTAR = 3 * LEVELS + 2;       // 2^(e · log* n): above every power of log* n, below every iterated log
+  const LSTAR = XSTAR + 1;            // log* n
   const LLSTAR = LSTAR + 1;           // log log* n
   const SIZE = LLSTAR + 1;
   const POLY = 1e6;                   // stands for "some polylog factor" in comparisons
@@ -36,6 +37,7 @@
   // Classify a vector index: {kind: "n" | "X" | "XP" | "L" | "star", k}.
   function slot(i) {
     if (i === C || i === IK) return { kind: "n", k: 0 };
+    if (i === XSTAR) return { kind: "xstar", k: 0 };
     if (i === LSTAR) return { kind: "star", k: 0 };
     if (i === LLSTAR) return { kind: "llstar", k: 0 };
     const k = Math.floor((i - 2) / 3) + 1;
@@ -101,6 +103,7 @@
     const { kind, k } = slot(i);
     if (kind === "n") return term([[L(1), 1]]);
     if (kind === "star") return term([[LLSTAR, 1]]);
+    if (kind === "xstar") return term([[LSTAR, a.v[XSTAR]]]);
     // log(log log* n) grows slower than every scale tracked here; it is treated as a constant, which only rounds
     // up a runtime that divides by it.
     if (kind === "llstar") return term();
@@ -122,6 +125,8 @@
     const i = lead(a);
     if (i < 0) return term();
     const { kind, k } = slot(i);
+    // 2^(e · log* n), e.g. 10^(log* (1/eps)).
+    if (kind === "star" && a.poly < 0 && !a.v.some((x, j) => j !== i && Math.abs(x) > EPS)) return term([[XSTAR, a.v[i]]]);
     if (kind !== "L" || a.poly >= 0) throw new Error("unsupported exponential");
     const e = a.v[i];
     const f = k < LEVELS ? a.v[L(k + 1)] : 0;
@@ -145,6 +150,7 @@
       else if (kind === "X" || kind === "XP") p = L(k);
       else if (kind === "L" && k < LEVELS) p = L(k + 1);
       else if (kind === "star") p = LLSTAR;
+      else if (kind === "xstar") p = LSTAR;
     }
     const t = powNum(a, 1);
     t.poly = minPoly(a.poly, p);
@@ -223,6 +229,7 @@
   // ---------- evaluation ----------
 
   const num = (x) => ({ num: true, x });
+  const FIXED = 65536;                // value of n and Delta when only the dependence on eps is wanted
   const CONSTANTS = { eps: 0.1, delta: 0.1, gamma: 0.1, lambda: 2 };
   const asTerm = (val) => (val.num ? term() : val);
 
@@ -231,6 +238,11 @@
       case "num":
         return num(node.value);
       case "var":
+        // The dependence on eps for fixed n and Delta (see epsDependence): eps = 1/x for a growing x.
+        if (env.eps) {
+          if (node.name === "n" || node.name === "Delta") return num(FIXED);
+          if (node.name === "eps") return powNum(term([[C, 1]]), -1);
+        }
         if (node.name === "n") return term([[C, 1]]);
         if (node.name === "Delta") {
           if (!env.delta) throw new Error("no regime for Delta");
@@ -340,6 +352,7 @@
       }
       if (Math.abs(v[L(k)]) > EPS) { put(v[L(k)], (x) => logLatex(k, x)); onlyExp = false; }
     }
+    if (Math.abs(v[XSTAR]) > EPS) put(v[XSTAR], () => "2^{\\mathcal{O}(\\log^{*} n)}");
     if (Math.abs(v[LSTAR]) > EPS) {
       put(v[LSTAR], (x) => (Math.abs(x - 1) < EPS ? "\\log^{*} n" : `(\\log^{*} n)^{${frac(x)}}`));
       onlyExp = false;
@@ -418,5 +431,19 @@
     }
   }
 
-  global.Asymptotics = { REGIMES, simplify, compare, shifted, parse };
+  /**
+   * The dependence of an expression on eps, with n and Delta fixed: the growth as eps -> 0, as a term in
+   * x = 1/eps (written as n). E.g. O(eps^-1 log n) gives x, O(eps^-1 log(1/eps) log n) gives x log x.
+   * Returns {term} or {error}.
+   */
+  function epsDependence(src) {
+    try {
+      const val = evaluate(parsed(src), { eps: true });
+      return { term: val.num ? term() : val };
+    } catch (e) {
+      return { error: e.message };
+    }
+  }
+
+  global.Asymptotics = { REGIMES, simplify, compare, shifted, parse, epsDependence };
 })(window);

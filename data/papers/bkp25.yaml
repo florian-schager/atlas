@@ -1,0 +1,17 @@
+id: bkp25
+label: BKP, 2025
+title: On the complexity of distributed edge coloring and orientation problems
+authors:
+- brandt-sebastian
+- kuhn-fabian
+- parsaeian-zahra
+public_url: https://arxiv.org/abs/2510.21327
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2510.21327'
+- type: conference
+  venue: opodis
+  year: 2025
+  doi: 10.4230/LIPIcs.OPODIS.2025.25

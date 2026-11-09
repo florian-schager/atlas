@@ -86,6 +86,12 @@ def check_references(entries):
                 errors.append(f"results/{rid}: year {result.get('year')} is before the result it reduces to ({target['year']})")
         if result.get("problem") == "network-decomposition" and "decomposition" not in result:
             errors.append(f"results/{rid}: network decomposition results need 'decomposition'")
+        splitting = result.get("problem") == "degree-splitting"
+        for key in ("discrepancy", "variant"):
+            if splitting and key not in result:
+                errors.append(f"results/{rid}: degree splitting results need '{key}'")
+            if not splitting and key in result:
+                errors.append(f"results/{rid}: '{key}' is only for degree splitting results")
     for folder in ("results", "reductions"):
         for rid, entry in entries[folder].items():
             for s in entry.get("sources", []):

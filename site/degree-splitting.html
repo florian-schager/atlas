@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Degree splitting · Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css?v=ee85c21911">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body data-problem="degree-splitting">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="problem-nav" aria-label="Problems">
+        <a href="maximal-matching.html">Maximal matching</a>
+        <a href="mis.html">MIS</a>
+        <a href="vertex-coloring.html">Vertex coloring</a>
+        <a href="edge-coloring.html">Edge coloring</a>
+        <a href="network-decomposition.html">Network decomposition</a>
+        <a class="active" href="degree-splitting.html" aria-current="page">Degree splitting</a>
+        <a class="nav-secondary" href="reductions.html">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="problem">
+      <div class="problem-text" id="problem-text">
+        <p class="eyebrow">Problem</p>
+        <h1>Degree splitting</h1>
+        <p>
+          <em>Undirected degree splitting</em> colors the edges of a graph $G = (V, E)$ red and blue so that every
+          node has about as many red as blue edges; <em>directed degree splitting</em> orients the edges so that
+          every node has about as many outgoing as incoming edges. The <em>discrepancy</em> at a node is the
+          difference between the two numbers, and the problem is parametrized by the largest discrepancy allowed.
+        </p>
+        <p class="params">
+          Runtimes are given in rounds, in terms of the number of nodes $n$ and the maximum degree $\Delta$;
+          $\varepsilon$ is a fixed constant. A discrepancy of $\varepsilon \deg(v) + \mathcal{O}(1)$ at every node
+          is compared as $\varepsilon\Delta$.
+        </p>
+      </div>
+
+      <figure class="illustration">
+        <svg viewBox="0 0 480 310" role="img" aria-labelledby="fig-title fig-desc">
+          <title id="fig-title">An undirected degree splitting</title>
+          <desc id="fig-desc">A wheel with six outer nodes, its edges colored red and blue: the center has three edges of each color, and every outer node has two edges of one color and one of the other.</desc>
+          <g class="colored-edges">
+            <line class="color-1" x1="240" y1="35" x2="344" y2="95"/>
+            <line class="color-2" x1="344" y1="95" x2="344" y2="215"/>
+            <line class="color-1" x1="344" y1="215" x2="240" y2="275"/>
+            <line class="color-2" x1="240" y1="275" x2="136" y2="215"/>
+            <line class="color-1" x1="136" y1="215" x2="136" y2="95"/>
+            <line class="color-2" x1="136" y1="95" x2="240" y2="35"/>
+            <line class="color-1" x1="240" y1="155" x2="240" y2="35"/>
+            <line class="color-2" x1="240" y1="155" x2="344" y2="95"/>
+            <line class="color-1" x1="240" y1="155" x2="344" y2="215"/>
+            <line class="color-2" x1="240" y1="155" x2="240" y2="275"/>
+            <line class="color-1" x1="240" y1="155" x2="136" y2="215"/>
+            <line class="color-2" x1="240" y1="155" x2="136" y2="95"/>
+          </g>
+          <g class="nodes">
+            <circle class="free" cx="240" cy="155" r="9"/>
+            <circle class="free" cx="240" cy="35" r="9"/>
+            <circle class="free" cx="344" cy="95" r="9"/>
+            <circle class="free" cx="344" cy="215" r="9"/>
+            <circle class="free" cx="240" cy="275" r="9"/>
+            <circle class="free" cx="136" cy="215" r="9"/>
+            <circle class="free" cx="136" cy="95" r="9"/>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="caption-text">
+            The center has three edges of each color; the outer nodes have odd degree, so discrepancy $1$ is the best possible there.
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="results" id="results"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" id="footer-text"></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="data.js?v=a004a42cc2"></script>
+  <script src="asymptotics.js?v=8028fec994"></script>
+  <script src="app.js?v=f056425f85"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ graph algorithms, with the state of the art highlighted for every range of the m
 - vertex coloring
 - edge coloring
 - network decomposition
+- degree splitting (directed and undirected)
 
 Every result records its runtime, the model (LOCAL or CONGEST), whether it is deterministic or randomized, the
 graph class and assumptions it needs, the number of colors (for colorings), and the theorem in the paper it comes
@@ -59,6 +60,8 @@ Conventions:
   and the functions `log`, `logstar`, `sqrt`, `O`, `Otilde`, `Omega`, `Theta`, `min`, e.g.
   `O(log(Delta)^2 * log(n))`. The schema lists everything the parser accepts.
 - Coloring results give their number of colors in `colors`.
+- Degree splitting results give their variant (`directed` or `undirected`) in `variant` and the maximum
+  discrepancy at a node in `discrepancy`; a discrepancy of ε·deg(v) + O(1) is compared as `eps*Delta`.
 - A result obtained from another one by a reduction names that result in `reduce_to` (e.g. a maximal matching
   algorithm from an MIS algorithm on the line graph, or a randomized algorithm from a deterministic one by
   shattering).

@@ -781,6 +781,72 @@ window.ATLAS_DATA = {
     ]
    }
   },
+  "bfhklrsu16": {
+   "id": "bfhklrsu16",
+   "label": "BFHKLRSU, 2016",
+   "title": "A lower bound for the distributed Lovász local lemma",
+   "authors": [
+    "Sebastian Brandt",
+    "Orr Fischer",
+    "Juho Hirvonen",
+    "Barbara Keller",
+    "Tuomo Lempiäinen",
+    "Joel Rybicki",
+    "Jukka Suomela",
+    "Jara Uitto"
+   ],
+   "sort_key": "brandt-sebastian fischer-orr hirvonen-juho keller-barbara lempiainen-tuomo rybicki-joel suomela-jukka uitto-jara 2015",
+   "public_url": "https://arxiv.org/abs/1511.00900",
+   "versions": [
+    {
+     "type": "preprint",
+     "venue": "arXiv",
+     "venue_name": "arXiv",
+     "year": 2015,
+     "title": null,
+     "doi": null,
+     "arxiv": "1511.00900"
+    },
+    {
+     "type": "conference",
+     "venue": "STOC",
+     "venue_name": "Annual ACM Symposium on Theory of Computing",
+     "year": 2016,
+     "title": null,
+     "doi": null,
+     "arxiv": null
+    }
+   ],
+   "raw": {
+    "id": "bfhklrsu16",
+    "label": "BFHKLRSU, 2016",
+    "title": "A lower bound for the distributed Lovász local lemma",
+    "authors": [
+     "brandt-sebastian",
+     "fischer-orr",
+     "hirvonen-juho",
+     "keller-barbara",
+     "lempiainen-tuomo",
+     "rybicki-joel",
+     "suomela-jukka",
+     "uitto-jara"
+    ],
+    "public_url": "https://arxiv.org/abs/1511.00900",
+    "versions": [
+     {
+      "type": "preprint",
+      "venue": "arxiv",
+      "year": 2015,
+      "arxiv": "1511.00900"
+     },
+     {
+      "type": "conference",
+      "venue": "stoc",
+      "year": 2016
+     }
+    ]
+   }
+  },
   "bkm20": {
    "id": "bkm20",
    "label": "BKM, 2020",
@@ -889,6 +955,63 @@ window.ATLAS_DATA = {
       "type": "conference",
       "venue": "podc",
       "year": 2020
+     }
+    ]
+   }
+  },
+  "bkp25": {
+   "id": "bkp25",
+   "label": "BKP, 2025",
+   "title": "On the complexity of distributed edge coloring and orientation problems",
+   "authors": [
+    "Sebastian Brandt",
+    "Fabian Kuhn",
+    "Zahra Parsaeian"
+   ],
+   "sort_key": "brandt-sebastian kuhn-fabian parsaeian-zahra 2025",
+   "public_url": "https://arxiv.org/abs/2510.21327",
+   "versions": [
+    {
+     "type": "preprint",
+     "venue": "arXiv",
+     "venue_name": "arXiv",
+     "year": 2025,
+     "title": null,
+     "doi": null,
+     "arxiv": "2510.21327"
+    },
+    {
+     "type": "conference",
+     "venue": "OPODIS",
+     "venue_name": "International Conference on Principles of Distributed Systems",
+     "year": 2025,
+     "title": null,
+     "doi": "10.4230/LIPIcs.OPODIS.2025.25",
+     "arxiv": null
+    }
+   ],
+   "raw": {
+    "id": "bkp25",
+    "label": "BKP, 2025",
+    "title": "On the complexity of distributed edge coloring and orientation problems",
+    "authors": [
+     "brandt-sebastian",
+     "kuhn-fabian",
+     "parsaeian-zahra"
+    ],
+    "public_url": "https://arxiv.org/abs/2510.21327",
+    "versions": [
+     {
+      "type": "preprint",
+      "venue": "arxiv",
+      "year": 2025,
+      "arxiv": "2510.21327"
+     },
+     {
+      "type": "conference",
+      "venue": "opodis",
+      "year": 2025,
+      "doi": "10.4230/LIPIcs.OPODIS.2025.25"
      }
     ]
    }
@@ -1215,6 +1338,76 @@ window.ATLAS_DATA = {
      {
       "type": "journal",
       "venue": "talg",
+      "year": 2019
+     }
+    ]
+   }
+  },
+  "ckp16": {
+   "id": "ckp16",
+   "label": "CKP, 2016",
+   "title": "An exponential separation between randomized and deterministic complexity in the LOCAL model",
+   "authors": [
+    "Yi-Jun Chang",
+    "Tsvi Kopelowitz",
+    "Seth Pettie"
+   ],
+   "sort_key": "chang-yi-jun kopelowitz-tsvi pettie-seth 2016",
+   "public_url": "https://arxiv.org/abs/1602.08166",
+   "versions": [
+    {
+     "type": "preprint",
+     "venue": "arXiv",
+     "venue_name": "arXiv",
+     "year": 2016,
+     "title": null,
+     "doi": null,
+     "arxiv": "1602.08166"
+    },
+    {
+     "type": "conference",
+     "venue": "FOCS",
+     "venue_name": "IEEE Annual Symposium on Foundations of Computer Science",
+     "year": 2016,
+     "title": null,
+     "doi": null,
+     "arxiv": null
+    },
+    {
+     "type": "journal",
+     "venue": "SICOMP",
+     "venue_name": "SIAM Journal on Computing",
+     "year": 2019,
+     "title": null,
+     "doi": null,
+     "arxiv": null
+    }
+   ],
+   "raw": {
+    "id": "ckp16",
+    "label": "CKP, 2016",
+    "title": "An exponential separation between randomized and deterministic complexity in the LOCAL model",
+    "authors": [
+     "chang-yi-jun",
+     "kopelowitz-tsvi",
+     "pettie-seth"
+    ],
+    "public_url": "https://arxiv.org/abs/1602.08166",
+    "versions": [
+     {
+      "type": "preprint",
+      "venue": "arxiv",
+      "year": 2016,
+      "arxiv": "1602.08166"
+     },
+     {
+      "type": "conference",
+      "venue": "focs",
+      "year": 2016
+     },
+     {
+      "type": "journal",
+      "venue": "sicomp",
       "year": 2019
      }
     ]
@@ -5925,6 +6118,39 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ds-lb-bfhklrsu16-randomized",
+   "title": "Sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} \\log n)",
+    "expr": "Omega(log(log(n))/log(Delta))"
+   },
+   "year": 2015,
+   "sources": [
+    {
+     "paper": "bfhklrsu16",
+     "reference": "Corollary 23",
+     "url": "https://arxiv.org/html/1511.00900v1#Thmtheorem23"
+    },
+    {
+     "paper": "ckp16",
+     "reference": "Theorem 4",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
+    }
+   ],
+   "comments": "any ε < 1; Ω(log log n) for constant Δ, dependence on Δ from [[ckp16]]",
+   "status": "approved"
+  },
+  {
    "id": "ec-eps15",
    "title": "Rödl nibble and shattering",
    "problem": "edge-coloring",
@@ -6098,6 +6324,214 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ds-gs17-directed",
+   "title": "Augmenting paths",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "assumptions": [
+    "max-degree-log-eps2"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-3} \\cdot \\log^{7} n)",
+    "expr": "O(1/eps^3 * log(n)^7)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Theorem D.3",
+     "url": "https://arxiv.org/html/1608.03220v1#A4.Thmtheorem3"
+    }
+   ],
+   "comments": "in- and out-degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-gs17-directed-randomized",
+   "title": "Blocking flows",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-3} \\cdot \\log^{4} n)",
+    "expr": "O(1/eps^3 * log(n)^4)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Corollary D.5",
+     "url": "https://arxiv.org/html/1608.03220v1#A4.Thmtheorem5"
+    }
+   ],
+   "comments": "in- and out-degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-gs17-directed-small-delta",
+   "title": "Augmenting paths",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "assumptions": [
+    "eps-greater-log-over-delta"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot \\Delta^{2} \\log^{5} n)",
+    "expr": "O(1/eps * Delta^2 * log(n)^5)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Lemma D.2",
+     "url": "https://arxiv.org/html/1608.03220v1#A4.Thmtheorem2"
+    }
+   ],
+   "comments": "in- and out-degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-gs17-undirected",
+   "title": "Augmenting paths",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "assumptions": [
+    "max-degree-log-eps2"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-3} \\cdot \\log^{7} n)",
+    "expr": "O(1/eps^3 * log(n)^7)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Theorem 3.5",
+     "url": "https://arxiv.org/html/1608.03220v1#S3.Thmtheorem5"
+    }
+   ],
+   "comments": "each color class has degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-gs17-undirected-randomized",
+   "title": "Augmenting paths",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-2} \\cdot \\Delta^{2} \\log^{4} n)",
+    "expr": "O(1/eps^2 * Delta^2 * log(n)^4)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Theorem C.1",
+     "url": "https://arxiv.org/html/1608.03220v1#A3.Thmtheorem1"
+    }
+   ],
+   "comments": "each color class has degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-gs17-undirected-small-delta",
+   "title": "Augmenting paths",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "assumptions": [
+    "eps-greater-log-over-delta"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot \\Delta^{2} \\log^{5} n)",
+    "expr": "O(1/eps * Delta^2 * log(n)^5)"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Lemma 3.2",
+     "url": "https://arxiv.org/html/1608.03220v1#S3.Thmtheorem2"
+    }
+   ],
+   "comments": "each color class has degree ≤ (1+ε)Δ/2",
+   "status": "approved"
+  },
+  {
+   "id": "ds-lb-ckp16-deterministic",
+   "title": "Sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} n)",
+    "expr": "Omega(log(n)/log(Delta))"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "ckp16",
+     "reference": "Theorem 4 (with Theorem 3)",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
+    }
+   ],
+   "comments": "any ε < 1; on Δ-regular graphs of high girth",
+   "status": "approved"
+  },
+  {
    "id": "ec-gs17-degree-splitting",
    "title": "Degree splitting",
    "problem": "edge-coloring",
@@ -6166,6 +6600,61 @@ window.ATLAS_DATA = {
    "sources": [
     {
      "paper": "hss16"
+    }
+   ],
+   "status": "approved"
+  },
+  {
+   "id": "ds-ghkmsu17-directed",
+   "title": "Path decompositions",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(n))"
+   },
+   "year": 2017,
+   "sources": [
+    {
+     "paper": "ghkmsu17",
+     "reference": "Theorem 1.1",
+     "url": "https://arxiv.org/html/1706.04746v2#S1.Thmtheorem1"
+    }
+   ],
+   "comments": "discrepancy ε·deg(v) + 1 at odd-degree nodes",
+   "status": "approved"
+  },
+  {
+   "id": "ds-ghkmsu17-undirected",
+   "title": "Path decompositions",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 4",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(n))"
+   },
+   "year": 2017,
+   "sources": [
+    {
+     "paper": "ghkmsu17",
+     "reference": "Theorem 1.1",
+     "url": "https://arxiv.org/html/1706.04746v2#S1.Thmtheorem1"
     }
    ],
    "status": "approved"
@@ -7423,6 +7912,68 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ds-hmn22-undirected",
+   "title": "Bipartite vertex splitting",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "assumptions": [
+    "eps4-greater-log-delta-over-delta"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1}) + \\mathrm{poly}\\log\\log n",
+    "expr": "O(1/eps) + poly(log(log(n)))"
+   },
+   "year": 2022,
+   "sources": [
+    {
+     "paper": "hmn22",
+     "reference": "Theorem 4",
+     "url": "https://arxiv.org/html/2208.08119v1#Thmtheorem4"
+    }
+   ],
+   "comments": "k = 2 parts, edges as variables; Δ ≥ poly log n by a random split",
+   "status": "approved"
+  },
+  {
+   "id": "ds-hmn22-undirected-congest",
+   "title": "Bipartite vertex splitting",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon\\Delta",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "CONGEST",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "assumptions": [
+    "eps4-greater-log-delta-loglog2-over-delta"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1}) + \\mathrm{poly}\\log\\log n",
+    "expr": "O(1/eps) + poly(log(log(n)))"
+   },
+   "year": 2022,
+   "sources": [
+    {
+     "paper": "hmn22",
+     "reference": "Theorem 23",
+     "url": "https://arxiv.org/html/2208.08119v1#Thmtheorem23"
+    }
+   ],
+   "comments": "k = 2 parts, edges as variables; Δ ≥ poly log n by a random split",
+   "status": "approved"
+  },
+  {
    "id": "ec-bbko22-congest",
    "title": "Polylogarithmic in Δ",
    "problem": "edge-coloring",
@@ -8077,6 +8628,118 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ds-bkp25-directed",
+   "title": "Generalized balanced splitting",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(n))"
+   },
+   "year": 2025,
+   "sources": [
+    {
+     "paper": "bkp25",
+     "reference": "Corollary 1.2",
+     "url": "https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "time T_BO(1/ε), with sinkless orientation in O(log n)",
+   "status": "approved"
+  },
+  {
+   "id": "ds-bkp25-directed-randomized",
+   "title": "Generalized balanced splitting",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log\\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(log(n)))"
+   },
+   "year": 2025,
+   "sources": [
+    {
+     "paper": "bkp25",
+     "reference": "Corollary 1.2",
+     "url": "https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "time T_BO(1/ε), with sinkless orientation in O(log log n)",
+   "status": "approved"
+  },
+  {
+   "id": "ds-bkp25-undirected",
+   "title": "Generalized balanced splitting",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(n))"
+   },
+   "year": 2025,
+   "sources": [
+    {
+     "paper": "bkp25",
+     "reference": "Corollary 1.2",
+     "url": "https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "time T_BO(1/ε), with sinkless orientation in O(log n)",
+   "status": "approved"
+  },
+  {
+   "id": "ds-bkp25-undirected-randomized",
+   "title": "Generalized balanced splitting",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\log\\varepsilon^{-1} (\\log\\log\\varepsilon^{-1})^{1.71} \\cdot \\log\\log n)",
+    "expr": "O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(log(n)))"
+   },
+   "year": 2025,
+   "sources": [
+    {
+     "paper": "bkp25",
+     "reference": "Corollary 1.2",
+     "url": "https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "time T_BO(1/ε), with sinkless orientation in O(log log n)",
+   "status": "approved"
+  },
+  {
    "id": "ec-bmnsu25-distributed-hall",
    "title": "Distributed Hall",
    "problem": "edge-coloring",
@@ -8340,6 +9003,118 @@ window.ATLAS_DATA = {
     }
    ],
    "comments": "Δ ≥ 3, no (Δ+1)-clique",
+   "status": "approved"
+  },
+  {
+   "id": "ds-mns26-directed",
+   "title": "Via hypergraph sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot \\log n)",
+    "expr": "O(1/eps * log(n))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "paper": "mns26",
+     "reference": "Theorem 1",
+     "url": "https://arxiv.org/html/2604.00724v3#Thmtheorem1"
+    }
+   ],
+   "comments": "discrepancy ε·deg(v) + 1 at odd-degree nodes",
+   "status": "approved"
+  },
+  {
+   "id": "ds-mns26-directed-randomized",
+   "title": "Via hypergraph sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "directed",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot 10^{\\log^{*} \\varepsilon^{-1}} \\cdot \\log\\log n)",
+    "expr": "O(1/eps * 10^logstar(1/eps) * log(log(n)))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "paper": "mns26",
+     "reference": "Theorem 2",
+     "url": "https://arxiv.org/html/2604.00724v3#Thmtheorem2"
+    }
+   ],
+   "comments": "discrepancy ε·deg(v) + 1 at odd-degree nodes",
+   "status": "approved"
+  },
+  {
+   "id": "ds-mns26-undirected",
+   "title": "Via hypergraph sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot \\log n)",
+    "expr": "O(1/eps * log(n))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "paper": "mns26",
+     "reference": "Theorem 1",
+     "url": "https://arxiv.org/html/2604.00724v3#Thmtheorem1"
+    }
+   ],
+   "comments": "discrepancy ε·deg(v) + 1 at odd-degree nodes",
+   "status": "approved"
+  },
+  {
+   "id": "ds-mns26-undirected-randomized",
+   "title": "Via hypergraph sinkless orientation",
+   "problem": "degree-splitting",
+   "variant": "undirected",
+   "discrepancy": {
+    "latex": "\\varepsilon \\deg(v) + 2",
+    "expr": "eps*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot 10^{\\log^{*} \\varepsilon^{-1}} \\cdot \\log\\log n)",
+    "expr": "O(1/eps * 10^logstar(1/eps) * log(log(n)))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "paper": "mns26",
+     "reference": "Theorem 2",
+     "url": "https://arxiv.org/html/2604.00724v3#Thmtheorem2"
+    }
+   ],
+   "comments": "discrepancy ε·deg(v) + 1 at odd-degree nodes",
    "status": "approved"
   },
   {
@@ -9247,6 +10022,7 @@ window.ATLAS_DATA = {
   "elkin-michael": "Michael Elkin",
   "faour-salwa": "Salwa Faour",
   "fischer-manuela": "Manuela Fischer",
+  "fischer-orr": "Orr Fischer",
   "fraigniaud-pierre": "Pierre Fraigniaud",
   "fuchs-marc": "Marc Fuchs",
   "gfeller-beat": "Beat Gfeller",
@@ -9266,9 +10042,12 @@ window.ATLAS_DATA = {
   "itai-alon": "Alon Itai",
   "johansson-ojvind": "Öjvind Johansson",
   "karonski-michal": "Michał Karoński",
+  "keller-barbara": "Barbara Keller",
   "khoury-seri": "Seri Khoury",
+  "kopelowitz-tsvi": "Tsvi Kopelowitz",
   "kosowski-adrian": "Adrian Kosowski",
   "kuhn-fabian": "Fabian Kuhn",
+  "lempiainen-tuomo": "Tuomo Lempiäinen",
   "lenzen-christoph": "Christoph Lenzen",
   "li-wenzheng": "Wenzheng Li",
   "linial-nathan": "Nathan Linial",
@@ -9281,6 +10060,7 @@ window.ATLAS_DATA = {
   "nolin-alexandre": "Alexandre Nolin",
   "olivetti-dennis": "Dennis Olivetti",
   "panconesi-alessandro": "Alessandro Panconesi",
+  "parsaeian-zahra": "Zahra Parsaeian",
   "parter-merav": "Merav Parter",
   "pettie-seth": "Seth Pettie",
   "plotkin-serge": "Serge A. Plotkin",
@@ -9288,6 +10068,7 @@ window.ATLAS_DATA = {
   "rabie-mikael": "Mikaël Rabie",
   "rizzi-romeo": "Romeo Rizzi",
   "rozhon-vaclav": "Václav Rozhoň",
+  "rybicki-joel": "Joel Rybicki",
   "saks-michael": "Michael Saks",
   "schager-florian": "Florian Schager",
   "schild-aaron": "Aaron Schild",
@@ -9366,6 +10147,11 @@ window.ATLAS_DATA = {
    "name": "Manuscript, not yet peer-reviewed",
    "short_name": "Manuscript",
    "type": "preprint"
+  },
+  "opodis": {
+   "name": "International Conference on Principles of Distributed Systems",
+   "short_name": "OPODIS",
+   "type": "conference"
   },
   "podc": {
    "name": "ACM Symposium on Principles of Distributed Computing",

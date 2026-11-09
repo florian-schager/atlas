@@ -1,0 +1,23 @@
+id: ds-gs17-directed-small-delta
+title: Augmenting paths
+problem: degree-splitting
+variant: directed
+discrepancy:
+  latex: \varepsilon\Delta
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+assumptions:
+- eps-greater-log-over-delta
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1} \cdot \Delta^{2} \log^{5} n)
+  expr: O(1/eps * Delta^2 * log(n)^5)
+year: 2016
+sources:
+- paper: gs17
+  reference: Lemma D.2
+  url: https://arxiv.org/html/1608.03220v1#A4.Thmtheorem2
+comments: in- and out-degree ≤ (1+ε)Δ/2
+status: approved

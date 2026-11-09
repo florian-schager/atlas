@@ -44,7 +44,12 @@
     "max-degree-constant": "Δ ≥ Δ₀ (large constant)",
     "max-degree-poly": "Δ = n^Ω(1)",
     "eps-greater-inverse-delta": "ε > 1/Δ",
+    "max-degree-log-eps2": "Δ = Ω(ε⁻² log n)",
+    "eps-greater-log-over-delta": "ε = Ω(log n / Δ)",
+    "eps4-greater-log-delta-over-delta": "ε⁴ = Ω(log Δ / Δ)",
+    "eps4-greater-log-delta-loglog2-over-delta": "ε⁴ = Ω(log Δ · log² log n / Δ)",
   };
+  const VARIANTS = { directed: "Directed", undirected: "Undirected" };
   // Assumptions that bound Delta from below: results relying on them only apply in these regimes.
   const LARGE_DELTA = ["exp14", "exp13", "exp12", "exp23", "nk", "n"];
   const ASSUMPTION_REGIMES = {
@@ -52,6 +57,10 @@
     "max-degree-log": ["log", "log2", "log3", ...LARGE_DELTA],
     "max-degree-log1delta": ["log2", "log3", ...LARGE_DELTA],
     "max-degree-poly": ["nk", "n"],
+    // With eps a constant, these need Delta = Omega(log n), resp. Delta = Omega(log^2 log n * log log log n).
+    "max-degree-log-eps2": ["log", "log2", "log3", ...LARGE_DELTA],
+    "eps-greater-log-over-delta": ["log", "log2", "log3", ...LARGE_DELTA],
+    "eps4-greater-log-delta-loglog2-over-delta": ["exploglog", "sqrtlog", "log", "log2", "log3", ...LARGE_DELTA],
   };
 
   // Lower bounds on the degree imply weaker ones: a result assuming the weaker bound also applies.
@@ -63,13 +72,19 @@
     "min-degree-log7": ["max-degree-log1delta", "max-degree-log", "max-degree-constant"],
     "max-degree-log1delta": ["max-degree-log", "max-degree-constant"],
     "max-degree-log": ["max-degree-constant"],
+    // For eps < 1: Delta >= C log n / eps^2 implies eps >= C log n / Delta, which implies Delta >= C log n.
+    "max-degree-log-eps2": ["eps-greater-log-over-delta", "max-degree-log", "max-degree-constant"],
+    "eps-greater-log-over-delta": ["max-degree-log", "max-degree-constant"],
+    "eps4-greater-log-delta-loglog2-over-delta": ["eps4-greater-log-delta-over-delta", "max-degree-constant"],
+    "eps4-greater-log-delta-over-delta": ["max-degree-constant"],
   };
   const assumptionClosure = (list) => new Set((list || []).flatMap((a) => [a, ...(ASSUMPTION_IMPLIES[a] || [])]));
 
   // A lower bound for a class with small Delta (e.g. Omega(log* n) on cycles) also holds for every larger Delta,
   // since graphs of maximum degree at most Delta include that class, as long as neither the bound nor the problem
-  // depends on Delta. Colorings are excluded: their palette grows with Delta, which can make them easier.
-  const holdsForAllDelta = (r) => r.bound === "lower" && !r.colors && !/\bDelta\b/.test(r.runtime.expr);
+  // depends on Delta. Colorings and degree splittings are excluded: their palette or allowed discrepancy grows
+  // with Delta, which can make them easier.
+  const holdsForAllDelta = (r) => r.bound === "lower" && !r.colors && !r.discrepancy && !/\bDelta\b/.test(r.runtime.expr);
 
   // Regimes of Delta a result applies in, or null for all of them.
   function allowedRegimes(r) {
@@ -82,6 +97,10 @@
 
   // Colorings with different numbers of colors are different problems; the key identifies the count.
   const colorsKey = (r) => (r.colors ? r.colors.expr.replace(/\s+/g, "") : null);
+  // Likewise degree splittings with different discrepancies, and directed and undirected splitting.
+  const discrepancyKey = (r) => (r.discrepancy ? r.discrepancy.expr.replace(/\s+/g, "") : null);
+  const sameParameters = (s, r) => colorsKey(s) === colorsKey(r) && discrepancyKey(s) === discrepancyKey(r)
+    && s.variant === r.variant;
   // Options of the Colors filter, per problem, as a hierarchy: an option shows the results of all options
   // below it (palettes of at most that size). `keys` are the exact color counts (colorsKey) placed at a
   // node; other counts fall back to their growth class (see colorGroup), or to "all" if the tree lacks it.
@@ -186,8 +205,17 @@
     "vertex-coloring": { name: "Vertex coloring", page: "vertex-coloring.html" },
     "edge-coloring": { name: "Edge coloring", page: "edge-coloring.html" },
     "network-decomposition": { name: "Network decomposition", page: "network-decomposition.html" },
+    "degree-splitting": { name: "Degree splitting", page: "degree-splitting.html" },
   };
   const problemInfo = (id) => PROBLEMS[id] || { name: humanize(id), page: null };
+  // Per-problem table options. bestColumn: false drops the "State of the art for" column (the badge stays).
+  // epsTiebreak: algorithms that tie for every Delta (e.g. since eps counts as a constant) are compared by
+  // their dependence on eps, so that O(eps^-1 log n) beats O(eps^-1 log(1/eps) log n).
+  const TABLE_OPTIONS = {
+    "degree-splitting": { bestColumn: false, epsTiebreak: true,
+      footer: "Algorithms that tie for every Δ are compared by their dependence on ε." },
+  };
+  const tableOptions = { bestColumn: true, epsTiebreak: false, footer: "", ...(TABLE_OPTIONS[PROBLEM] || {}) };
 
   function problemLink(id, text) {
     const p = problemInfo(id);
@@ -278,7 +306,8 @@
     Only algorithms for general graphs are marked; algorithms for smaller graph classes are listed but not ranked.
     The randomness filter lists only algorithms of that kind. A CONGEST result also counts for LOCAL, and a result
     without an assumption also counts where the assumption holds.
-    For colorings, only results with the same number of colors are compared.
+    For colorings, only results with the same number of colors are compared, and for degree splitting only
+    results for the same variant and discrepancy.
     Results obtained by a reduction from another problem say so in the Comments column (see Reductions).`;
 
   const FOOTER_LOWER = `
@@ -328,6 +357,19 @@
           <div class="segmented" data-key="model">
             <button type="button" data-value="LOCAL" aria-pressed="true">LOCAL</button>
             <button type="button" data-value="CONGEST" aria-pressed="false">CONGEST</button>
+          </div>
+        </div>
+      </div>
+      <div class="filter-item" id="variant-group" data-options hidden>
+        <button type="button" class="filter-toggle" aria-expanded="false" aria-controls="fp-variant">
+          <span class="filter-label">Variant</span>
+          <span class="filter-value" id="fv-variant"></span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <div class="filter-popover" id="fp-variant" role="group" aria-label="Variant" hidden>
+          <div class="segmented" data-key="variant">
+            <button type="button" data-value="directed" aria-pressed="true">Directed</button>
+            <button type="button" data-value="undirected" aria-pressed="false">Undirected</button>
           </div>
         </div>
       </div>
@@ -587,6 +629,9 @@
     const decDiameter = r.problem === "network-decomposition" ? exprPair("Diameter", dec && dec.diameter) : null;
     const decType = r.problem === "network-decomposition"
       ? select([["weak", "Weak"], ["strong", "Strong"]], dec && dec.diameter_type, { "aria-label": "Diameter type" }) : null;
+    const isSplitting = r.problem === "degree-splitting";
+    const discrepancy = isSplitting ? exprPair("Discrepancy", r.discrepancy) : null;
+    const variant = isSplitting ? select(Object.entries(VARIANTS), r.variant, { "aria-label": "Variant" }) : null;
 
     const bound = select([["upper", "Upper bound"], ["lower", "Lower bound"]], r.bound);
     const model = select([["LOCAL", "LOCAL"], ["CONGEST", "CONGEST"]], r.model);
@@ -622,6 +667,7 @@
     const parameterFields = [
       colors && colors.node, decColors && decColors.node, decDiameter && decDiameter.node,
       decType && field("Diameter type", decType),
+      variant && field("Variant", variant), discrepancy && discrepancy.node,
     ].filter(Boolean);
     const form = el("form", { class: "bib-form result-form" }, [
       field("Title", title),
@@ -643,7 +689,8 @@
       e.preventDefault();
       const pair = (p) => ({ latex: p.latex.value.trim(), expr: p.expr.value.trim() });
       // Check the expressions with the site's own parser before saving, so the pages keep working.
-      const exprs = [["Runtime", runtime], ["Colors", colors], ["Colors", decColors], ["Diameter", decDiameter]]
+      const exprs = [["Runtime", runtime], ["Colors", colors], ["Colors", decColors], ["Diameter", decDiameter],
+                     ["Discrepancy", discrepancy]]
         .filter(([, p]) => p);
       for (const [label, p] of exprs) {
         try { A.parse(p.expr.value.trim()); } catch (err) {
@@ -657,6 +704,8 @@
         out.decomposition = { colors: pair(decColors), diameter: pair(decDiameter), diameter_type: decType.value };
       }
       if (colors) out.colors = pair(colors);
+      if (variant) out.variant = variant.value;
+      if (discrepancy) out.discrepancy = pair(discrepancy);
       Object.assign(out, { bound: bound.value, model: model.value, randomness: randomness.value,
                            graph_class: graphClass.value });
       const chosen = [...assumptions.querySelectorAll("input:checked")].map((c) => c.value);
@@ -829,9 +878,10 @@
       kind: "results", id: r.id, kindName: "Result", what: "this result", yaml: toYaml(r),
       title: first ? `${r.title} (${first.label})` : r.title,
       details: [
-        `**Problem:** ${problemInfo(r.problem).name} · ${r.bound === "lower" ? "lower bound" : "algorithm"}`
-          + ` · ${r.model} · ${r.randomness} · ${GRAPH_CLASSES[r.graph_class] || humanize(r.graph_class)}`,
+        `**Problem:** ${problemInfo(r.problem).name}${r.variant ? ` (${r.variant})` : ""}`
+          + ` · ${r.bound === "lower" ? "lower bound" : "algorithm"} · ${r.model} · ${r.randomness} · ${GRAPH_CLASSES[r.graph_class] || humanize(r.graph_class)}`,
         `**Runtime:** $${r.runtime.latex}$`,
+        ...(r.discrepancy ? [`**Discrepancy:** $${r.discrepancy.latex}$`] : []),
         ...(sources.length ? [`**Source:** ${sources.join("; ")}`] : []),
       ],
     };
@@ -967,8 +1017,8 @@
     // bounds start with the setting that lists all of them.
     // Results that rely on assumptions are always listed; the assumptions show in the Graph class column.
     const DEFAULTS = {
-      upper: { randomness: "deterministic", model: "LOCAL", graphClass: "all" },   // LOCAL also lists CONGEST algorithms
-      lower: { randomness: "deterministic", model: "CONGEST", graphClass: "all" }, // also lists randomized / LOCAL bounds
+      upper: { randomness: "deterministic", model: "LOCAL", graphClass: "all", variant: "directed" },   // LOCAL also lists CONGEST algorithms
+      lower: { randomness: "deterministic", model: "CONGEST", graphClass: "all", variant: "directed" }, // also lists randomized / LOCAL bounds
     };
     const state = {
       bound: "upper",                   // table shown: "upper" (algorithms) or "lower" (lower bounds)
@@ -985,6 +1035,10 @@
     // There is no Delta slider; a result is state of the art if no other result is at least as good in
     // runtime, colors, diameter and diameter type at once (and better in one of them).
     const hasDecomp = data.results.some((r) => r.problem === PROBLEM && r.decomposition);
+    // Degree splitting: a discrepancy column, and a filter for the directed or undirected variant.
+    const hasDiscrepancy = data.results.some((r) => r.problem === PROBLEM && r.discrepancy);
+    const hasVariant = data.results.some((r) => r.problem === PROBLEM && r.variant);
+    const hasBestColumn = !hasDecomp && tableOptions.bestColumn;
     const CONST = A.REGIMES.find((g) => g.id === "const");
     const decompTerms = new Map();
     for (const r of data.results.filter((x) => x.problem === PROBLEM && x.decomposition)) {
@@ -1050,7 +1104,7 @@
     // (CONGEST -> LOCAL), to randomized algorithms and to subclasses; a lower bound the other way round:
     // to weaker models (LOCAL -> CONGEST), to deterministic algorithms and to superclasses.
     function appliesTo(s, r) {
-      if (s.problem !== r.problem || s.bound !== r.bound || colorsKey(s) !== colorsKey(r)) return false;
+      if (s.problem !== r.problem || s.bound !== r.bound || !sameParameters(s, r)) return false;
       const [from, to] = r.bound === "lower" ? [r, s] : [s, r];
       return RANDOMNESS_RANK[from.randomness] <= RANDOMNESS_RANK[to.randomness]
         && MODEL_RANK[from.model] <= MODEL_RANK[to.model]
@@ -1124,6 +1178,20 @@
     }
 
     const TRIVIAL = A.simplify("1", CONST).term;
+    // Dependence of a runtime on eps for fixed n and Delta, or null if it cannot be determined.
+    const epsTerms = new Map();
+    const epsTerm = (r) => {
+      if (!epsTerms.has(r.id)) {
+        const d = A.epsDependence(r.runtime.expr);
+        epsTerms.set(r.id, d.error ? null : d.term);
+      }
+      return epsTerms.get(r.id);
+    };
+    // Is algorithm s better than r in its dependence on eps?
+    const betterInEps = (s, r) => {
+      const a = epsTerm(s), b = epsTerm(r);
+      return Boolean(a && b && A.compare(a, b) < 0);
+    };
     // Compare two terms ignoring the polylog factor an O~ hides (e.g. O~(log^{5/3} n) vs O(log^{5/3} n) tie).
     const compareLead = (a, b) => {
       for (let i = 0; i < a.v.length; i++) {
@@ -1190,6 +1258,8 @@
             if (c === -better) return false;
             if (c === better) strict = true;
           }
+          // A tie at every Delta is broken by the dependence on eps, where the problem asks for it.
+          if (!strict && tableOptions.epsTiebreak && r.bound === "upper") return betterInEps(s, r);
           return strict;
         });
         if (dominated) {
@@ -1288,13 +1358,14 @@
         yearCell,
         runtime,
         ...(hasColors ? [el("td", { class: "col-colors" }, r.colors ? [tex(r.colors.latex)] : [])] : []),
+        ...(hasDiscrepancy ? [el("td", { class: "col-colors" }, r.discrepancy ? [tex(r.discrepancy.latex)] : [])] : []),
         ...(hasDecomp ? [
           el("td", { class: "col-colors" }, r.decomposition ? [tex(r.decomposition.colors.latex)] : []),
           el("td", { class: "col-diameter" }, r.decomposition ? [
             runtimeTex(r.decomposition.diameter.latex),
             el("span", { class: `sub diameter-${r.decomposition.diameter_type}`, text: r.decomposition.diameter_type }),
           ] : []),
-        ] : [bestCell(r)]),
+        ] : hasBestColumn ? [bestCell(r)] : []),
         el("td", { class: "col-model" }, [
           el("span", { class: `chip ${r.randomness}`, text: r.randomness === "deterministic" ? "Det." : "Rand." }),
           el("span", { class: "chip model", text: r.model }),
@@ -1334,6 +1405,7 @@
         bound: (r) => r.bound === state.bound,
         randomness: (r) => randomnessMatch(r, state.randomness),
         model: (r) => modelMatch(r, state.model),
+        variant: (r) => !hasVariant || r.variant === state.variant,
         colors: (r) => (state.colorsExact ? colorNode(r) === state.colors : inGroup(r, state.colors)),
         classes: (r) => state.graphClass === "all" || classMatch(r, state.graphClass),
         diameter: (r) => state.diameter === "all" || (r.decomposition && r.decomposition.diameter_type === state.diameter),
@@ -1354,7 +1426,7 @@
         const span = btn.querySelector(".pill-count");
         if (span) span.textContent = String(n);
       };
-      for (const key of ["randomness", "model", "diameter"]) {
+      for (const key of ["randomness", "model", "variant", "diameter"]) {
         const pool = without(key);
         for (const btn of section.querySelectorAll(`.segmented[data-key="${key}"] button`)) {
           const v = btn.dataset.value;
@@ -1424,7 +1496,16 @@
       document.getElementById("missing-label").textContent = `Report missing ${isLower() ? "lower bound" : "algorithm"}`;
       if (missingFor && missingFor !== state.bound) closeMissing();
       const footer = document.getElementById("footer-text");
-      if (footer && !hasDecomp) footer.textContent = (isLower() ? FOOTER_LOWER : FOOTER).replace(/\s+/g, " ").trim();
+      if (footer && !hasDecomp) {
+        let text = (isLower() ? FOOTER_LOWER : FOOTER).replace(/\s+/g, " ").trim();
+        // Without the "State of the art for" column there are no ranges to qualify.
+        if (!hasBestColumn) {
+          text = text.replace(/^“State of the art for” compares the (results|lower bounds) at (.*?), so the ranges shown are approximate\./,
+            "The state of the art is found by comparing the $1 at $2.");
+        }
+        if (tableOptions.footer && !isLower()) text += ` ${tableOptions.footer}`;
+        footer.textContent = text;
+      }
 
       const yearBtn = document.getElementById("sort-year");
       const runtimeBtn = document.getElementById("sort-runtime");
@@ -1479,6 +1560,12 @@
     // Filters a problem does not have at all are dropped (colors only for colorings, diameter only for decompositions).
     if (!hasColors) document.getElementById("colors-group").remove();
     if (!hasDecomp) document.getElementById("diameter-group").remove();
+    if (!hasVariant) document.getElementById("variant-group").remove();
+    if (!hasDecomp && !hasBestColumn) document.getElementById("best-col").remove();
+    if (hasDiscrepancy) {
+      document.getElementById("sort-runtime").closest("th")
+        .after(el("th", { scope: "col", text: "Discrepancy" }));
+    }
     if (hasColors) {
       document.getElementById("sort-runtime").closest("th")
         .after(el("th", { scope: "col", text: "Colors" }));
@@ -1500,6 +1587,7 @@
       const text = (t) => [document.createTextNode(t)];
       set("fv-randomness", text(state.randomness === "deterministic" ? "Deterministic" : "Randomized"));
       set("fv-model", text(state.model));
+      set("fv-variant", text(VARIANTS[state.variant] || state.variant));
       set("fv-diameter", text(state.diameter === "strong" ? "Strong" : "All"));
       const pressedColors = section.querySelector("#colors-filter button[aria-pressed=true]");
       if (pressedColors) {
@@ -1660,7 +1748,7 @@
       tab.addEventListener("click", () => {
         if (tab.dataset.bound === state.bound) return;
         savedChoice[state.bound] = { randomness: state.randomness, model: state.model, graphClass: state.graphClass,
-                                     colors: state.colors, colorsExact: state.colorsExact };
+                                     variant: state.variant, colors: state.colors, colorsExact: state.colorsExact };
         state.bound = tab.dataset.bound;
         useYearRange();
         for (const [key, value] of Object.entries(savedChoice[state.bound])) {
@@ -1707,6 +1795,7 @@
       useYearRange();
       press("model", wanted.bound === "lower" ? "CONGEST" : "LOCAL");   // the setting that lists them all
       if (hasDecomp) press("diameter", "all");
+      if (hasVariant) press("variant", wanted.variant);
       if (hasColors) {
         state.colors = "all";
         state.colorsExact = false;

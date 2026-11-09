@@ -1,0 +1,21 @@
+id: ds-bkp25-undirected-randomized
+title: Generalized balanced splitting
+problem: degree-splitting
+variant: undirected
+discrepancy:
+  latex: \varepsilon \deg(v) + 2
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1} \log\varepsilon^{-1} (\log\log\varepsilon^{-1})^{1.71} \cdot \log\log n)
+  expr: O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(log(n)))
+year: 2025
+sources:
+- paper: bkp25
+  reference: Corollary 1.2
+  url: https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2
+comments: time T_BO(1/ε), with sinkless orientation in O(log log n)
+status: approved

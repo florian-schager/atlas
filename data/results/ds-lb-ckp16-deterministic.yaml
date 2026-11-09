@@ -1,0 +1,21 @@
+id: ds-lb-ckp16-deterministic
+title: Sinkless orientation
+problem: degree-splitting
+variant: directed
+discrepancy:
+  latex: \varepsilon\Delta
+  expr: eps*Delta
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \Omega(\log_{\Delta} n)
+  expr: Omega(log(n)/log(Delta))
+year: 2016
+sources:
+- paper: ckp16
+  reference: Theorem 4 (with Theorem 3)
+  url: https://arxiv.org/html/1602.08166v2#Thmtheorem4
+comments: any ε < 1; on Δ-regular graphs of high girth
+status: approved

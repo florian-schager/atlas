@@ -1,0 +1,21 @@
+id: ds-mns26-directed
+title: Via hypergraph sinkless orientation
+problem: degree-splitting
+variant: directed
+discrepancy:
+  latex: \varepsilon \deg(v) + 2
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1} \cdot \log n)
+  expr: O(1/eps * log(n))
+year: 2026
+sources:
+- paper: mns26
+  reference: Theorem 1
+  url: https://arxiv.org/html/2604.00724v3#Thmtheorem1
+comments: discrepancy ε·deg(v) + 1 at odd-degree nodes
+status: approved

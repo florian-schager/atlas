@@ -1,0 +1,21 @@
+id: ds-ghkmsu17-directed
+title: Path decompositions
+problem: degree-splitting
+variant: directed
+discrepancy:
+  latex: \varepsilon \deg(v) + 2
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1} \log\varepsilon^{-1} (\log\log\varepsilon^{-1})^{1.71} \cdot \log n)
+  expr: O(1/eps * log(1/eps) * log(log(1/eps))^1.71 * log(n))
+year: 2017
+sources:
+- paper: ghkmsu17
+  reference: Theorem 1.1
+  url: https://arxiv.org/html/1706.04746v2#S1.Thmtheorem1
+comments: discrepancy ε·deg(v) + 1 at odd-degree nodes
+status: approved

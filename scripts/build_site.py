@@ -14,7 +14,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-PROBLEM_ORDER = ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition"]
+PROBLEM_ORDER = ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition",
+                 "degree-splitting"]
 
 
 def load(folder):

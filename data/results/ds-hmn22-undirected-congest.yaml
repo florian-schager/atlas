@@ -1,0 +1,23 @@
+id: ds-hmn22-undirected-congest
+title: Bipartite vertex splitting
+problem: degree-splitting
+variant: undirected
+discrepancy:
+  latex: \varepsilon\Delta
+  expr: eps*Delta
+bound: upper
+model: CONGEST
+randomness: randomized
+graph_class: general
+assumptions:
+- eps4-greater-log-delta-loglog2-over-delta
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1}) + \mathrm{poly}\log\log n
+  expr: O(1/eps) + poly(log(log(n)))
+year: 2022
+sources:
+- paper: hmn22
+  reference: Theorem 23
+  url: https://arxiv.org/html/2208.08119v1#Thmtheorem23
+comments: k = 2 parts, edges as variables; Δ ≥ poly log n by a random split
+status: approved

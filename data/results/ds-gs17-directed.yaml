@@ -1,0 +1,23 @@
+id: ds-gs17-directed
+title: Augmenting paths
+problem: degree-splitting
+variant: directed
+discrepancy:
+  latex: \varepsilon\Delta
+  expr: eps*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+assumptions:
+- max-degree-log-eps2
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-3} \cdot \log^{7} n)
+  expr: O(1/eps^3 * log(n)^7)
+year: 2016
+sources:
+- paper: gs17
+  reference: Theorem D.3
+  url: https://arxiv.org/html/1608.03220v1#A4.Thmtheorem3
+comments: in- and out-degree ≤ (1+ε)Δ/2
+status: approved
