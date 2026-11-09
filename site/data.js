@@ -8652,7 +8652,7 @@ window.ATLAS_DATA = {
      "url": "https://arxiv.org/html/2510.21327v1#S1.Thmtheorem2"
     }
    ],
-   "comments": "time T_BO(1/ε), with sinkless orientation in O(log n)",
+   "comments": "solves hybrid version, where some edges are colored and others oriented",
    "status": "approved"
   },
   {
