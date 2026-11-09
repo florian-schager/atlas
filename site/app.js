@@ -945,9 +945,13 @@
   // ---------- landing page ----------
 
   function setupLanding() {
+    const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
     for (const node of document.querySelectorAll("[data-count]")) {
-      const n = data.results.filter((r) => r.problem === node.dataset.count).length;
-      node.textContent = n === 1 ? "1 result" : `${n} results`;
+      const results = data.results.filter((r) => r.problem === node.dataset.count);
+      const lower = results.filter((r) => r.bound === "lower").length;
+      const parts = [plural(results.length - lower, "algorithm")];
+      if (lower) parts.push(plural(lower, "lower bound"));
+      node.textContent = parts.join(" · ");
     }
   }
 

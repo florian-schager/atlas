@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atlas of Distributed Algorithms</title>
-  <link rel="stylesheet" href="style.css?v=4df3bfe648">
+  <link rel="stylesheet" href="style.css?v=561f61563e">
   <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
 </head>
 <body>
@@ -27,40 +27,119 @@
     <p class="eyebrow">Overview</p>
     <h1>The state of the art in distributed symmetry breaking</h1>
     <p class="lede">
-      Known upper bounds for the four classical symmetry-breaking problems in distributed graph algorithms,
-      with the state of the art highlighted for every range of the maximum degree.
+      A curated database of algorithms and lower bounds for five fundamental problems in distributed graph
+      algorithms, in the LOCAL and CONGEST models, deterministic and randomized. For every range of the
+      maximum degree Δ, the atlas highlights which results are the state of the art.
     </p>
 
     <div class="problem-cards">
       <a class="problem-card" href="maximal-matching.html">
+        <!-- Maximal matching: the thick edges; every node is matched, so no edge can be added. -->
+        <svg class="card-map" viewBox="145 105 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-mm" class="map-land" d="M158 150 C156 126 184 114 216 116 C250 118 274 132 272 156 C270 180 244 196 212 194 C180 192 160 174 158 150 Z"/>
+          <use class="map-shore" href="#isl-mm" transform="translate(215 155) scale(.84) translate(-215 -155)"/>
+          <g class="map-graph">
+            <path class="edge" d="M214 126 L246 142 M242 174 L210 182 M180 168 L184 140 M214 126 L210 182"/>
+            <path class="edge matched" d="M184 140 L214 126 M246 142 L242 174 M210 182 L180 168"/>
+            <circle class="node" cx="184" cy="140" r="6"/><circle class="node" cx="214" cy="126" r="6"/>
+            <circle class="node" cx="246" cy="142" r="6"/><circle class="node" cx="242" cy="174" r="6"/>
+            <circle class="node" cx="210" cy="182" r="6"/><circle class="node" cx="180" cy="168" r="6"/>
+          </g>
+        </svg>
         <span class="card-title">Maximal matching</span>
         <span class="card-desc">A set of disjoint edges that cannot be extended.</span>
         <span class="card-count" data-count="maximal-matching"></span>
       </a>
       <a class="problem-card" href="mis.html">
+        <!-- MIS: the filled nodes are independent, and every other node has a filled neighbor. -->
+        <svg class="card-map" viewBox="10 99 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-mis" class="map-land" d="M22 146 C18 124 44 108 78 110 C112 112 142 122 142 146 C142 172 116 190 80 188 C46 186 26 168 22 146 Z"/>
+          <use class="map-shore" href="#isl-mis" transform="translate(82 149) scale(.84) translate(-82 -149)"/>
+          <g class="map-graph">
+            <path class="edge" d="M48 145 L78 124 L112 138 L104 170 L62 172 Z M78 124 L104 170"/>
+            <circle class="node in-set" cx="48" cy="145" r="6"/><circle class="node" cx="78" cy="124" r="6"/>
+            <circle class="node in-set" cx="112" cy="138" r="6"/><circle class="node" cx="104" cy="170" r="6"/>
+            <circle class="node" cx="62" cy="172" r="6"/>
+          </g>
+        </svg>
         <span class="card-title">Maximal independent set</span>
         <span class="card-desc">A set of pairwise non-adjacent nodes that cannot be extended.</span>
         <span class="card-count" data-count="mis"></span>
       </a>
       <a class="problem-card" href="vertex-coloring.html">
+        <!-- Vertex coloring: adjacent nodes get different colors. -->
+        <svg class="card-map" viewBox="284 90 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-vc" class="map-land" d="M300 132 C298 108 326 96 356 98 C388 100 410 116 408 140 C406 166 382 184 352 182 C322 180 302 158 300 132 Z"/>
+          <use class="map-shore" href="#isl-vc" transform="translate(354 140) scale(.84) translate(-354 -140)"/>
+          <g class="map-graph">
+            <path class="edge" d="M326 130 L354 112 L384 128 L378 162 L336 164 Z M354 112 L336 164 M354 112 L378 162"/>
+            <circle class="node c1" cx="354" cy="112" r="6"/><circle class="node c2" cx="326" cy="130" r="6"/>
+            <circle class="node c3" cx="384" cy="128" r="6"/><circle class="node c2" cx="378" cy="162" r="6"/>
+            <circle class="node c3" cx="336" cy="164" r="6"/>
+          </g>
+        </svg>
         <span class="card-title">Vertex coloring</span>
         <span class="card-desc">Colors for the nodes so that adjacent nodes differ.</span>
         <span class="card-count" data-count="vertex-coloring"></span>
       </a>
       <a class="problem-card" href="edge-coloring.html">
+        <!-- Edge coloring: edges at a common node get different colors. -->
+        <svg class="card-map" viewBox="413 54 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-ec" class="map-land" d="M428 100 C424 74 452 56 484 58 C518 60 542 78 540 104 C538 132 514 152 482 150 C450 148 432 126 428 100 Z"/>
+          <use class="map-shore" href="#isl-ec" transform="translate(484 104) scale(.84) translate(-484 -104)"/>
+          <g class="map-graph">
+            <path class="edge e1" d="M452 104 L480 78 M514 96 L506 132"/>
+            <path class="edge e2" d="M480 78 L514 96 M506 132 L466 134"/>
+            <path class="edge e3" d="M466 134 L452 104 M480 78 L506 132"/>
+            <circle class="node" cx="452" cy="104" r="5"/><circle class="node" cx="480" cy="78" r="5"/>
+            <circle class="node" cx="514" cy="96" r="5"/><circle class="node" cx="506" cy="132" r="5"/>
+            <circle class="node" cx="466" cy="134" r="5"/>
+          </g>
+        </svg>
         <span class="card-title">Edge coloring</span>
         <span class="card-desc">Colors for the edges so that adjacent edges differ.</span>
         <span class="card-count" data-count="edge-coloring"></span>
       </a>
       <a class="problem-card" href="network-decomposition.html">
+        <!-- Network decomposition: three small clusters; adjacent clusters get different colors. -->
+        <svg class="card-map" viewBox="0 0 140 100" aria-hidden="true" focusable="false">
+          <path id="isl-nd" class="map-land" d="M10 52 C8 26 40 10 72 12 C106 14 132 30 130 54 C128 80 102 94 70 92 C38 90 12 78 10 52 Z"/>
+          <use class="map-shore" href="#isl-nd" transform="translate(70 52) scale(.84) translate(-70 -52)"/>
+          <g class="map-graph">
+            <ellipse class="cluster c1" cx="36" cy="58" rx="17" ry="15"/>
+            <ellipse class="cluster c2" cx="70" cy="40" rx="17" ry="15"/>
+            <ellipse class="cluster c1" cx="104" cy="58" rx="17" ry="15"/>
+            <path class="edge" d="M28 52 L44 50 L36 66 Z M62 34 L78 34 L70 48 Z M96 52 L112 52 L104 66 Z M44 50 L62 34 M78 34 L96 52"/>
+            <circle class="node" cx="28" cy="52" r="4.5"/><circle class="node" cx="44" cy="50" r="4.5"/><circle class="node" cx="36" cy="66" r="4.5"/>
+            <circle class="node" cx="62" cy="34" r="4.5"/><circle class="node" cx="78" cy="34" r="4.5"/><circle class="node" cx="70" cy="48" r="4.5"/>
+            <circle class="node" cx="96" cy="52" r="4.5"/><circle class="node" cx="112" cy="52" r="4.5"/><circle class="node" cx="104" cy="66" r="4.5"/>
+          </g>
+        </svg>
         <span class="card-title">Network decomposition</span>
         <span class="card-desc">Low-diameter clusters, colored so that adjacent clusters differ.</span>
         <span class="card-count" data-count="network-decomposition"></span>
       </a>
     </div>
+
+    <div class="landing-more">
+      <p>
+        Many results follow from others through <a href="reductions.html">reductions</a>, for example a maximal
+        matching from an MIS of the line graph; the tables show them next to the results they are derived from.
+        The <a href="bibliography.html">bibliography</a> lists every paper the atlas draws on.
+      </p>
+      <p>
+        The data is open: every entry is a file in the
+        <a href="https://github.com/florian-schager/atlas">GitHub repository</a>, licensed under CC BY 4.0.
+        Missing a result or found a mistake? Use the <em>Report an issue</em> button next to any result or paper.
+      </p>
+    </div>
+
+    <a class="home-link" href="https://florian-schager.github.io/">
+      <span class="home-arrow" aria-hidden="true">←</span> Back to my homepage
+    </a>
   </main>
 
   <script src="data.js?v=14f1bbec5e"></script>
-  <script src="app.js?v=66ccb270ce"></script>
+  <script src="app.js?v=14eddae9bb"></script>
 </body>
 </html>
