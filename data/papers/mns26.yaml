@@ -1,0 +1,21 @@
+id: mns26
+label: MNS, 2026
+title: Fast Deterministic Distributed Degree Splitting
+authors:
+- maus-yannic
+- nolin-alexandre
+- schager-florian
+public_url: https://arxiv.org/abs/2604.00724
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2026
+  arxiv: '2604.00724'
+- type: conference
+  venue: podc
+  year: 2026
+  doi: 10.1145/3796701.3815955
+- type: conference
+  venue: disc
+  year: 2026
+  doi: 10.4230/LIPIcs.DISC.2026.25

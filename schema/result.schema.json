@@ -43,7 +43,7 @@
     "assumptions": {
       "description": "Extra input or knowledge the algorithm relies on.",
       "type": "array",
-      "items": { "enum": ["given-2-coloring", "given-orientation-towards-root", "max-degree-log21", "min-degree-log7", "max-degree-log", "max-degree-log1delta", "max-degree-constant", "max-degree-poly"] },
+      "items": { "enum": ["given-2-coloring", "given-orientation-towards-root", "max-degree-log21", "min-degree-log7", "max-degree-log", "max-degree-log1delta", "max-degree-constant", "max-degree-poly", "eps-greater-inverse-delta"] },
       "uniqueItems": true
     },
     "runtime": { "$ref": "#/$defs/expression" },

@@ -43,6 +43,7 @@
     "max-degree-log1delta": "Δ = Ω(log^(1+δ) n)",
     "max-degree-constant": "Δ ≥ Δ₀ (large constant)",
     "max-degree-poly": "Δ = n^Ω(1)",
+    "eps-greater-inverse-delta": "ε > 1/Δ",
   };
   // Assumptions that bound Delta from below: results relying on them only apply in these regimes.
   const LARGE_DELTA = ["exp14", "exp13", "exp12", "exp23", "nk", "n"];
@@ -99,6 +100,7 @@
       ],
     },
     "edge-coloring": {
+      initial: { id: "two1", exact: true },       // the Colors filter starts at exactly 2Delta - 1
       fallback: { poly: "more", exp: "more" },   // growth classes of palettes not listed under `keys`
       nodes: [
         // (1+eps)Delta + O(sqrt(log n)) grows with n and fits no option below, so it is only under "All".
@@ -107,8 +109,9 @@
         { id: "more", parent: "all", order: 0, latex: "> 2\\Delta - 1", single: true,
           keys: ["(2+eps)*Delta", "(8+eps)*Delta", "O(Delta^(1+eps))", "O(Delta*log(n))", "1.6*Delta+O(log(n)^(1+delta))"] },
         { id: "two1", parent: "all", order: 1, latex: "2\\Delta - 1", keys: ["2*Delta-1"] },
-        { id: "two2", parent: "two1", latex: "2\\Delta - 2", keys: ["2*Delta-2", "(3/2+eps)*Delta"] },
-        { id: "threehalves", parent: "two2", latex: "3\\Delta/2", keys: ["3*Delta/2"] },
+        { id: "two2", parent: "two1", latex: "2\\Delta - 2", keys: ["2*Delta-2"] },
+        { id: "threehalveseps", parent: "two2", latex: "(3/2+\\varepsilon)\\Delta", keys: ["(3/2+eps)*Delta"] },
+        { id: "threehalves", parent: "threehalveseps", latex: "3\\Delta/2", keys: ["3*Delta/2"] },
         { id: "eps", parent: "threehalves", latex: "(1+\\varepsilon)\\Delta", keys: ["(1+eps)*Delta"] },
         { id: "sqrt", parent: "eps", latex: "\\Delta + \\mathcal{O}(\\sqrt{\\Delta})",
           keys: ["Delta+O(sqrt(Delta))", "Delta+Otilde(sqrt(Delta))"] },

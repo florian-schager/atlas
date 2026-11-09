@@ -3726,6 +3726,78 @@ window.ATLAS_DATA = {
     ]
    }
   },
+  "mns26": {
+   "id": "mns26",
+   "label": "MNS, 2026",
+   "title": "Fast Deterministic Distributed Degree Splitting",
+   "authors": [
+    "Yannic Maus",
+    "Alexandre Nolin",
+    "Florian Schager"
+   ],
+   "sort_key": "maus-yannic nolin-alexandre schager-florian 2026",
+   "public_url": "https://arxiv.org/abs/2604.00724",
+   "versions": [
+    {
+     "type": "preprint",
+     "venue": "arXiv",
+     "venue_name": "arXiv",
+     "year": 2026,
+     "title": null,
+     "doi": null,
+     "arxiv": "2604.00724"
+    },
+    {
+     "type": "conference",
+     "venue": "PODC",
+     "venue_name": "ACM Symposium on Principles of Distributed Computing",
+     "year": 2026,
+     "title": null,
+     "doi": "10.1145/3796701.3815955",
+     "arxiv": null
+    },
+    {
+     "type": "conference",
+     "venue": "DISC",
+     "venue_name": "International Symposium on Distributed Computing",
+     "year": 2026,
+     "title": null,
+     "doi": "10.4230/LIPIcs.DISC.2026.25",
+     "arxiv": null
+    }
+   ],
+   "raw": {
+    "id": "mns26",
+    "label": "MNS, 2026",
+    "title": "Fast Deterministic Distributed Degree Splitting",
+    "authors": [
+     "maus-yannic",
+     "nolin-alexandre",
+     "schager-florian"
+    ],
+    "public_url": "https://arxiv.org/abs/2604.00724",
+    "versions": [
+     {
+      "type": "preprint",
+      "venue": "arxiv",
+      "year": 2026,
+      "arxiv": "2604.00724"
+     },
+     {
+      "type": "conference",
+      "venue": "podc",
+      "year": 2026,
+      "doi": "10.1145/3796701.3815955"
+     },
+     {
+      "type": "conference",
+      "venue": "disc",
+      "year": 2026,
+      "doi": "10.4230/LIPIcs.DISC.2026.25"
+     }
+    ]
+   }
+  },
   "mt20": {
    "id": "mt20",
    "label": "MT, 2020",
@@ -8040,6 +8112,9 @@ window.ATLAS_DATA = {
    "model": "LOCAL",
    "randomness": "deterministic",
    "graph_class": "general",
+   "assumptions": [
+    "eps-greater-inverse-delta"
+   ],
    "runtime": {
     "latex": "\\mathcal{O}(\\varepsilon^{-2} \\cdot \\log^{2}\\Delta \\cdot \\mathrm{poly}\\log\\log\\Delta \\cdot \\log n)",
     "expr": "Otilde(1/eps^2 * log(Delta)^2 * log(n))"
@@ -8393,6 +8468,36 @@ window.ATLAS_DATA = {
     }
    ],
    "comments": "list; all Δ for bipartite graphs",
+   "status": "approved"
+  },
+  {
+   "id": "ec-mns26-degree-splitting",
+   "title": "Degree splitting",
+   "problem": "edge-coloring",
+   "colors": {
+    "latex": "(3/2+\\varepsilon)\\Delta",
+    "expr": "(3/2+eps)*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "assumptions": [
+    "eps-greater-inverse-delta"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\varepsilon^{-1} \\cdot \\log^{2}\\Delta \\cdot \\log n + \\varepsilon^{-2} \\cdot \\log n)",
+    "expr": "O(1/eps * log(Delta)^2 * log(n) + 1/eps^2 * log(n))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "paper": "mns26",
+     "reference": "Corollary 34",
+     "url": "https://arxiv.org/html/2604.00724v3#Thmtheorem34"
+    }
+   ],
+   "comments": "applies degree splitting with base case [[ec-bmnsu25-distributed-hall]]",
    "status": "approved"
   },
   {

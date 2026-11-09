@@ -1,0 +1,22 @@
+id: ec-mns26-degree-splitting
+title: Degree splitting
+problem: edge-coloring
+colors:
+  latex: (3/2+\varepsilon)\Delta
+  expr: (3/2+eps)*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+assumptions:
+- eps-greater-inverse-delta
+runtime:
+  latex: \mathcal{O}(\varepsilon^{-1} \cdot \log^{2}\Delta \cdot \log n + \varepsilon^{-2} \cdot \log n)
+  expr: O(1/eps * log(Delta)^2 * log(n) + 1/eps^2 * log(n))
+year: 2026
+sources:
+- paper: mns26
+  reference: Corollary 34
+  url: https://arxiv.org/html/2604.00724v3#Thmtheorem34
+comments: applies degree splitting with base case [[ec-bmnsu25-distributed-hall]]
+status: approved
