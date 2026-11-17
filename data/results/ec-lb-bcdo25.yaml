@@ -1,0 +1,20 @@
+id: ec-lb-bcdo25
+title: Round elimination via self-reduction
+problem: edge-coloring
+colors:
+  latex: \Delta(1 + \Delta^{-\delta})
+  expr: Delta*(1 + Delta^(-delta))
+bound: lower
+model: LOCAL
+randomness: randomized
+graph_class: trees
+runtime:
+  latex: \Omega(\min\{\log\Delta, \log_{\Delta} n\})
+  expr: Omega(min(log(Delta), log(n) / log(Delta)))
+year: 2025
+sources:
+- paper: bcdo25
+  reference: Theorem 4.1
+  url: https://arxiv.org/html/2510.19972v2#S4.Thmtheorem1
+comments: for any constant δ ∈ (0, 1]; even with shared randomness
+status: approved

@@ -385,6 +385,65 @@ window.ATLAS_DATA = {
     ]
    }
   },
+  "bcdo25": {
+   "id": "bcdo25",
+   "label": "BCDO, 2025",
+   "title": "New Hardness Results for the LOCAL Model via a Simple Self-Reduction",
+   "authors": [
+    "Alkida Balliu",
+    "Filippo Casagrande",
+    "Francesco d'Amore",
+    "Dennis Olivetti"
+   ],
+   "sort_key": "balliu-alkida casagrande-filippo damore-francesco olivetti-dennis 2025",
+   "public_url": "https://arxiv.org/abs/2510.19972",
+   "versions": [
+    {
+     "type": "preprint",
+     "venue": "arXiv",
+     "venue_name": "arXiv",
+     "year": 2025,
+     "title": null,
+     "doi": null,
+     "arxiv": "2510.19972"
+    },
+    {
+     "type": "conference",
+     "venue": "PODC",
+     "venue_name": "ACM Symposium on Principles of Distributed Computing",
+     "year": 2026,
+     "title": null,
+     "doi": "10.1145/3796701.3815938",
+     "arxiv": null
+    }
+   ],
+   "raw": {
+    "id": "bcdo25",
+    "label": "BCDO, 2025",
+    "title": "New Hardness Results for the LOCAL Model via a Simple Self-Reduction",
+    "authors": [
+     "balliu-alkida",
+     "casagrande-filippo",
+     "damore-francesco",
+     "olivetti-dennis"
+    ],
+    "public_url": "https://arxiv.org/abs/2510.19972",
+    "versions": [
+     {
+      "type": "preprint",
+      "venue": "arxiv",
+      "year": 2025,
+      "arxiv": "2510.19972"
+     },
+     {
+      "type": "conference",
+      "venue": "podc",
+      "year": 2026,
+      "doi": "10.1145/3796701.3815938"
+     }
+    ]
+   }
+  },
   "bd23": {
    "id": "bd23",
    "label": "BD, 2023",
@@ -8816,6 +8875,33 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ec-lb-bcdo25",
+   "title": "Round elimination via self-reduction",
+   "problem": "edge-coloring",
+   "colors": {
+    "latex": "\\Delta(1 + \\Delta^{-\\delta})",
+    "expr": "Delta*(1 + Delta^(-delta))"
+   },
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "trees",
+   "runtime": {
+    "latex": "\\Omega(\\min\\{\\log\\Delta, \\log_{\\Delta} n\\})",
+    "expr": "Omega(min(log(Delta), log(n) / log(Delta)))"
+   },
+   "year": 2025,
+   "sources": [
+    {
+     "paper": "bcdo25",
+     "reference": "Theorem 4.1",
+     "url": "https://arxiv.org/html/2510.19972v2#S4.Thmtheorem1"
+    }
+   ],
+   "comments": "for any constant δ ∈ (0, 1]; even with shared randomness",
+   "status": "approved"
+  },
+  {
    "id": "mis-ks26b-girth-7",
    "title": "MIS by faster degree reduction (girth at least 7)",
    "problem": "mis",
@@ -10010,10 +10096,12 @@ window.ATLAS_DATA = {
   "blikstad-joakim": "Joakim Blikstad",
   "bourreau-yann": "Yann Bourreau",
   "brandt-sebastian": "Sebastian Brandt",
+  "casagrande-filippo": "Filippo Casagrande",
   "censor-hillel-keren": "Keren Censor-Hillel",
   "chang-yi-jun": "Yi-Jun Chang",
   "cole-richard": "Richard Cole",
   "czygrinow-andrzej": "Andrzej Czygrinow",
+  "damore-francesco": "Francesco d'Amore",
   "davies-peck-peter": "Peter Davies-Peck",
   "de-vos-tijn": "Tijn de Vos",
   "dhawan-abhishek": "Abhishek Dhawan",

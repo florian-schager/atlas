@@ -1,0 +1,18 @@
+id: bcdo25
+label: BCDO, 2025
+title: New Hardness Results for the LOCAL Model via a Simple Self-Reduction
+authors:
+- balliu-alkida
+- casagrande-filippo
+- damore-francesco
+- olivetti-dennis
+public_url: https://arxiv.org/abs/2510.19972
+versions:
+- type: preprint
+  venue: arxiv
+  year: 2025
+  arxiv: '2510.19972'
+- type: conference
+  venue: podc
+  year: 2026
+  doi: 10.1145/3796701.3815938

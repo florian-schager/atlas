@@ -132,7 +132,9 @@
         { id: "threehalveseps", parent: "two2", latex: "(3/2+\\varepsilon)\\Delta", keys: ["(3/2+eps)*Delta"] },
         { id: "threehalves", parent: "threehalveseps", latex: "3\\Delta/2", keys: ["3*Delta/2"] },
         { id: "eps", parent: "threehalves", latex: "(1+\\varepsilon)\\Delta", keys: ["(1+eps)*Delta"] },
-        { id: "sqrt", parent: "eps", latex: "\\Delta + \\mathcal{O}(\\sqrt{\\Delta})",
+        // Delta(1 + Delta^(-delta)) for any constant delta > 0, so it contains Delta + O(sqrt(Delta)) (delta < 1/2).
+        { id: "sublinear", parent: "eps", latex: "\\Delta(1 + \\Delta^{-\\delta})", keys: ["Delta*(1+Delta^(-delta))"] },
+        { id: "sqrt", parent: "sublinear", latex: "\\Delta + \\mathcal{O}(\\sqrt{\\Delta})",
           keys: ["Delta+O(sqrt(Delta))", "Delta+Otilde(sqrt(Delta))"] },
         { id: "o1", parent: "sqrt", latex: "\\Delta + \\mathcal{O}(1)", keys: ["Delta+2", "Delta+O(1)"] },
         { id: "delta1", parent: "o1", latex: "\\Delta + 1", keys: ["Delta+1"] },
