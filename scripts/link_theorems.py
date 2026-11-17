@@ -84,7 +84,7 @@ def main():
             entry = yaml.safe_load(path.read_text(encoding="utf-8"))
             for s in entry.get("sources") or []:
                 m = REF.match(s.get("reference", ""))
-                if m and not s.get("url") and arxiv_id(papers.get(s["paper"], {})):
+                if m and not s.get("url") and arxiv_id(papers.get(s.get("paper"), {})):
                     todo.append((path, s["paper"], s["reference"], f"{m.group(1)} {m.group(2)}"))
 
     pages = {}

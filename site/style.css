@@ -22,6 +22,9 @@
   --warn-bg-hover: #f8e2b0;
   --warn-text: #7f5200;
   --warn-border: #dcae52;
+  --danger-bg: #fbe3e0;
+  --danger-text: #9b1c12;
+  --danger-border: #e0928a;
   --add-bg: #e2f1e1;
   --add-bg-hover: #cfe7cd;
   --add-text: #2b6a38;
@@ -64,6 +67,9 @@
     --warn-bg-hover: #45361a;
     --warn-text: #f1c66e;
     --warn-border: #8d6c2b;
+    --danger-bg: #3d1a17;
+    --danger-text: #f4a198;
+    --danger-border: #93453d;
     --add-bg: #1b2b1e;
     --add-bg-hover: #243a28;
     --add-text: #8fd09c;
@@ -383,7 +389,7 @@ h2 { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; margin: 0; 
 .chip.deterministic { background: var(--chip-det); color: var(--chip-det-text); }
 .chip.randomized { background: var(--chip-rand); color: var(--chip-rand-text); }
 .chip.model { background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 500; }
-/* "via MIS": the reduction a result is obtained by (see .reduction-chips). */
+/* The reduction a result is obtained by, e.g. "Line graph" (see .reduction-chips). */
 .chip.via {
   font-weight: 500; color: var(--muted); text-decoration: none; background: transparent; border: 1px dashed var(--edge);
 }
@@ -584,6 +590,11 @@ html:not([data-editable]) .entry-edit, html[data-editable] .entry-report { displ
   color: var(--warn-text); background: var(--warn-bg); border: 1px solid var(--warn-border);
   font-size: 0.72rem; padding: 1px 7px; margin: 2px 6px 2px 0; cursor: help;
 }
+/* "AI-generated": the source is an AI-generated document; a stronger warning than "Preprint". */
+.chip.ai-generated {
+  color: var(--danger-text); background: var(--danger-bg); border: 1px solid var(--danger-border);
+  font-size: 0.72rem; font-weight: 600; padding: 1px 7px; margin: 2px 6px 2px 0; cursor: help; white-space: nowrap;
+}
 
 /* Results: edit button at the end of each row, and the edit form in a row below */
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -600,11 +611,12 @@ html:not([data-editable]) .entry-edit, html[data-editable] .entry-report { displ
 .runtime-preview { font-size: 1.05rem; min-height: 1.6em; color: var(--text); }
 .assumption-checks { flex-wrap: wrap; gap: 6px 16px; }
 
-/* Results obtained by a reduction: "via MIS → GG, 2024" in the Comments column. */
+/* Results obtained by a reduction: "Reduction: Line graph applied to MIS (GG, 2024)" in the Comments column. */
 .reduction-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 2px; }
 .reduction-chips + * { margin-top: 6px; }
 .reduction-chips .chip { margin-right: 0; }
-.reduction-arrow { color: var(--muted); padding: 0 3px; }
+.reduction-word { color: var(--muted); padding: 0 4px 0 0; }
+.reduction-target + .reduction-target .reduction-word { padding-left: 4px; }
 .reduction-target { display: inline-flex; align-items: center; white-space: nowrap; }
 .chip.result { font-weight: 500; color: var(--text); text-decoration: none; background: transparent; border: 1px solid var(--border); }
 a.chip.result:hover { color: var(--accent); border-color: var(--accent); }

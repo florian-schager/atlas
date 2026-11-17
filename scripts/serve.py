@@ -33,7 +33,7 @@ RESULT_SCHEMA = json.loads((ROOT / "schema" / "result.schema.json").read_text(en
 FIELD_ORDER = ["id", "label", "title", "authors", "public_url", "versions"]
 VERSION_ORDER = ["type", "venue", "year", "title", "doi", "arxiv", "url"]
 RESULT_ORDER = list(RESULT_SCHEMA["properties"])          # id, title, problem, ... status
-SOURCE_ORDER = ["paper", "reference", "url"]
+SOURCE_ORDER = ["paper", "name", "reference", "url", "ai_generated"]
 
 
 def load(folder):
@@ -96,6 +96,8 @@ def check_result(result, rid, current):
     papers = load("papers")
     years = []
     for s in result.get("sources", []):
+        if "name" in s:
+            continue   # a document that is not a paper (see the result schema)
         if s.get("paper") not in papers:
             errors.append(f"unknown paper '{s.get('paper')}'")
         else:

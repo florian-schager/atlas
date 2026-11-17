@@ -9332,6 +9332,65 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "ec-daslop-bipartite",
+   "title": "Local palette selection",
+   "problem": "edge-coloring",
+   "colors": {
+    "latex": "\\lfloor 16.5\\Delta \\rfloor",
+    "expr": "16.5*Delta"
+   },
+   "bound": "upper",
+   "model": "CONGEST",
+   "randomness": "deterministic",
+   "graph_class": "bipartite",
+   "assumptions": [
+    "given-2-coloring"
+   ],
+   "runtime": {
+    "latex": "\\mathcal{O}(\\log^{\\star} \\Delta)",
+    "expr": "O(logstar(Delta))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "name": "DA-Slop",
+     "reference": "Theorem 3.7",
+     "url": "https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf",
+     "ai_generated": true
+    }
+   ],
+   "status": "approved"
+  },
+  {
+   "id": "ec-daslop-general",
+   "title": "Splitting vertices",
+   "problem": "edge-coloring",
+   "reduce_to": "ec-daslop-bipartite",
+   "via": "edge-coloring-split-vertices",
+   "colors": {
+    "latex": "50\\Delta",
+    "expr": "50*Delta"
+   },
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\log^{\\star} n)",
+    "expr": "O(logstar(n))"
+   },
+   "year": 2026,
+   "sources": [
+    {
+     "name": "DA-Slop",
+     "reference": "Theorem 7.1",
+     "url": "https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf",
+     "ai_generated": true
+    }
+   ],
+   "status": "approved"
+  },
+  {
    "id": "ec-mns26-degree-splitting",
    "title": "Degree splitting",
    "problem": "edge-coloring",
@@ -10048,6 +10107,53 @@ window.ATLAS_DATA = {
     "LOCAL"
    ],
    "comments": "vertex coloring of L(G) is an edge coloring of G",
+   "status": "approved"
+  },
+  {
+   "id": "edge-coloring-split-vertices",
+   "title": "Splitting vertices",
+   "from": {
+    "problem": "edge-coloring",
+    "colors": {
+     "latex": "3c",
+     "expr": "3 * c"
+    }
+   },
+   "to": {
+    "problem": "edge-coloring",
+    "colors": {
+     "latex": "c",
+     "expr": "c"
+    }
+   },
+   "instance": {
+    "graph": "split-vertices",
+    "n": {
+     "latex": "2n",
+     "expr": "2 * n"
+    },
+    "Delta": {
+     "latex": "\\Delta",
+     "expr": "Delta"
+    }
+   },
+   "runtime": {
+    "latex": "\\mathcal{O}(T + \\log^{\\star} n)",
+    "expr": "O(T + logstar(n))"
+   },
+   "models": [
+    "LOCAL"
+   ],
+   "year": 2026,
+   "sources": [
+    {
+     "name": "DA-Slop",
+     "reference": "Theorem 7.1",
+     "url": "https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf",
+     "ai_generated": true
+    }
+   ],
+   "comments": "bipartite with given sides; then 3-color the monochromatic paths",
    "status": "approved"
   },
   {

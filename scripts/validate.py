@@ -95,7 +95,7 @@ def check_references(entries):
     for folder in ("results", "reductions"):
         for rid, entry in entries[folder].items():
             for s in entry.get("sources", []):
-                if s.get("paper") not in papers:
+                if "name" not in s and s.get("paper") not in papers:
                     errors.append(f"{folder}/{rid}: unknown paper '{s.get('paper')}'")
             for ref in re.findall(r"\[\[([^\]]*)\]\]", entry.get("comments", "")):
                 if ref not in papers and ref not in entries["results"]:
@@ -109,7 +109,7 @@ def check_references(entries):
     used_authors = {a for p in papers.values() for a in p.get("authors", [])}
     used_venues = {v["venue"] for p in papers.values() for v in p.get("versions", [])}
     used_papers = {s["paper"] for folder in ("results", "reductions")
-                   for r in entries[folder].values() for s in r.get("sources", [])}
+                   for r in entries[folder].values() for s in r.get("sources", []) if "paper" in s}
     for kind, ids, used in (("authors", authors, used_authors), ("venues", venues, used_venues),
                             ("papers", papers, used_papers)):
         for unused in sorted(set(ids) - used):

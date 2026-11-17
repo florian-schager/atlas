@@ -1,0 +1,22 @@
+id: ec-daslop-general
+title: Splitting vertices
+problem: edge-coloring
+reduce_to: ec-daslop-bipartite
+via: edge-coloring-split-vertices
+colors:
+  latex: 50\Delta
+  expr: 50*Delta
+bound: upper
+model: LOCAL
+randomness: deterministic
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log^{\star} n)
+  expr: O(logstar(n))
+year: 2026
+sources:
+- name: DA-Slop
+  reference: Theorem 7.1
+  url: https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf
+  ai_generated: true
+status: approved

@@ -70,6 +70,9 @@ Conventions:
   `runtime` uses `T` for the runtime of the algorithm for `to` on the instance, `c` for the colors of a given
   coloring and `C`, `D` for the colors and cluster diameter of a network decomposition. Reductions without
   `sources` are folklore.
+- A source that is not a paper, such as a write-up in a repository, gives a `name` and a `url` to the document
+  instead of `paper`; it is not listed in the bibliography. `ai_generated: true` marks an AI-generated document,
+  and the site shows a warning next to it.
 - `public_url` on a paper points to a freely accessible version (preferably arXiv) and is left out if none is
   known.
 

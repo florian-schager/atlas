@@ -1,0 +1,33 @@
+id: edge-coloring-split-vertices
+title: Splitting vertices
+from:
+  problem: edge-coloring
+  colors:
+    latex: 3c
+    expr: 3 * c
+to:
+  problem: edge-coloring
+  colors:
+    latex: c
+    expr: c
+instance:
+  graph: split-vertices
+  n:
+    latex: 2n
+    expr: 2 * n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: \mathcal{O}(T + \log^{\star} n)
+  expr: O(T + logstar(n))
+models:
+- LOCAL
+year: 2026
+sources:
+- name: DA-Slop
+  reference: Theorem 7.1
+  url: https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf
+  ai_generated: true
+comments: bipartite with given sides; then 3-color the monochromatic paths
+status: approved

@@ -1,0 +1,22 @@
+id: ec-daslop-bipartite
+title: Local palette selection
+problem: edge-coloring
+colors:
+  latex: \lfloor 16.5\Delta \rfloor
+  expr: 16.5*Delta
+bound: upper
+model: CONGEST
+randomness: deterministic
+graph_class: bipartite
+assumptions:
+- given-2-coloring
+runtime:
+  latex: \mathcal{O}(\log^{\star} \Delta)
+  expr: O(logstar(Delta))
+year: 2026
+sources:
+- name: DA-Slop
+  reference: Theorem 3.7
+  url: https://github.com/suomela/da-slop/blob/main/edge-coloring/writeup.pdf
+  ai_generated: true
+status: approved
