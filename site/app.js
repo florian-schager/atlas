@@ -1029,13 +1029,213 @@
   // ---------- landing page ----------
 
   function setupLanding() {
+    const root = document.getElementById("problem-graph");
+    if (!root) return;
+    // Redraw only when the layout switches between wide screens and phones.
+    let layout = null;
+    const redraw = () => {
+      const next = root.parentElement.getBoundingClientRect().width < 640 ? "tall" : "wide";
+      if (next !== layout) { layout = next; drawProblemGraph(root, layout); }
+    };
+    redraw();
+    window.addEventListener("resize", redraw);
+  }
+
+  // ---------- landing page: problem graph ----------
+
+  // Island centres for a wide screen and for a phone. Network decomposition sits in the middle, the four
+  // symmetry-breaking problems around it, and sinkless orientation / degree splitting below.
+  const GRAPH_LAYOUTS = {
+    wide: {
+      width: 960, height: 690, maxIsland: 200, font: 17,
+      nodes: {
+        "maximal-matching": [230, 100], mis: [730, 100], "network-decomposition": [480, 285],
+        "edge-coloring": [230, 450], "vertex-coloring": [730, 450],
+        "sinkless-orientation": [370, 595], "degree-splitting": [590, 595],
+      },
+    },
+    tall: {
+      width: 440, height: 880, maxIsland: 150, font: 17, loopUp: true,
+      nodes: {
+        "maximal-matching": [112, 125], mis: [328, 125], "network-decomposition": [220, 310],
+        "edge-coloring": [112, 525], "vertex-coloring": [328, 525],
+        "sinkless-orientation": [112, 760], "degree-splitting": [328, 760],
+      },
+    },
+  };
+
+  // Per reduction pair "from>to": the results derived through it, i.e. algorithms for `from` built on a result
+  // for `to`, and lower bounds for `to` built on a result for `from` (see reductionFor).
+  function derivedCounts() {
+    const byId = new Map(data.results.map((r) => [r.id, r]));
+    const counts = new Map();
+    for (const r of data.results) {
+      const target = r.reduce_to && byId.get(r.reduce_to);
+      if (!target) continue;
+      const [from, to] = r.bound === "lower" ? [target.problem, r.problem] : [r.problem, target.problem];
+      const key = `${from}>${to}`;
+      if (!counts.has(key)) counts.set(key, { upper: 0, lower: 0 });
+      counts.get(key)[r.bound === "lower" ? "lower" : "upper"]++;
+    }
+    return counts;
+  }
+
+  function drawProblemGraph(root, layoutName) {
+    const L = GRAPH_LAYOUTS[layoutName];
     const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
-    for (const node of document.querySelectorAll("[data-count]")) {
-      const results = data.results.filter((r) => r.problem === node.dataset.count);
+
+    // The island art and descriptions live in the page, in <template id="problem-islands">.
+    const islands = {};
+    for (const card of document.getElementById("problem-islands").content.querySelectorAll(".problem-card")) {
+      islands[card.querySelector("[data-count]").dataset.count] = {
+        href: card.getAttribute("href"),
+        art: card.querySelector("svg"),
+        title: card.querySelector(".card-title").textContent,
+        desc: card.querySelector(".card-desc").textContent,
+      };
+    }
+
+    // Island area proportional to the number of results.
+    const total = {};
+    for (const r of data.results) total[r.problem] = (total[r.problem] || 0) + 1;
+    const maxTotal = Math.max(1, ...Object.values(total));
+    const geo = {};                                    // centre and ellipse radii used to attach arrows
+    for (const [id, [x, y]] of Object.entries(L.nodes)) {
+      const w = Math.max(56, L.maxIsland * Math.sqrt((total[id] || 0) / maxTotal)), h = w * 100 / 140;
+      geo[id] = { x, y, w, h, rx: w * 0.43, ry: h * 0.41 };
+    }
+
+    // Arrows: one per reduction pair (from, to), as on the Reductions page.
+    const counts = derivedCounts();
+    const pairs = new Map();
+    for (const r of data.reductions || []) {
+      if (!geo[r.from.problem] || !geo[r.to.problem]) continue;
+      const key = `${r.from.problem}>${r.to.problem}`;
+      if (!pairs.has(key)) pairs.set(key, []);
+      pairs.get(key).push(r);
+    }
+    const maxCount = Math.max(1, ...[...counts.values()].map((c) => c.upper + c.lower));
+    const strokeFor = (n) => (n ? 2 + 8 * n / maxCount : 1.4);
+    const cx = L.width / 2, cy = L.height / 2;
+
+    const arrows = svg("g", { class: "pg-arrows" });
+    const nodes = svg("g", { class: "pg-nodes" });
+    root.setAttribute("viewBox", `0 0 ${L.width} ${L.height}`);
+    root.replaceChildren(arrows, nodes);
+
+    for (const [id, G] of Object.entries(geo)) {
+      const isl = islands[id];
+      if (!isl) continue;
+      const results = data.results.filter((r) => r.problem === id);
       const lower = results.filter((r) => r.bound === "lower").length;
-      const parts = [plural(results.length - lower, "algorithm")];
-      if (lower) parts.push(plural(lower, "lower bound"));
-      node.textContent = parts.join(" · ");
+      const summary = [plural(results.length - lower, "algorithm"), lower && plural(lower, "lower bound")].filter(Boolean).join(" · ");
+      const art = isl.art.cloneNode(true);
+      art.setAttribute("class", "pg-island");
+      for (const [k, v] of Object.entries({ x: G.x - G.w / 2, y: G.y - G.h / 2, width: G.w, height: G.h })) art.setAttribute(k, v);
+      const labelY = G.y + G.h / 2 + L.font * 0.6;
+      const name = svg("text", { x: G.x, y: labelY, class: "pg-name", "text-anchor": "middle", "font-size": L.font, text: isl.title });
+      const count = svg("text", { x: G.x, y: labelY + L.font * 1.15, class: "pg-total", "text-anchor": "middle",
+        "font-size": L.font * 0.8, text: plural(results.length, "result") });
+      nodes.append(svg("a", {
+        href: isl.href, class: "pg-node", "data-problem": id, "aria-label": `${isl.title}: ${summary}`,
+      }, [svg("title", { text: `${isl.title}\n${isl.desc}\n${summary}` }), art, name, count]));
+      // The label box, which arrows keep clear of as well.
+      const a = name.getBBox(), b = count.getBBox();
+      const x0 = Math.min(a.x, b.x) - 6, x1 = Math.max(a.x + a.width, b.x + b.width) + 6;
+      G.label = { x0, x1, y0: a.y - 2, y1: b.y + b.height + 4 };
+    }
+
+    // Distance from an island's centre to the edge of island-plus-label in direction (ux, uy), |u| = 1.
+    const reach = (G, ux, uy) => {
+      let t = 1 / Math.hypot(ux / G.rx, uy / G.ry);
+      const R = G.label;
+      if (R) {
+        let lo = -Infinity, hi = Infinity;
+        for (const [o, u, a, b] of [[G.x, ux, R.x0, R.x1], [G.y, uy, R.y0, R.y1]]) {
+          if (Math.abs(u) < 1e-9) { if (o < a || o > b) hi = -Infinity; continue; }
+          const t1 = (a - o) / u, t2 = (b - o) / u;
+          lo = Math.max(lo, Math.min(t1, t2)); hi = Math.min(hi, Math.max(t1, t2));
+        }
+        if (lo <= hi && hi > 0) t = Math.max(t, hi);
+      }
+      return t;
+    };
+
+    for (const [key, list] of pairs) {
+      const [from, to] = key.split(">");
+      const c = counts.get(key) || { upper: 0, lower: 0 }, n = c.upper + c.lower;
+      const sw = strokeFor(n);
+      const head = { len: 7 + sw * 1.3, half: 4 + sw * 0.9 };
+      const A = geo[from], B = geo[to];
+      let d, tip, dir, mid;
+      if (from === to) {
+        // Reduction within one problem (e.g. shattering): a loop on the outer side, tilted up, away from the label
+        // (on a phone diagonally up, since there is no room at the sides).
+        const tilt = L.loopUp ? 0.8 : 0.3;
+        const ang = A.x < cx ? Math.PI + tilt : -tilt;
+        const at = (t, extra = 0) => {
+          const ux = Math.cos(t), uy = Math.sin(t), r = 1 / Math.hypot(ux / A.rx, uy / A.ry) + extra;
+          return [A.x + ux * r, A.y + uy * r];
+        };
+        const s = at(ang - 0.45, 3), e = at(ang + 0.45, 3 + head.len);
+        const c1 = at(ang - 0.7, 75), c2 = at(ang + 0.7, 75);
+        tip = at(ang + 0.45, 3);
+        dir = [tip[0] - c2[0], tip[1] - c2[1]];
+        d = `M${s} C${c1} ${c2} ${e}`;
+        mid = [0, 1].map((i) => (s[i] + 3 * c1[i] + 3 * c2[i] + e[i]) / 8);
+      } else {
+        // A gentle curve, bending to the right of its direction, so that A→B and B→A do not overlap.
+        const dx = B.x - A.x, dy = B.y - A.y, len = Math.hypot(dx, dy);
+        const nx = -dy / len, ny = dx / len;
+        const bend = (key === "vertex-coloring>maximal-matching" ? 0.2 : 0.09) * len;   // around the middle island
+        const ctrl = [A.x + dx / 2 - nx * bend * 2, A.y + dy / 2 - ny * bend * 2];
+        // Where the curve leaves / reaches an island: towards the control point, just outside island and label.
+        const rim = (G, gap) => {
+          const vx = ctrl[0] - G.x, vy = ctrl[1] - G.y, l = Math.hypot(vx, vy), r = reach(G, vx / l, vy / l) + gap;
+          return [G.x + vx / l * r, G.y + vy / l * r];
+        };
+        const s = rim(A, 4);
+        tip = rim(B, 4);
+        dir = [tip[0] - ctrl[0], tip[1] - ctrl[1]];
+        const dl = Math.hypot(...dir);
+        const e = [tip[0] - dir[0] / dl * head.len * 0.8, tip[1] - dir[1] / dl * head.len * 0.8];
+        d = `M${s} Q${ctrl} ${e}`;
+        mid = [(s[0] + 2 * ctrl[0] + e[0]) / 4, (s[1] + 2 * ctrl[1] + e[1]) / 4];
+      }
+      const dl = Math.hypot(...dir), ux = dir[0] / dl, uy = dir[1] / dl;
+      const base = [tip[0] - ux * head.len, tip[1] - uy * head.len];
+      const headPath = `M${tip} L${base[0] - uy * head.half},${base[1] + ux * head.half} `
+        + `L${base[0] + uy * head.half},${base[1] - ux * head.half} Z`;
+
+      const name = (id) => problemInfo(id).name;
+      const what = [c.upper && plural(c.upper, "algorithm"), c.lower && plural(c.lower, "lower bound")].filter(Boolean);
+      const title = `${from === to ? `${name(from)} → ${name(from)}` : `${name(from)} reduces to ${name(to)}`}\n`
+        + (n ? `${what.join(" and ")} derived this way` : "No results derived this way yet")
+        + `\n${list.map((r) => r.title).join(", ")}`;
+      arrows.append(svg("a", {
+        href: `reductions.html#${list[0].id}`, class: `pg-arrow${n ? "" : " is-empty"}`,
+        "data-from": from, "data-to": to, "aria-label": title.replace(/\n/g, ". "),
+      }, [
+        svg("title", { text: title }),
+        svg("path", { d, class: "hit" }),
+        svg("path", { d, class: "shaft", "stroke-width": sw }),
+        svg("path", { d: headPath, class: "head" }),
+        ...(n ? [svg("text", { x: mid[0], y: mid[1] + 5, class: "pg-count", "text-anchor": "middle", text: n })] : []),
+      ]));
+    }
+
+    // Hovering an island highlights its reductions.
+    const focus = (id) => {
+      root.classList.toggle("is-focused", !!id);
+      for (const a of arrows.children) a.classList.toggle("is-on", a.dataset.from === id || a.dataset.to === id);
+      for (const nd of nodes.children) nd.classList.toggle("is-on", nd.dataset.problem === id
+        || [...arrows.children].some((a) => a.classList.contains("is-on") && (a.dataset.from === nd.dataset.problem || a.dataset.to === nd.dataset.problem)));
+    };
+    for (const nd of nodes.children) {
+      nd.addEventListener("mouseenter", () => focus(nd.dataset.problem));
+      nd.addEventListener("mouseleave", () => focus(null));
+      nd.addEventListener("focus", () => focus(nd.dataset.problem));
+      nd.addEventListener("blur", () => focus(null));
     }
   }
 
@@ -2284,6 +2484,20 @@
   }
 
   // ---------- start ----------
+
+  // The "Problems" menu is a <details>; close it on an outside click or Escape.
+  const navMenu = document.querySelector(".nav-menu");
+  if (navMenu) {
+    document.addEventListener("click", (e) => {
+      if (navMenu.open && !navMenu.contains(e.target)) navMenu.open = false;
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navMenu.open) {
+        navMenu.open = false;
+        navMenu.querySelector("summary").focus();
+      }
+    });
+  }
 
   renderMath(document.getElementById("problem-text"));
   renderMath(document.querySelector(".illustration figcaption"));

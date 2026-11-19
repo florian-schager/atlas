@@ -4,37 +4,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atlas of Distributed Algorithms</title>
-  <link rel="stylesheet" href="style.css?v=24e52ca0e5">
+  <link rel="stylesheet" href="style.css?v=cb7011c47b">
   <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
-      <nav class="problem-nav" aria-label="Problems">
-        <a href="maximal-matching.html">Maximal matching</a>
-        <a href="mis.html">MIS</a>
-        <a href="vertex-coloring.html">Vertex coloring</a>
-        <a href="edge-coloring.html">Edge coloring</a>
-        <a href="network-decomposition.html">Network decomposition</a>
-        <a href="degree-splitting.html">Degree splitting</a>
-        <a href="sinkless-orientation.html">Sinkless orientation</a>
-        <a class="nav-secondary" href="reductions.html">Reductions</a>
+      <nav class="site-nav" aria-label="Site">
+        <details class="nav-menu">
+          <summary>Problems</summary>
+          <div class="nav-menu-list">
+            <a href="maximal-matching.html">Maximal matching</a>
+            <a href="mis.html">MIS</a>
+            <a href="vertex-coloring.html">Vertex coloring</a>
+            <a href="edge-coloring.html">Edge coloring</a>
+            <a href="network-decomposition.html">Network decomposition</a>
+            <a href="degree-splitting.html">Degree splitting</a>
+            <a href="sinkless-orientation.html">Sinkless orientation</a>
+          </div>
+        </details>
+        <a href="reductions.html">Reductions</a>
         <a href="bibliography.html">Bibliography</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap landing">
-    <p class="eyebrow">Overview</p>
-    <h1>The state of the art in distributed symmetry breaking</h1>
-    <p class="lede">
-      A curated database of algorithms and lower bounds for seven fundamental problems in distributed graph
-      algorithms, in the LOCAL and CONGEST models, deterministic and randomized. For every range of the
-      maximum degree Δ, the atlas highlights which results are the state of the art.
-    </p>
+    <h1>Problem overview</h1>
 
-    <div class="problem-cards">
+    <figure class="problem-graph">
+      <svg id="problem-graph" viewBox="0 0 960 690" aria-label="The problems in the atlas and the reductions between them"></svg>
+      <figcaption>
+        <span>Each island is a problem; its area grows with the number of results in the atlas.</span>
+        <span>An arrow A → B is a reduction from A to B: an algorithm for B gives one for A, and a lower bound
+        for A gives one for B. Its thickness and number count the results derived through it; dashed arrows
+        have none yet.</span>
+      </figcaption>
+    </figure>
+
+    <!-- Island art and descriptions for the problem graph above (drawn by app.js). -->
+    <template id="problem-islands">
       <a class="problem-card" href="maximal-matching.html">
         <!-- Maximal matching: the thick edges; every node is matched, so no edge can be added. -->
         <svg class="card-map" viewBox="145 105 140 100" aria-hidden="true" focusable="false">
@@ -163,9 +173,14 @@
         <span class="card-desc">An orientation of the edges in which every node has an outgoing edge.</span>
         <span class="card-count" data-count="sinkless-orientation"></span>
       </a>
-    </div>
+    </template>
 
     <div class="landing-more">
+      <p>
+        A curated database of algorithms and lower bounds for seven fundamental problems in distributed graph
+        algorithms, in the LOCAL and CONGEST models, deterministic and randomized. For every range of the
+        maximum degree Δ, the atlas highlights which results are the state of the art.
+      </p>
       <p>
         Many results follow from others through <a href="reductions.html">reductions</a>, for example a maximal
         matching from an MIS of the line graph; the tables show them next to the results they are derived from.
@@ -184,6 +199,6 @@
   </main>
 
   <script src="data.js?v=3ddbb36b93"></script>
-  <script src="app.js?v=b59c71f9a1"></script>
+  <script src="app.js?v=96422919da"></script>
 </body>
 </html>
