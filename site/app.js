@@ -349,10 +349,12 @@
       <div class="bound-tabs" role="tablist" aria-labelledby="results-title">
         <button type="button" role="tab" data-bound="upper" aria-selected="true">Algorithms <span class="pill-count"></span></button>
         <button type="button" role="tab" data-bound="lower" aria-selected="false">Lower bounds <span class="pill-count"></span></button>
+        <button type="button" role="tab" id="evolution-tab" aria-controls="evolution" aria-selected="false" hidden>State-of-the-art over time</button>
       </div>
       <p class="count" id="result-count" aria-live="polite"></p>
     </div>
 
+    <div id="tables-view" role="tabpanel">
     <div class="filter-bar" id="filter-bar">
       <div class="filter-item" id="randomness-group" data-options>
         <button type="button" class="filter-toggle" aria-expanded="false" aria-controls="fp-randomness">
@@ -477,7 +479,9 @@
         <span class="missing-plus" aria-hidden="true"></span><span id="missing-label">Report missing algorithm</span>
       </button>
       <div class="missing-slot" id="missing-slot"></div>
-    </div>`;
+    </div>
+    </div>
+    <div class="evolution" id="evolution" role="tabpanel" aria-labelledby="evolution-tab" hidden></div>`;
 
   // ---------- edit forms (papers in the bibliography, results in the tables) ----------
   // Every entry gets two buttons, and only one of them is shown. With scripts/serve.py running, /api/status
@@ -1259,6 +1263,7 @@
       onlyBest: false,                  // hide results that are not state of the art under the filters
       diameter: "all",                  // network decomposition: "all" or "strong" diameter only
       yearLo: -Infinity, yearHi: Infinity,   // year range of the shown (and compared) results
+      view: "tables",                   // "tables" or "evolution" (the chart of the state of the art over time)
     };
 
     const hasColors = data.results.some((r) => r.problem === PROBLEM && r.colors);
@@ -1535,6 +1540,286 @@
       });
     }
 
+    // ---------- evolution of the state of the art ----------
+
+    // A step chart of the best known algorithms (deterministic and randomized) and lower bounds over the years,
+    // for a chosen model (LOCAL or CONGEST) and a fixed regime of Delta (Theta(1), Theta(log n) or Theta(n); root's
+    // data-regime picks the first one shown). The y-axis is ordinal: one row per growth class of n that occurs, in
+    // increasing order, spaced by how far apart neighbouring classes are. Runtimes below the best lower bound are
+    // shaded red. A lower bound for a smaller Delta also holds for the chosen Delta (add a disjoint star to raise
+    // the maximum degree), so lower bounds are taken at their strongest regime up to it. Algorithms count if they
+    // hold for general graphs (for Delta = Theta(1) also for bounded-degree graphs) under assumptions the regime
+    // satisfies. Returns a function that draws the chart for its current width, or null if there is nothing to show.
+    function drawEvolution(root) {
+      const MODELS = ["LOCAL", "CONGEST"];
+      const EVO_REGIMES = ["const", "log", "n"].map((id) => A.REGIMES.find((g) => g.id === id));
+      const view = {
+        model: "LOCAL",
+        regime: EVO_REGIMES.find((g) => g.id === root.dataset.regime) || EVO_REGIMES[EVO_REGIMES.length - 1],
+      };
+
+      // The four series for a model and a regime: steps [{year, term, latex, results}], one per year in which the
+      // state of the art improved.
+      function computeSeries(model, regime) {
+        const below = A.REGIMES.slice(0, A.REGIMES.indexOf(regime) + 1);
+        // Algorithms may assume a lower bound on Delta that the regime satisfies.
+        const regimeAssumptions = Object.keys(ASSUMPTION_REGIMES).filter((a) => ASSUMPTION_REGIMES[a].includes(regime.id));
+        if (regime.id !== "const") regimeAssumptions.push("max-degree-constant");
+        const setting = (bound, randomness) => ({
+          problem: PROBLEM, bound, model, randomness,
+          // Lower bounds for any class hold for general graphs; with constant Delta, algorithms for bounded-degree
+          // graphs (and their superclasses) apply.
+          graph_class: bound === "upper" && regime.id === "const" ? "bounded-degree" : "general",
+          assumptions: bound === "upper" ? regimeAssumptions : [],
+        });
+        const valueOf = (r) => {
+          const m = simplified.get(r.id);
+          if (r.bound === "upper") return usable(m.get(regime.id)) ? m.get(regime.id) : null;
+          let best = null;
+          for (const g of below) {
+            const s = m.get(g.id);
+            if (usable(s) && A.compare(s.term, TRIVIAL) > 0 && (!best || A.compare(s.term, best.term) > 0)) best = s;
+          }
+          return best;
+        };
+        function steps(bound, randomness) {
+          const target = setting(bound, randomness);
+          const better = bound === "lower" ? 1 : -1;
+          const out = [];
+          const pool = results.filter((s) => appliesTo(s, target)
+            && (bound === "upper" || !(s.assumptions || []).some((a) => !ASSUMPTION_REGIMES[a])));
+          for (const r of pool.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id))) {
+            const v = valueOf(r);
+            if (!v) continue;
+            const last = out[out.length - 1];
+            const c = last ? A.compare(v.term, last.term) : better;
+            if (c === better) {
+              if (last && last.year === r.year) out.pop();
+              out.push({ year: r.year, term: v.term, latex: v.latex, results: [r] });
+            } else if (c === 0 && last.year === r.year) last.results.push(r);
+          }
+          return out;
+        }
+        return [
+          { key: "lb-det", name: "Ruled out for deterministic algorithms", steps: steps("lower", "deterministic") },
+          { key: "lb-rand", name: "Ruled out for all algorithms", steps: steps("lower", "randomized") },
+          { key: "ub-det", name: "Deterministic", steps: steps("upper", "deterministic") },
+          { key: "ub-rand", name: "Randomized", steps: steps("upper", "randomized") },
+        ];
+      }
+      if (!MODELS.some((m) => EVO_REGIMES.some((g) => computeSeries(m, g).some((s) => s.steps.length)))) return null;
+
+      // The same years in every setting, so that switching keeps the time axis in place.
+      const allYears = results.map((r) => r.year);
+      const first = Math.min(...allYears) - 1;
+      // The axis ends with the current year (a step in year y covers y to y + 1), so the latest steps have width.
+      const last = Math.max(Math.max(...allYears), new Date().getFullYear()) + 1;
+      const axisLatex = (latex) => latex.replace(/^(?:\\mathcal\{O\}|\\Omega|\\Theta)\((.*)\)$/, "$1");
+      // The state of a series in a year: its last step up to then, or null.
+      const at = (s, year) => s.steps.filter((st) => st.year <= year).pop() || null;
+      const sourceLabel = (r) => {
+        const src = r.sources[0];
+        const paper = src.paper && data.papers[src.paper];
+        return paper ? paper.label : src.name || "";
+      };
+      const shortLabel = (st) => [...new Set(st.results.map((r) => sourceLabel(r).replace(/,\s*\d{4}$/, "")))].join(", ");
+
+      // Rows are spaced by how far apart neighbouring growth classes are (see Asymptotics.gap).
+      const TOP = 14, BOTTOM = 30, RIGHT = 104;
+      const GAP = { subpoly: 30, poly: 44, superpoly: 62, exp: 84 };
+      let cur = null;                   // {series, levels, levelOf, offsets, span, labels} for the chosen setting
+      function compute() {
+        const series = computeSeries(view.model, view.regime);
+        // Rows of the y-axis: every growth class reached, plus a constant baseline.
+        const levels = [{ term: TRIVIAL, latex: "1" }];
+        for (const s of series) {
+          for (const st of s.steps) {
+            if (!levels.some((l) => A.compare(l.term, st.term) === 0)) levels.push({ term: st.term, latex: st.latex });
+          }
+        }
+        levels.sort((a, b) => A.compare(a.term, b.term));
+        const offsets = [0];            // distance of each row above the baseline row
+        for (let i = 1; i < levels.length; i++) {
+          offsets.push(offsets[i - 1] + GAP[A.gap(levels[i - 1].term, levels[i].term)]);
+        }
+        cur = {
+          series, levels, offsets, span: offsets[offsets.length - 1],
+          levelOf: (t) => levels.findIndex((l) => A.compare(l.term, t) === 0),
+          // Axis labels are HTML (KaTeX); their width sets the left margin.
+          labels: levels.map((l) => el("div", { class: "evo-ylabel" }, [tex(axisLatex(l.latex))])),
+        };
+      }
+
+      // Controls: the model and the regime of Delta.
+      const segmented = (label, options, isOn, pick) => {
+        const buttons = options.map(([value, content]) => {
+          const b = el("button", { type: "button", "aria-pressed": String(isOn(value)) }, [content]);
+          b.addEventListener("click", () => {
+            pick(value);
+            for (const x of buttons) x.setAttribute("aria-pressed", String(x === b));
+            update();
+          });
+          return b;
+        });
+        return el("div", { class: "evo-control", role: "group", "aria-label": label }, [
+          el("span", { class: "filter-label", text: label }), el("div", { class: "segmented" }, buttons),
+        ]);
+      };
+      const controls = el("div", { class: "evo-controls" }, [
+        segmented("Model", MODELS.map((m) => [m, m]), (m) => m === view.model, (m) => { view.model = m; }),
+        segmented("Max. degree Δ", EVO_REGIMES.map((g) => [g.id, tex(g.label)]), (id) => id === view.regime.id,
+          (id) => { view.regime = EVO_REGIMES.find((g) => g.id === id); }),
+      ]);
+      const legend = el("ul", { class: "evo-legend" }, [
+        el("li", {}, [el("span", { class: "evo-key evo-key-ub-det" }), "Deterministic algorithms"]),
+        el("li", {}, [el("span", { class: "evo-key evo-key-ub-rand" }), "Randomized algorithms"]),
+        el("li", {}, [el("span", { class: "evo-key evo-key-lb-rand" }), "Ruled out for all algorithms"]),
+        el("li", {}, [el("span", { class: "evo-key evo-key-lb-det" }), "Ruled out for deterministic algorithms"]),
+      ]);
+      const plot = el("div", { class: "evo-plot" });
+      const empty = el("p", { class: "empty", text: "No results for this setting yet.", hidden: "" });
+      const scroll = el("div", { class: "evo-scroll" }, [plot]);
+      const note = el("p", { class: "evo-note", text:
+        "Each line follows the fastest known algorithm for general graphs in the chosen model (for Δ = Θ(1) also "
+        + "algorithms for bounded-degree graphs), each red region the runtimes ruled out by the strongest known lower "
+        + "bound, with runtimes simplified to functions of n. The vertical axis lists the growth classes that occur in "
+        + "order and is not to scale: the space between two of them is small for a subpolynomial factor "
+        + "(log n / log log n to log n), medium for a polynomial one (log n to log² n) and largest for an exponential "
+        + "one (log⁷ n to 2^√(log n)). Lower bounds proved for a smaller maximum degree carry over by adding a "
+        + "disjoint star." });
+      root.replaceChildren(controls, legend, scroll, empty, note);
+      const tooltip = el("div", { class: "evo-tooltip", role: "status", hidden: "" });
+
+      function draw() {
+        const { series, levels, levelOf, offsets, span, labels } = cur;
+        const hasData = series.some((s) => s.steps.length);
+        scroll.hidden = !hasData;
+        empty.hidden = hasData;
+        if (!hasData) return;
+        plot.replaceChildren(...labels, tooltip);
+        tooltip.hidden = true;
+        const left = Math.max(...labels.map((x) => x.offsetWidth)) + 14;
+        const width = Math.max(plot.clientWidth, 600);
+        const height = TOP + span + BOTTOM;
+        const x = (year) => left + ((year - first) / (last - first)) * (width - left - RIGHT);
+        const y = (i) => TOP + span - offsets[i];
+        const base = y(0);
+        const xEnd = x(last);
+        plot.style.height = `${height}px`;
+        labels.forEach((lab, i) => { lab.style.top = `${y(i)}px`; lab.style.width = `${left - 14}px`; });
+
+        const parts = [];
+        // Grid: one line per row, ticks every five years.
+        for (let i = 0; i < levels.length; i++) parts.push(svg("line", { class: "evo-grid", x1: left, x2: xEnd, y1: y(i), y2: y(i) }));
+        for (let yr = Math.ceil(first / 5) * 5; yr < last; yr += 5) {
+          parts.push(svg("line", { class: "evo-tick", x1: x(yr), x2: x(yr), y1: base, y2: base + 5 }),
+            svg("text", { class: "evo-xlabel", x: x(yr), y: base + 20 }, [String(yr)]));
+        }
+        // A step path through a series' steps, continued to the end of the axis.
+        const stepPath = (s) => {
+          let d = "";
+          s.steps.forEach((st, i) => {
+            const yy = y(levelOf(st.term));
+            d += i === 0 ? `M${x(st.year)},${yy}` : `V${yy}`;
+            d += `H${i + 1 < s.steps.length ? x(s.steps[i + 1].year) : xEnd}`;
+          });
+          return d;
+        };
+        for (const s of series.filter((t) => t.key.startsWith("lb") && t.steps.length)) {
+          const d = stepPath(s);
+          parts.push(svg("path", { class: `evo-area evo-${s.key}`, d: `M${x(s.steps[0].year)},${base}${d.replace(/^M[^,]+,/, "V")}V${base}Z` }),
+            svg("path", { class: `evo-edge evo-${s.key}`, d }));
+        }
+        for (const s of series.filter((t) => t.key.startsWith("ub") && t.steps.length)) {
+          parts.push(svg("path", { class: `evo-line evo-${s.key}`, d: stepPath(s) }));
+        }
+        // Markers and short source labels where a series improves.
+        const placed = [];
+        for (const s of series) {
+          for (const st of s.steps) {
+            const cx = x(st.year), cy = y(levelOf(st.term));
+            parts.push(svg("circle", { class: `evo-dot evo-${s.key}`, cx, cy, r: s.key.startsWith("ub") ? 4.5 : 3.5 }));
+            const ly = s.key.startsWith("ub") ? cy - 7 : cy + 14;
+            const key = `${Math.round(cx)}:${Math.round(ly)}`;
+            if (placed.includes(key)) continue;
+            placed.push(key);
+            parts.push(svg("text", { class: `evo-dotlabel evo-dotlabel-${s.key.slice(0, 2)}`, x: cx + 5, y: ly }, [shortLabel(st)]));
+          }
+        }
+        // Direct labels at the right end of the algorithm lines.
+        const ends = series.filter((s) => s.key.startsWith("ub") && s.steps.length)
+          .map((s) => ({ s, yy: y(levelOf(s.steps[s.steps.length - 1].term)) }));
+        if (ends.length === 2 && Math.abs(ends[0].yy - ends[1].yy) < 14) {
+          const [hi, lo] = ends[0].yy <= ends[1].yy ? ends : [ends[1], ends[0]];
+          hi.yy -= 7; lo.yy += 7;
+        }
+        for (const { s, yy } of ends) parts.push(svg("text", { class: "evo-endlabel", x: xEnd + 8, y: yy + 4 }, [s.name]));
+        const cross = svg("line", { class: "evo-cross", x1: 0, x2: 0, y1: TOP - 6, y2: base, visibility: "hidden" });
+        parts.push(cross);
+        const chart = svg("svg", { class: "evo-svg", width, height, viewBox: `0 0 ${width} ${height}`, role: "img",
+          "aria-labelledby": "evolution-tab" }, parts);
+        plot.prepend(chart);
+
+        // Hover: a crosshair on the nearest year, with the state of the art then.
+        const yearAt = (clientX) => {
+          const rect = chart.getBoundingClientRect();
+          const px = clientX - rect.left;
+          return Math.floor(first + ((px - left) / (width - left - RIGHT)) * (last - first));
+        };
+        const describe = (year) => {
+          const rows = [];
+          const ub = { "ub-det": "Deterministic", "ub-rand": "Randomized" };
+          const lb = { "lb-det": "Lower bound, deterministic", "lb-rand": "Lower bound, randomized" };
+          for (const s of [...series.slice(2), ...series.slice(0, 2)]) {
+            const st = at(s, year);
+            const name = ub[s.key] || lb[s.key];
+            const value = st ? tex(st.latex) : el("span", { class: "evo-none", text: "none" });
+            const src = st ? el("span", { class: "evo-src", text: st.results.map(sourceLabel).filter((v, i, a) => a.indexOf(v) === i).join("; ") }) : null;
+            rows.push(el("tr", { class: st && st.year === year ? "is-new" : null }, [
+              el("th", { scope: "row" }, [el("span", { class: `evo-key evo-key-${s.key}` }), name]),
+              el("td", {}, [value]), el("td", {}, src ? [src] : []),
+            ]));
+          }
+          return [el("div", { class: "evo-tip-year", text: String(year) }), el("table", {}, [el("tbody", {}, rows)])];
+        };
+        const show = (year) => {
+          year = Math.max(first + 1, Math.min(last - 1, year));
+          cross.setAttribute("x1", x(year));
+          cross.setAttribute("x2", x(year));
+          cross.setAttribute("visibility", "visible");
+          tooltip.replaceChildren(...describe(year));
+          tooltip.hidden = false;
+          const tw = tooltip.offsetWidth;
+          const px = x(year);
+          tooltip.style.left = `${px + 14 + tw > plot.clientWidth ? Math.max(0, px - 14 - tw) : px + 14}px`;
+          tooltip.style.top = `${TOP}px`;
+        };
+        const hide = () => { cross.setAttribute("visibility", "hidden"); tooltip.hidden = true; };
+        chart.addEventListener("pointermove", (e) => {
+          const px = e.clientX - chart.getBoundingClientRect().left;
+          if (px < left - 4 || px > xEnd + 4) { hide(); return; }
+          show(yearAt(e.clientX));
+        });
+        chart.addEventListener("pointerleave", hide);
+      }
+
+      // The chart sits in a tab that starts hidden, where nothing can be measured: draw it whenever it gets a
+      // (new) width, and when the setting changes.
+      let lastWidth = 0;
+      const refresh = () => {
+        if (plot.clientWidth && plot.clientWidth !== lastWidth) { lastWidth = plot.clientWidth; draw(); }
+      };
+      // The controls are only clickable while the chart is visible, so it can be measured right away.
+      function update() {
+        compute();
+        draw();
+        lastWidth = plot.clientWidth;
+      }
+      compute();
+      new ResizeObserver(refresh).observe(plot);
+      return refresh;
+    }
+
     // ---------- table ----------
 
     function runtimeCell(r, regime) {
@@ -1720,8 +2005,8 @@
       const noun = isLower() ? (total === 1 ? "lower bound" : "lower bounds") : (total === 1 ? "algorithm" : "algorithms");
       document.getElementById("result-count").textContent =
         rows.length === total ? `${total} ${noun}` : `${rows.length} of ${total} ${noun}`;
-      for (const tab of section.querySelectorAll(".bound-tabs [role=tab]")) {
-        tab.setAttribute("aria-selected", String(tab.dataset.bound === state.bound));
+      for (const tab of section.querySelectorAll(".bound-tabs [role=tab][data-bound]")) {
+        tab.setAttribute("aria-selected", String(state.view === "tables" && tab.dataset.bound === state.bound));
         tab.querySelector(".pill-count").textContent = String(results.filter((r) => r.bound === tab.dataset.bound).length);
       }
       document.getElementById("missing-label").textContent = `Report missing ${isLower() ? "lower bound" : "algorithm"}`;
@@ -1974,10 +2259,11 @@
     }
 
     const savedChoice = { upper: { ...DEFAULTS.upper, ...colorStart.upper }, lower: { ...DEFAULTS.lower, ...colorStart.lower } };
-    for (const tab of section.querySelectorAll(".bound-tabs [role=tab]")) {
+    for (const tab of section.querySelectorAll(".bound-tabs [role=tab][data-bound]")) {
       // Each table keeps its own randomness, model and graph class choice.
       tab.addEventListener("click", () => {
-        if (tab.dataset.bound === state.bound) return;
+        if (state.view !== "tables") showView("tables");
+        if (tab.dataset.bound === state.bound) { render(); return; }
         savedChoice[state.bound] = { randomness: state.randomness, model: state.model, graphClass: state.graphClass,
                                      variant: state.variant, colors: state.colors, colorsExact: state.colorsExact };
         state.bound = tab.dataset.bound;
@@ -2006,6 +2292,30 @@
     });
     document.getElementById("sort-runtime").addEventListener("click", () => {
       state.sort = "runtime";
+      render();
+    });
+
+    // A third tab with the chart of the state of the art over time, on pages that ask for it with
+    // data-evolution="<regime id>" on the results section.
+    const evolutionTab = document.getElementById("evolution-tab");
+    const evolution = document.getElementById("evolution");
+    function showView(view) {
+      state.view = view;
+      document.getElementById("tables-view").hidden = view !== "tables";
+      document.getElementById("result-count").hidden = view !== "tables";
+      evolution.hidden = view !== "evolution";
+      evolutionTab.setAttribute("aria-selected", String(view === "evolution"));
+    }
+    let refreshEvolution = null;      // draws the chart for its current width (it is drawn once visible)
+    if (section.dataset.evolution) {
+      evolution.dataset.regime = section.dataset.evolution;
+      refreshEvolution = drawEvolution(evolution);
+    }
+    evolutionTab.hidden = !refreshEvolution;
+    evolutionTab.addEventListener("click", () => {
+      closePopovers();
+      showView("evolution");
+      refreshEvolution();
       render();
     });
 

@@ -445,5 +445,26 @@
     }
   }
 
-  global.Asymptotics = { REGIMES, simplify, compare, shifted, parse, epsDependence };
+  /**
+   * How far apart two growth classes a < b are:
+   *   "subpoly"   b = a^(1 + o(1)), e.g. log n / log log n vs log n;
+   *   "poly"      b = a^Theta(1), e.g. log n vs log^2 n (also when a is constant);
+   *   "superpoly" b = a^omega(1) but b = 2^(a^o(1)), e.g. 2^sqrt(log n) vs 2^sqrt(log n log log n);
+   *   "exp"       b = 2^(a^Omega(1)) or more, e.g. log^7 n vs 2^sqrt(log n).
+   */
+  function gap(a, b) {
+    try {
+      if (lead(a) < 0) return "poly";
+      const la = log(a), lb = log(b);
+      if (compare(lb, la) <= 0) {
+        const ratio = mul(b, powNum(a, -1));
+        return compare(log(ratio), la) < 0 ? "subpoly" : "poly";
+      }
+      return compare(log(lb), la) >= 0 ? "exp" : "superpoly";
+    } catch (e) {
+      return "poly";
+    }
+  }
+
+  global.Asymptotics = { REGIMES, simplify, compare, shifted, parse, epsDependence, gap };
 })(window);
