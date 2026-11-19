@@ -1,6 +1,7 @@
 id: ds-lb-ckp16-deterministic
 title: Sinkless orientation
 problem: degree-splitting
+reduce_to: so-lb-ckp16-deterministic
 variant: directed
 discrepancy:
   latex: \varepsilon\Delta
@@ -17,5 +18,5 @@ sources:
 - paper: ckp16
   reference: Theorem 4 (with Theorem 3)
   url: https://arxiv.org/html/1602.08166v2#Thmtheorem4
-comments: any ε < 1; on Δ-regular graphs of high girth
+comments: any ε < 1
 status: approved

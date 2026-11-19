@@ -75,7 +75,7 @@
       "additionalProperties": false,
       "required": ["problem"],
       "properties": {
-        "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition"] },
+        "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition", "degree-splitting", "sinkless-orientation"] },
         "colors": { "description": "Number of colors, for coloring problems, in terms of the input graph.", "$ref": "#/$defs/expression" }
       }
     },

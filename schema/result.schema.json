@@ -9,7 +9,7 @@
   "properties": {
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
     "title": { "description": "Short descriptive name, e.g. 'Maximal matching via rounding'.", "type": "string" },
-    "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition", "degree-splitting"] },
+    "problem": { "enum": ["maximal-matching", "mis", "vertex-coloring", "edge-coloring", "network-decomposition", "degree-splitting", "sinkless-orientation"] },
     "reduce_to": {
       "description": "Id of the result this one is obtained from by a reduction (see data/reductions/), e.g. a maximal matching algorithm from an MIS algorithm on the line graph. Left out for algorithms that solve the problem directly.",
       "type": "string"

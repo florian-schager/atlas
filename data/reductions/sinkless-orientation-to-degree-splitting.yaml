@@ -1,0 +1,22 @@
+id: sinkless-orientation-to-degree-splitting
+title: Directed splitting
+from:
+  problem: sinkless-orientation
+to:
+  problem: degree-splitting
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+runtime:
+  latex: T
+  expr: T
+models:
+- LOCAL
+- CONGEST
+comments: an orientation with discrepancy below deg(v) leaves no sink
+status: approved

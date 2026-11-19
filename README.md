@@ -11,6 +11,7 @@ graph algorithms, with the state of the art highlighted for every range of the m
 - edge coloring
 - network decomposition
 - degree splitting (directed and undirected)
+- sinkless orientation
 
 Every result records its runtime, the model (LOCAL or CONGEST), whether it is deterministic or randomized, the
 graph class and assumptions it needs, the number of colors (for colorings), and the theorem in the paper it comes

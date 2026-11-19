@@ -1,0 +1,17 @@
+id: so-gs17-randomized
+title: Shattering
+problem: sinkless-orientation
+bound: upper
+model: LOCAL
+randomness: randomized
+graph_class: general
+runtime:
+  latex: \mathcal{O}(\log_{\Delta}\log n)
+  expr: O(log(log(n)) / log(Delta))
+year: 2016
+sources:
+- paper: gs17
+  reference: Theorem 1.2
+  url: https://arxiv.org/html/1608.03220v1#S1.Thmtheorem2
+comments: on all graphs of minimum degree Δ ≥ 3
+status: approved

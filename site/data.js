@@ -6180,6 +6180,7 @@ window.ATLAS_DATA = {
    "id": "ds-lb-bfhklrsu16-randomized",
    "title": "Sinkless orientation",
    "problem": "degree-splitting",
+   "reduce_to": "so-lb-bfhklrsu16-randomized",
    "variant": "directed",
    "discrepancy": {
     "latex": "\\varepsilon\\Delta",
@@ -6206,7 +6207,7 @@ window.ATLAS_DATA = {
      "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
     }
    ],
-   "comments": "any ε < 1; Ω(log log n) for constant Δ, dependence on Δ from [[ckp16]]",
+   "comments": "any ε < 1",
    "status": "approved"
   },
   {
@@ -6281,6 +6282,34 @@ window.ATLAS_DATA = {
      "paper": "ghaffari16"
     }
    ],
+   "status": "approved"
+  },
+  {
+   "id": "so-lb-bfhklrsu16-randomized",
+   "title": "Round elimination via sinkless coloring",
+   "problem": "sinkless-orientation",
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} \\log n)",
+    "expr": "Omega(log(log(n))/log(Delta))"
+   },
+   "year": 2015,
+   "sources": [
+    {
+     "paper": "bfhklrsu16",
+     "reference": "Corollary 23",
+     "url": "https://arxiv.org/html/1511.00900v1#Thmtheorem23"
+    },
+    {
+     "paper": "ckp16",
+     "reference": "Theorem 4",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
+    }
+   ],
+   "comments": "Ω(log log n) on Δ-regular graphs, dependence on Δ from [[ckp16]]",
    "status": "approved"
   },
   {
@@ -6566,6 +6595,7 @@ window.ATLAS_DATA = {
    "id": "ds-lb-ckp16-deterministic",
    "title": "Sinkless orientation",
    "problem": "degree-splitting",
+   "reduce_to": "so-lb-ckp16-deterministic",
    "variant": "directed",
    "discrepancy": {
     "latex": "\\varepsilon\\Delta",
@@ -6587,7 +6617,7 @@ window.ATLAS_DATA = {
      "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
     }
    ],
-   "comments": "any ε < 1; on Δ-regular graphs of high girth",
+   "comments": "any ε < 1",
    "status": "approved"
   },
   {
@@ -6637,6 +6667,75 @@ window.ATLAS_DATA = {
     }
    ],
    "comments": "seeds via conditional expectations, aggregated over a BFS tree",
+   "status": "approved"
+  },
+  {
+   "id": "so-gs17-deterministic",
+   "title": "Orienting short cycles",
+   "problem": "sinkless-orientation",
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\log_{\\Delta} n)",
+    "expr": "O(log(n) / log(Delta))"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Theorem 1.2",
+     "url": "https://arxiv.org/html/1608.03220v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "on all graphs of minimum degree Δ ≥ 3",
+   "status": "approved"
+  },
+  {
+   "id": "so-gs17-randomized",
+   "title": "Shattering",
+   "problem": "sinkless-orientation",
+   "bound": "upper",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\mathcal{O}(\\log_{\\Delta}\\log n)",
+    "expr": "O(log(log(n)) / log(Delta))"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "gs17",
+     "reference": "Theorem 1.2",
+     "url": "https://arxiv.org/html/1608.03220v1#S1.Thmtheorem2"
+    }
+   ],
+   "comments": "on all graphs of minimum degree Δ ≥ 3",
+   "status": "approved"
+  },
+  {
+   "id": "so-lb-ckp16-deterministic",
+   "title": "Round elimination via sinkless coloring",
+   "problem": "sinkless-orientation",
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} n)",
+    "expr": "Omega(log(n)/log(Delta))"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "ckp16",
+     "reference": "Theorem 4 (with Theorem 3)",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem4"
+    }
+   ],
+   "comments": "on Δ-regular graphs of high girth",
    "status": "approved"
   },
   {
@@ -10188,6 +10287,80 @@ window.ATLAS_DATA = {
     "LOCAL"
    ],
    "comments": "decomposition of L(G)",
+   "status": "approved"
+  },
+  {
+   "id": "sinkless-orientation-to-edge-coloring",
+   "title": "Orienting by color",
+   "from": {
+    "problem": "sinkless-orientation"
+   },
+   "to": {
+    "problem": "edge-coloring",
+    "colors": {
+     "latex": "2\\Delta - 2",
+     "expr": "2 * Delta - 2"
+    }
+   },
+   "instance": {
+    "graph": "same",
+    "n": {
+     "latex": "n",
+     "expr": "n"
+    },
+    "Delta": {
+     "latex": "\\Delta",
+     "expr": "Delta"
+    }
+   },
+   "graph_class": "bipartite",
+   "runtime": {
+    "latex": "T + 1",
+    "expr": "T + 1"
+   },
+   "models": [
+    "LOCAL"
+   ],
+   "year": 2017,
+   "sources": [
+    {
+     "paper": "chlpu18",
+     "reference": "Theorem 1",
+     "url": "https://arxiv.org/html/1708.04290v3#Thmtheorem1"
+    }
+   ],
+   "comments": "given a 2-coloring; colors below Δ point from one side to the other",
+   "status": "approved"
+  },
+  {
+   "id": "sinkless-orientation-to-degree-splitting",
+   "title": "Directed splitting",
+   "from": {
+    "problem": "sinkless-orientation"
+   },
+   "to": {
+    "problem": "degree-splitting"
+   },
+   "instance": {
+    "graph": "same",
+    "n": {
+     "latex": "n",
+     "expr": "n"
+    },
+    "Delta": {
+     "latex": "\\Delta",
+     "expr": "Delta"
+    }
+   },
+   "runtime": {
+    "latex": "T",
+    "expr": "T"
+   },
+   "models": [
+    "LOCAL",
+    "CONGEST"
+   ],
+   "comments": "an orientation with discrepancy below deg(v) leaves no sink",
    "status": "approved"
   }
  ],

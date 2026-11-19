@@ -1,0 +1,30 @@
+id: sinkless-orientation-to-edge-coloring
+title: Orienting by color
+from:
+  problem: sinkless-orientation
+to:
+  problem: edge-coloring
+  colors:
+    latex: 2\Delta - 2
+    expr: 2 * Delta - 2
+instance:
+  graph: same
+  n:
+    latex: n
+    expr: n
+  Delta:
+    latex: \Delta
+    expr: Delta
+graph_class: bipartite
+runtime:
+  latex: T + 1
+  expr: T + 1
+models:
+- LOCAL
+year: 2017
+sources:
+- paper: chlpu18
+  reference: Theorem 1
+  url: https://arxiv.org/html/1708.04290v3#Thmtheorem1
+comments: given a 2-coloring; colors below Δ point from one side to the other
+status: approved

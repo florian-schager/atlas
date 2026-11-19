@@ -1,6 +1,7 @@
 id: ds-lb-bfhklrsu16-randomized
 title: Sinkless orientation
 problem: degree-splitting
+reduce_to: so-lb-bfhklrsu16-randomized
 variant: directed
 discrepancy:
   latex: \varepsilon\Delta
@@ -20,5 +21,5 @@ sources:
 - paper: ckp16
   reference: Theorem 4
   url: https://arxiv.org/html/1602.08166v2#Thmtheorem4
-comments: any ε < 1; Ω(log log n) for constant Δ, dependence on Δ from [[ckp16]]
+comments: any ε < 1
 status: approved

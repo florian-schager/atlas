@@ -208,6 +208,7 @@
     "edge-coloring": { name: "Edge coloring", page: "edge-coloring.html" },
     "network-decomposition": { name: "Network decomposition", page: "network-decomposition.html" },
     "degree-splitting": { name: "Degree splitting", page: "degree-splitting.html" },
+    "sinkless-orientation": { name: "Sinkless orientation", page: "sinkless-orientation.html" },
   };
   const problemInfo = (id) => PROBLEMS[id] || { name: humanize(id), page: null };
   // Per-problem table options. bestColumn: false drops the "State of the art for" column (the badge stays).
@@ -1859,11 +1860,13 @@
     return `${problemInfo(r.from.problem).name} → ${problemInfo(r.to.problem).name}`;
   }
 
-  // Diagram: the four symmetry-breaking problems in the corners, network decomposition in the middle.
+  // Diagram: the four symmetry-breaking problems in the corners, network decomposition in the middle, and
+  // sinkless orientation with the problems it reduces to (edge coloring, degree splitting) in a row below.
   const MAP_NODES = {
     "maximal-matching": [110, 50], mis: [470, 50],
     "edge-coloring": [110, 290], "vertex-coloring": [470, 290],
     "network-decomposition": [290, 170],
+    "sinkless-orientation": [110, 400], "degree-splitting": [470, 400],
   };
   const SVG_NS = "http://www.w3.org/2000/svg";
 
