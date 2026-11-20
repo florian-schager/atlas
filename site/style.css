@@ -177,7 +177,24 @@ figcaption { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; fo
 }
 .toggle-all:hover { border-color: var(--accent); }
 .toggle-all:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toggle-all:disabled { opacity: 0.5; cursor: default; border-color: var(--border); }
+.bib-entry[hidden] { display: none; }
+.bib-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.bib-search {
+  font: inherit; font-size: 0.9rem; color: var(--text); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; width: 19rem; max-width: 100%;
+}
+.bib-search::placeholder { color: var(--muted); }
+.bib-search:hover { border-color: var(--accent); }
+.bib-search:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bib-search-status { margin: 16px 0 0; font-size: 0.9rem; color: var(--muted); }
+.bib-search-status:empty { display: none; }
 .bib-list { list-style: none; margin: 24px 0 0; padding: 0; }
+.bib-search-status:not(:empty) + .bib-list { margin-top: 12px; }
+@media (max-width: 720px) {
+  .bib-tools { width: 100%; }
+  .bib-search { flex: 1 1 12rem; width: auto; }
+}
 .bib-entry {
   display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 4px 20px;
   padding: 18px 0; border-top: 1px solid var(--border); scroll-margin-top: 16px;

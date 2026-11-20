@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bibliography · Atlas of Distributed Algorithms</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css?v=616b244a3a">
+  <link rel="stylesheet" href="style.css?v=b288c0c767">
   <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
 </head>
 <body data-page="bibliography">
@@ -38,13 +38,18 @@
         <h1>Bibliography</h1>
         <p class="lede" id="bib-count"></p>
       </div>
-      <button type="button" class="toggle-all" id="toggle-all" aria-pressed="false">Expand all</button>
+      <div class="bib-tools">
+        <input type="search" class="bib-search" id="bib-search" placeholder="Search title, author or problem"
+               aria-label="Search papers by title, author or problem" autocomplete="off" spellcheck="false">
+        <button type="button" class="toggle-all" id="toggle-all" aria-pressed="false">Expand all</button>
+      </div>
     </div>
+    <p class="bib-search-status" id="bib-search-status" aria-live="polite"></p>
     <ol class="bib-list" id="bib-list"></ol>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="data.js?v=3ddbb36b93"></script>
-  <script src="app.js?v=d51be767d0"></script>
+  <script src="app.js?v=0a70b82198"></script>
 </body>
 </html>

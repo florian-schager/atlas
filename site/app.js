@@ -349,7 +349,7 @@
       <div class="bound-tabs" role="tablist" aria-labelledby="results-title">
         <button type="button" role="tab" data-bound="upper" aria-selected="true">Algorithms <span class="pill-count"></span></button>
         <button type="button" role="tab" data-bound="lower" aria-selected="false">Lower bounds <span class="pill-count"></span></button>
-        <button type="button" role="tab" id="evolution-tab" aria-controls="evolution" aria-selected="false" hidden>State-of-the-art over time</button>
+        <button type="button" role="tab" id="evolution-tab" aria-controls="evolution" aria-selected="false" hidden>Timeline</button>
       </div>
       <p class="count" id="result-count" aria-live="polite"></p>
     </div>
@@ -1547,7 +1547,8 @@
     // data-regime picks the first one shown). The y-axis is ordinal: one row per growth class of n that occurs, in
     // increasing order, spaced by how far apart neighbouring classes are. Runtimes below the best lower bound are
     // shaded red. A lower bound for a smaller Delta also holds for the chosen Delta (add a disjoint star to raise
-    // the maximum degree), so lower bounds are taken at their strongest regime up to it. Algorithms count if they
+    // the maximum degree), so lower bounds are taken at their strongest regime up to it (except for colorings,
+    // which also choose a palette, see TIMELINE_PALETTES). Algorithms count if they
     // hold for general graphs (for Delta = Theta(1) also for bounded-degree graphs) under assumptions the regime
     // satisfies. Returns a function that draws the chart for its current width, or null if there is nothing to show.
     function drawEvolution(root) {
@@ -1557,14 +1558,52 @@
         model: "LOCAL",
         regime: EVO_REGIMES.find((g) => g.id === root.dataset.regime) || EVO_REGIMES[EVO_REGIMES.length - 1],
       };
+      // Coloring problems also choose a palette: COLOR_TREE nodes with an exact color count, the first shown first.
+      // A problem with colors but no palettes listed here gets no timeline.
+      const TIMELINE_PALETTES = { "vertex-coloring": ["delta1", "delta"], "edge-coloring": ["two1", "two2", "eps"] };
+      const PALETTES = hasColors ? (TIMELINE_PALETTES[PROBLEM] || []).map((id) => COLOR_NODE[id]) : [null];
+      if (!PALETTES.length) return null;
+      view.palette = PALETTES[0];
 
-      // The four series for a model and a regime: steps [{year, term, latex, results}], one per year in which the
-      // state of the art improved.
-      function computeSeries(model, regime) {
-        const below = A.REGIMES.slice(0, A.REGIMES.indexOf(regime) + 1);
+      // Classes that fix the maximum degree, for comparing a lower bound's palette with the chosen one.
+      const FIXED_DELTA = { cycles: 2, paths: 2 };
+      // The value of a palette expression such as "Delta+1", "3" or "(1+eps)*Delta" for a given Delta, or null.
+      // Constants of a result (eps etc.) are small, as in the asymptotic engine.
+      const SMALL = { eps: 0.1, delta: 0.1, gamma: 0.1 };
+      const numeric = (expr, delta) => {
+        const ev = (node) => {
+          if (node.type === "num") return node.value;
+          if (node.type === "var") return node.name === "Delta" ? delta : SMALL[node.name] ?? null;
+          if (node.type !== "bin") return null;
+          const a = ev(node.l), b = ev(node.r);
+          if (a === null || b === null) return null;
+          return { "+": a + b, "-": a - b, "*": a * b, "/": a / b, "^": a ** b }[node.op];
+        };
+        try { return ev(A.parse(expr)); } catch (e) { return null; }
+      };
+      // Does result s count for the palette? An algorithm with at most that many colors also solves it; a lower
+      // bound holds for every palette up to its own (compared at the fixed degree of its class, e.g. 3 colors on
+      // cycles is a (Delta + 1)-coloring there).
+      function paletteFits(s, palette) {
+        if (!palette) return true;
+        if (s.bound === "upper") return inColorOption(s, palette.id);
+        const delta = FIXED_DELTA[s.graph_class];
+        if (delta !== undefined) {
+          const mine = numeric(s.colors.expr, delta), wanted = numeric(palette.keys[0], delta);
+          return mine !== null && wanted !== null && wanted <= mine;
+        }
+        return inColorOption({ id: `palette-${palette.id}`, colors: { expr: palette.keys[0] } }, colorNode(s));
+      }
+
+      // The four series for a model, a regime and a palette: steps [{year, term, latex, results}], one per year in
+      // which the state of the art improved.
+      function computeSeries(model, regime, palette) {
+        // With colors, a lower bound for a smaller Delta does not carry over: the palette grows with Delta.
+        const below = palette ? [regime] : A.REGIMES.slice(0, A.REGIMES.indexOf(regime) + 1);
         // Algorithms may assume a lower bound on Delta that the regime satisfies.
         const regimeAssumptions = Object.keys(ASSUMPTION_REGIMES).filter((a) => ASSUMPTION_REGIMES[a].includes(regime.id));
-        if (regime.id !== "const") regimeAssumptions.push("max-degree-constant");
+        // A growing Delta exceeds any constant, so also Delta >= Delta_0 and, for a constant eps, eps > 1/Delta.
+        if (regime.id !== "const") regimeAssumptions.push("max-degree-constant", "eps-greater-inverse-delta");
         const setting = (bound, randomness) => ({
           problem: PROBLEM, bound, model, randomness,
           // Lower bounds for any class hold for general graphs; with constant Delta, algorithms for bounded-degree
@@ -1586,8 +1625,13 @@
           const target = setting(bound, randomness);
           const better = bound === "lower" ? 1 : -1;
           const out = [];
-          const pool = results.filter((s) => appliesTo(s, target)
-            && (bound === "upper" || !(s.assumptions || []).some((a) => !ASSUMPTION_REGIMES[a])));
+          // Palettes are matched by paletteFits, not by appliesTo (which wants the same palette). A lower bound may
+          // restrict Delta (handled by the regime) or give the algorithm extra input such as a 2-coloring, which only
+          // makes it stronger; other assumptions leave it out.
+          const lowerOk = (a) => ASSUMPTION_REGIMES[a] || a.startsWith("given-");
+          const pool = results.filter((s) => appliesTo(s, palette ? { ...target, colors: s.colors } : target)
+            && paletteFits(s, palette)
+            && (bound === "upper" || (s.assumptions || []).every(lowerOk)));
           for (const r of pool.sort((a, b) => a.year - b.year || a.id.localeCompare(b.id))) {
             const v = valueOf(r);
             if (!v) continue;
@@ -1607,7 +1651,8 @@
           { key: "ub-rand", name: "Randomized", steps: steps("upper", "randomized") },
         ];
       }
-      if (!MODELS.some((m) => EVO_REGIMES.some((g) => computeSeries(m, g).some((s) => s.steps.length)))) return null;
+      if (!PALETTES.some((p) => MODELS.some((m) => EVO_REGIMES.some((g) => computeSeries(m, g, p)
+        .some((s) => s.steps.length))))) return null;
 
       // The same years in every setting, so that switching keeps the time axis in place.
       const allYears = results.map((r) => r.year);
@@ -1622,14 +1667,14 @@
         const paper = src.paper && data.papers[src.paper];
         return paper ? paper.label : src.name || "";
       };
-      const shortLabel = (st) => [...new Set(st.results.map((r) => sourceLabel(r).replace(/,\s*\d{4}$/, "")))].join(", ");
+      const shortLabel = (st) => [...new Set(st.results.map((r) => sourceLabel(r).replace(/,\s*\d{4}[a-z]?$/, "")))].join(", ");
 
       // Rows are spaced by how far apart neighbouring growth classes are (see Asymptotics.gap).
       const TOP = 14, BOTTOM = 30, RIGHT = 104;
       const GAP = { subpoly: 30, poly: 44, superpoly: 62, exp: 84 };
       let cur = null;                   // {series, levels, levelOf, offsets, span, labels} for the chosen setting
       function compute() {
-        const series = computeSeries(view.model, view.regime);
+        const series = computeSeries(view.model, view.regime, view.palette);
         // Rows of the y-axis: every growth class reached, plus a constant baseline.
         const levels = [{ term: TRIVIAL, latex: "1" }];
         for (const s of series) {
@@ -1650,7 +1695,7 @@
         };
       }
 
-      // Controls: the model and the regime of Delta.
+      // Controls: the palette (for colorings), the model and the regime of Delta.
       const segmented = (label, options, isOn, pick) => {
         const buttons = options.map(([value, content]) => {
           const b = el("button", { type: "button", "aria-pressed": String(isOn(value)) }, [content]);
@@ -1666,6 +1711,8 @@
         ]);
       };
       const controls = el("div", { class: "evo-controls" }, [
+        ...(view.palette ? [segmented("Colors", PALETTES.map((p) => [p.id, tex(p.latex)]), (id) => id === view.palette.id,
+          (id) => { view.palette = PALETTES.find((p) => p.id === id); })] : []),
         segmented("Model", MODELS.map((m) => [m, m]), (m) => m === view.model, (m) => { view.model = m; }),
         segmented("Max. degree Δ", EVO_REGIMES.map((g) => [g.id, tex(g.label)]), (id) => id === view.regime.id,
           (id) => { view.regime = EVO_REGIMES.find((g) => g.id === id); }),
@@ -1683,10 +1730,11 @@
         "Each line follows the fastest known algorithm for general graphs in the chosen model (for Δ = Θ(1) also "
         + "algorithms for bounded-degree graphs), each red region the runtimes ruled out by the strongest known lower "
         + "bound, with runtimes simplified to functions of n. The vertical axis lists the growth classes that occur in "
-        + "order and is not to scale: the space between two of them is small for a subpolynomial factor "
-        + "(log n / log log n to log n), medium for a polynomial one (log n to log² n) and largest for an exponential "
-        + "one (log⁷ n to 2^√(log n)). Lower bounds proved for a smaller maximum degree carry over by adding a "
-        + "disjoint star." });
+        + "order. "
+        + (view.palette
+          ? "Algorithms with fewer colors count for a palette, and lower bounds for more colors. A lower bound for a "
+            + "smaller maximum degree does not carry over, since the palette grows with Δ."
+          : "Lower bounds proved for a smaller maximum degree carry over by adding a disjoint star.") });
       root.replaceChildren(controls, legend, scroll, empty, note);
       const tooltip = el("div", { class: "evo-tooltip", role: "status", hidden: "" });
 
@@ -2730,6 +2778,18 @@
       focus();
     }
 
+    // ---------- search ----------
+    // A paper matches if every word of the query occurs in its title (any version's), its label, an author's
+    // name or the name of a problem it has a result for (a reduction counts for the problem it solves).
+    // Case and accents are ignored. A word that is a one-word problem name ("MIS") matches only that problem,
+    // not titles or names that contain it (Misra).
+    const PROBLEM_ALIASES = { mis: ["maximal independent set"] };
+    const normalize = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ").trim();
+    const problemWords = new Map(Object.keys(PROBLEMS).map((id) => [normalize(PROBLEMS[id].name), id])
+      .filter(([name]) => !name.includes(" ")));
+    const searchable = [];   // {li, details, problems: Set of problem ids, text: normalized title/label/authors/problems}
+
     const list = document.getElementById("bib-list");
     for (const paper of papers) {
       const entries = byPaper.get(paper.id);
@@ -2760,21 +2820,56 @@
       const reportBtn = el("button", { type: "button", class: "bib-edit-btn entry-report", "aria-expanded": "false",
                                        title: "Report an issue with this paper's entry", text: "Report an issue" });
       reportBtn.addEventListener("click", () => togglePaperReport(paper, body, reportBtn));
-      list.append(el("li", { class: "bib-entry", id: paper.id }, [
+      const li = el("li", { class: "bib-entry", id: paper.id }, [
         el("div", { class: "bib-side" }, [el("span", { class: "bib-label", text: paper.label }), editBtn, reportBtn]),
         body,
-      ]));
+      ]);
+      list.append(li);
+
+      const problems = new Set([...results.map((e) => e.result.problem), ...reductions.map((e) => e.reduction.from.problem)]);
+      const text = [
+        paper.title, paper.label, ...paper.versions.map((v) => v.title || ""), ...paper.authors,
+        ...[...problems].flatMap((id) => [problemInfo(id).name, ...(PROBLEM_ALIASES[id] || [])]),
+      ].map(normalize).join(" ");
+      searchable.push({ li, details, problems, text: ` ${text} ` });
     }
 
     document.getElementById("bib-count").textContent =
       `${papers.length} papers with at least one result or reduction in the database, sorted by first author.`;
 
+    const search = document.getElementById("bib-search");
+    const searchStatus = document.getElementById("bib-search-status");
+    const matches = (item, words) => words.every((w) =>
+      problemWords.has(w) ? item.problems.has(problemWords.get(w)) : item.text.includes(w));
+    function applySearch() {
+      const words = normalize(search.value).split(" ").filter(Boolean);
+      let shown = 0;
+      for (const item of searchable) {
+        const hit = matches(item, words);
+        item.li.hidden = !hit;
+        if (hit) shown++;
+      }
+      const q = search.value.trim();
+      searchStatus.textContent = !words.length ? ""
+        : shown === 0 ? `No papers match “${q}”.`
+        : `${shown} of ${papers.length} papers match “${q}”.`;
+      // Keep the query in the address (as ?q=…) so that a search can be linked to.
+      const url = new URL(location.href);
+      if (q) url.searchParams.set("q", q); else url.searchParams.delete("q");
+      history.replaceState(history.state, "", url);
+      syncToggle();
+    }
+    search.addEventListener("input", applySearch);
+
     const toggle = document.getElementById("toggle-all");
-    const panels = () => [...list.querySelectorAll("details.bib-results")];
+    // Expand all / Collapse all act on the papers the search shows.
+    const panels = () => searchable.filter((s) => !s.li.hidden).map((s) => s.details);
     const syncToggle = () => {
-      const allOpen = panels().every((d) => d.open);
+      const visible = panels();
+      const allOpen = visible.length > 0 && visible.every((d) => d.open);
       toggle.textContent = allOpen ? "Collapse all" : "Expand all";
       toggle.setAttribute("aria-pressed", String(allOpen));
+      toggle.disabled = visible.length === 0;
     };
     toggle.addEventListener("click", () => {
       const open = !panels().every((d) => d.open);
@@ -2782,6 +2877,9 @@
       syncToggle();
     });
     list.addEventListener("toggle", syncToggle, true);
+
+    const initialQuery = new URLSearchParams(location.search).get("q");
+    if (initialQuery) { search.value = initialQuery; applySearch(); }
 
     // A link to bibliography.html#paper-id opens that paper's panel.
     const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
