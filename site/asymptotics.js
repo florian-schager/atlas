@@ -10,8 +10,10 @@
  *   [ n^c, n^(i/k), 2^(log^e n · loglog^f n), log n, 2^(loglog^e n · logloglog^f n), log log n, ...,
  *     2^(log* n), log* n, log log* n ]
  *
- * (the exponential factor at each level has two exponents e and f, so that bounds like
- * 2^O(sqrt(log n · log log n)) are representable).
+ * (the exponential factor at each level is 2^(c · (log^(k) n)^e · (log^(k+1) n)^f), with two exponents e and f so
+ * that bounds like 2^O(sqrt(log n · log log n)) are representable, and a coefficient c: powers and products of the
+ * same factor scale c, e.g. (2^sqrt(log n))^84 = 2^(84 sqrt(log n)), which stays in the class 2^O(sqrt(log n)) and
+ * only beats 2^sqrt(log n) itself. A factor with a faster-growing exponent absorbs a slower one in a product).
  *
  * Within this family any two terms are comparable by comparing the vectors
  * lexicographically, so a sum always reduces to its largest term.
@@ -24,24 +26,25 @@
   const LEVELS = 5;                   // iterated logs tracked: log n ... log^(5) n
   const C = 0;                        // exponent of n (constant part)
   const IK = 1;                       // exponent of n in units of 1/k (k an arbitrary constant)
-  const X = (k) => 3 * k - 1;         // 2^((log^(k) n)^e · ...): exponent e
-  const XP = (k) => 3 * k;            //   ... · (log^(k+1) n)^f): exponent f
-  const L = (k) => 3 * k + 1;         // (log^(k) n)^e
-  const XSTAR = 3 * LEVELS + 2;       // 2^(e · log* n): above every power of log* n, below every iterated log
+  const X = (k) => 4 * k - 2;         // 2^(c · (log^(k) n)^e · ...): exponent e
+  const XP = (k) => 4 * k - 1;        //   ... · (log^(k+1) n)^f): exponent f
+  const XC = (k) => 4 * k;            //   coefficient c (0: no such factor)
+  const L = (k) => 4 * k + 1;         // (log^(k) n)^e
+  const XSTAR = 4 * LEVELS + 2;       // 2^(e · log* n): above every power of log* n, below every iterated log
   const LSTAR = XSTAR + 1;            // log* n
   const LLSTAR = LSTAR + 1;           // log log* n
   const SIZE = LLSTAR + 1;
   const POLY = 1e6;                   // stands for "some polylog factor" in comparisons
   const EPS = 1e-9;
 
-  // Classify a vector index: {kind: "n" | "X" | "XP" | "L" | "star", k}.
+  // Classify a vector index: {kind: "n" | "X" | "XP" | "XC" | "L" | "xstar" | "star" | "llstar", k}.
   function slot(i) {
     if (i === C || i === IK) return { kind: "n", k: 0 };
     if (i === XSTAR) return { kind: "xstar", k: 0 };
     if (i === LSTAR) return { kind: "star", k: 0 };
     if (i === LLSTAR) return { kind: "llstar", k: 0 };
-    const k = Math.floor((i - 2) / 3) + 1;
-    return { kind: ["X", "XP", "L"][(i - 2) % 3], k };
+    const k = Math.floor((i - 2) / 4) + 1;
+    return { kind: ["X", "XP", "XC", "L"][(i - 2) % 4], k };
   }
 
   // ---------- terms ----------
@@ -63,13 +66,50 @@
     return v;
   }
 
-  function compare(a, b) {
-    const va = vec(a), vb = vec(b);
+  const cmpNum = (x, y) => (x > y + EPS ? 1 : x < y - EPS ? -1 : 0);
+  const sgn = (x) => (x > EPS ? 1 : x < -EPS ? -1 : 0);
+
+  // Compare the exponential factors 2^(c · g) of level k: by the sign of c, then by the growth g = (e, f), then by c.
+  function compareExp(va, vb, k) {
+    const sa = sgn(va[XC(k)]), sb = sgn(vb[XC(k)]);
+    if (sa !== sb) return sa > sb ? 1 : -1;
+    if (sa === 0) return 0;
+    const d = cmpNum(va[X(k)], vb[X(k)]) || cmpNum(va[XP(k)], vb[XP(k)]);
+    if (d) return sa > 0 ? d : -d;
+    return cmpNum(va[XC(k)], vb[XC(k)]);
+  }
+
+  function compareVec(va, vb) {
     for (let i = 0; i < SIZE; i++) {
-      if (va[i] > vb[i] + EPS) return 1;
-      if (va[i] < vb[i] - EPS) return -1;
+      const s = slot(i);
+      if (s.kind === "X") {
+        const c = compareExp(va, vb, s.k);
+        if (c) return c;
+        i += 2;                       // the factor's three entries are compared together
+        continue;
+      }
+      const c = cmpNum(va[i], vb[i]);
+      if (c) return c;
     }
     return 0;
+  }
+
+  function compare(a, b) {
+    return compareVec(vec(a), vec(b));
+  }
+
+  // Compare ignoring the polylog factor an O~ hides (e.g. O~(log^{5/3} n) and O(log^{5/3} n) tie).
+  function compareLead(a, b) {
+    return compareVec(a.v, b.v);
+  }
+
+  // An exponential factor with c = 0 is absent, and one with e = f = 0 is a constant.
+  function normalize(t) {
+    for (let k = 1; k <= LEVELS; k++) {
+      const none = !sgn(t.v[XC(k)]) || (!sgn(t.v[X(k)]) && !sgn(t.v[XP(k)]));
+      if (none) t.v[X(k)] = t.v[XP(k)] = t.v[XC(k)] = 0;
+    }
+    return t;
   }
 
   function minPoly(p, q) {
@@ -81,15 +121,28 @@
   function mul(a, b) {
     const t = term();
     for (let i = 0; i < SIZE; i++) t.v[i] = a.v[i] + b.v[i];
+    // Exponential factors: 2^(c g) · 2^(c' g) = 2^((c + c') g); otherwise the one with the faster-growing exponent wins.
+    for (let k = 1; k <= LEVELS; k++) {
+      const ca = a.v[XC(k)], cb = b.v[XC(k)];
+      const growth = cmpNum(a.v[X(k)], b.v[X(k)]) || cmpNum(a.v[XP(k)], b.v[XP(k)]);
+      let from = null;
+      if (!sgn(cb)) from = a;
+      else if (!sgn(ca)) from = b;
+      else if (growth) from = growth > 0 ? a : b;
+      if (from) [t.v[X(k)], t.v[XP(k)], t.v[XC(k)]] = [from.v[X(k)], from.v[XP(k)], from.v[XC(k)]];
+      else [t.v[X(k)], t.v[XP(k)], t.v[XC(k)]] = [a.v[X(k)], a.v[XP(k)], ca + cb];
+    }
     t.poly = minPoly(a.poly, b.poly);
-    return t;
+    return normalize(t);
   }
 
   function powNum(a, r) {
     const t = term();
     for (let i = 0; i < SIZE; i++) t.v[i] = a.v[i] * r;
+    // (2^(c g))^r = 2^(rc g): the exponents of g stay.
+    for (let k = 1; k <= LEVELS; k++) [t.v[X(k)], t.v[XP(k)]] = [a.v[X(k)], a.v[XP(k)]];
     t.poly = a.poly;
-    return t;
+    return normalize(t);
   }
 
   function max(a, b) {
@@ -111,6 +164,7 @@
     // 2^((log^(k) n)^e · (log^(k+1) n)^f)  ->  (log^(k) n)^e · (log^(k+1) n)^f
     if (kind === "X") return term([[L(k), a.v[X(k)]], [L(k + 1), a.v[XP(k)]]]);
     if (kind === "XP") return term([[L(k + 1), a.v[XP(k)]]]);
+    if (kind === "XC") return term();  // not reached: a factor with a coefficient has an exponent
     return term([[L(k + 1), 1]]);     // log^(k) n  ->  log^(k+1) n
   }
 
@@ -132,11 +186,11 @@
     const f = k < LEVELS ? a.v[L(k + 1)] : 0;
     const others = a.v.some((x, j) => j !== i && (k >= LEVELS || j !== L(k + 1)) && Math.abs(x) > EPS);
     if (others) throw new Error("unsupported exponential");
-    if (e < 1 - EPS) return term([[X(k), e], [XP(k), f]]);
+    if (e < 1 - EPS) return term([[X(k), e], [XP(k), f], [XC(k), 1]]);
     if (Math.abs(e - 1) < EPS && Math.abs(f) < EPS) return k === 1 ? term([[C, 1]]) : term([[L(k - 1), 1]]);
     // 2^((log^(k) n)^e) with e > 1, e.g. 2^(log^2 log Delta): faster than every power of log^(k-1) n but slower
     // than 2^((log^(k-1) n)^eps). That is the second exponent of the exponential one level up, with the first at 0.
-    if (e > 1 + EPS && Math.abs(f) < EPS && k >= 2) return term([[XP(k - 1), e]]);
+    if (e > 1 + EPS && Math.abs(f) < EPS && k >= 2) return term([[XP(k - 1), e], [XC(k - 1), 1]]);
     throw new Error("unsupported exponential");
   }
 
@@ -147,7 +201,7 @@
     if (i >= 0) {
       const { kind, k } = slot(i);
       if (kind === "n") p = L(1);
-      else if (kind === "X" || kind === "XP") p = L(k);
+      else if (kind === "X" || kind === "XP" || kind === "XC") p = L(k);
       else if (kind === "L" && k < LEVELS) p = L(k + 1);
       else if (kind === "star") p = LLSTAR;
       else if (kind === "xstar") p = LSTAR;
@@ -339,8 +393,8 @@
     if (Math.abs(v[C]) > EPS || Math.abs(v[IK]) > EPS) parts.push(nLatex(v[C], v[IK]));
     let onlyExp = true;
     for (let k = 1; k <= LEVELS; k++) {
-      const e = v[X(k)], f = v[XP(k)];
-      if (Math.abs(e) > EPS || Math.abs(f) > EPS) {
+      const e = v[X(k)], f = v[XP(k)], c = v[XC(k)];
+      if (Math.abs(c) > EPS) {
         let inner;
         if (Math.abs(e - 0.5) < EPS && Math.abs(f - 0.5) < EPS) {
           inner = `\\sqrt{${logLatex(k, 1)} \\cdot ${logLatex(k + 1, 1)}}`;
@@ -348,7 +402,8 @@
           inner = [Math.abs(e) > EPS ? logLatex(k, e) : null, Math.abs(f) > EPS ? logLatex(k + 1, f) : null]
             .filter(Boolean).join(" \\cdot ");
         }
-        parts.push(`2^{\\mathcal{O}(${inner})}`);
+        // The coefficient c is a constant in the exponent, hidden by the O; 2^(-g) goes into the denominator.
+        (c > 0 ? parts : below).push(`2^{\\mathcal{O}(${inner})}`);
       }
       if (Math.abs(v[L(k)]) > EPS) { put(v[L(k)], (x) => logLatex(k, x)); onlyExp = false; }
     }
@@ -380,15 +435,15 @@
     { id: "logstar", point: "\\log^{*} n", delta: term([[LSTAR, 1]]) },
     { id: "loglog", slider: true, label: "\\Theta(\\log\\log n)", point: "\\log\\log n", delta: term([[L(2), 1]]) },
     // log Delta = log log n / log log log n: where bounds like log Delta and log log n / log log log n cross.
-    { id: "exploglog", point: "2^{\\log\\log n / \\log\\log\\log n}", delta: term([[X(2), 1], [XP(2), -1]]) },
+    { id: "exploglog", point: "2^{\\log\\log n / \\log\\log\\log n}", delta: term([[X(2), 1], [XP(2), -1], [XC(2), 1]]) },
     { id: "sqrtlog", point: "\\sqrt{\\log n}", delta: term([[L(1), 0.5]]) },
     { id: "log", slider: true, label: "\\Theta(\\log n)", point: "\\log n", delta: term([[L(1), 1]]) },
     { id: "log2", point: "\\log^{2} n", delta: term([[L(1), 2]]) },
     { id: "log3", point: "\\log^{3} n", delta: term([[L(1), 3]]) },
-    { id: "exp14", point: "2^{\\log^{1/4} n}", delta: term([[X(1), 0.25]]) },
-    { id: "exp13", point: "2^{\\log^{1/3} n}", delta: term([[X(1), 1 / 3]]) },
-    { id: "exp12", point: "2^{\\sqrt{\\log n}}", delta: term([[X(1), 0.5]]) },
-    { id: "exp23", point: "2^{\\log^{2/3} n}", delta: term([[X(1), 2 / 3]]) },
+    { id: "exp14", point: "2^{\\log^{1/4} n}", delta: term([[X(1), 0.25], [XC(1), 1]]) },
+    { id: "exp13", point: "2^{\\log^{1/3} n}", delta: term([[X(1), 1 / 3], [XC(1), 1]]) },
+    { id: "exp12", point: "2^{\\sqrt{\\log n}}", delta: term([[X(1), 0.5], [XC(1), 1]]) },
+    { id: "exp23", point: "2^{\\log^{2/3} n}", delta: term([[X(1), 2 / 3], [XC(1), 1]]) },
     { id: "nk", slider: true, label: "\\Theta(n^{1/k})", point: "n^{1/k}", delta: term([[IK, 1]]) },
     { id: "n", slider: true, label: "\\Theta(n)", point: "n", delta: term([[C, 1]]) },
   ];
@@ -402,7 +457,7 @@
     if (i < 0) return null;
     const { kind, k } = slot(i);
     let p = -1;
-    if (kind === "n" || kind === "X" || kind === "XP") p = L(Math.max(k, 1));
+    if (kind === "n" || kind === "X" || kind === "XP" || kind === "XC") p = L(Math.max(k, 1));
     else if (kind === "L" && k < LEVELS) p = L(k + 1);
     else if (kind === "star") p = LLSTAR;
     if (p < 0) return null;
@@ -466,5 +521,23 @@
     }
   }
 
-  global.Asymptotics = { REGIMES, simplify, compare, shifted, parse, epsDependence, gap };
+  /**
+   * How close an upper bound b is to a lower bound a (both growth classes):
+   *   "tight"   b = O(a);
+   *   "almost"  b = O(a · polylog(a)), e.g. log n against log n / log log n, or O~(f) against Omega(f);
+   *   "poly"    b = a^O(1), e.g. log^{5/3} n against log n / log log n, or log n against sqrt(log n);
+   *   "exp"     anything larger, e.g. log* n against log log n or against polylog n.
+   */
+  function classify(a, b) {
+    if (compare(b, a) <= 0) return "tight";
+    if (compare(b, tilde(a)) <= 0) return "almost";
+    try {
+      if (lead(a) >= 0 && compare(log(b), log(a)) <= 0) return "poly";
+    } catch (e) {
+      // too many nested logarithms: the bounds are far apart
+    }
+    return "exp";
+  }
+
+  global.Asymptotics = { REGIMES, simplify, compare, compareLead, shifted, parse, epsDependence, gap, classify };
 })(window);

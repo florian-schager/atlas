@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CONGEST model · Atlas of Distributed Algorithms</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css?v=11bdb4d513">
+  <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
+</head>
+<body data-page="model" data-model="CONGEST">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">Atlas of Distributed Algorithms</a>
+      <nav class="site-nav" aria-label="Site">
+        <details class="nav-menu">
+          <summary>Problems</summary>
+          <div class="nav-menu-list">
+            <a href="maximal-matching.html">Maximal matching</a>
+            <a href="mis.html">MIS</a>
+            <a href="vertex-coloring.html">Vertex coloring</a>
+            <a href="edge-coloring.html">Edge coloring</a>
+            <a href="network-decomposition.html">Network decomposition</a>
+            <a href="degree-splitting.html">Degree splitting</a>
+            <a href="sinkless-orientation.html">Sinkless orientation</a>
+          </div>
+        </details>
+        <details class="nav-menu">
+          <summary class="active">Models</summary>
+          <div class="nav-menu-list">
+            <a href="local.html">LOCAL</a>
+            <a class="active" aria-current="page" href="congest.html">CONGEST</a>
+          </div>
+        </details>
+        <a href="reductions.html">Reductions</a>
+        <a href="bibliography.html">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="problem problem-wide">
+      <div class="problem-text" id="problem-text">
+        <p class="eyebrow">Overview</p>
+        <h1>The CONGEST model</h1>
+        <p>
+          The best known lower and upper bounds for every problem in the CONGEST model on general graphs, for
+          deterministic and randomized algorithms. As in the <a href="local.html">LOCAL model</a>, the nodes
+          communicate in synchronous rounds, but every message has only $O(\log n)$ bits. Every lower bound for
+          LOCAL also holds here, while algorithms must work with small messages. Runtimes depend on the number of nodes $n$ and the maximum
+          degree $\Delta$; choose a regime of $\Delta$ to compare them as functions of $n$, or take the worst case
+          over all $\Delta$.
+        </p>
+        <p class="params">
+          The gap between the bounds is classified as <em>tight</em> (they match asymptotically),
+          <em>almost tight</em> (they match up to a factor polylogarithmic in the lower bound, such as
+          $\log n$ against $\log n / \log\log n$), a <em>polynomial gap</em> (the upper bound is polynomial in the
+          lower bound, such as $\log^{5/3} n$ against $\log n$) or an <em>exponential gap</em> (the upper bound is
+          exponential in the lower bound or more, such as $\mathrm{polylog}\, n$ against $\log^* n$).
+        </p>
+      </div>
+    </section>
+
+    <section class="results" id="overview"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Bounds are taken from the results in the database and compared at sample values of Δ, so they can only be as
+      complete as the database. Corrections are welcome on the problem pages.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="data.js?v=4bce79a8fd"></script>
+  <script src="asymptotics.js?v=21cf5400d7"></script>
+  <script src="app.js?v=7fc04e0547"></script>
+</body>
+</html>

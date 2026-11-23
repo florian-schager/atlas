@@ -2,7 +2,7 @@ id: mis-abi86
 title: MIS via marking vertices randomly
 problem: mis
 bound: upper
-model: LOCAL
+model: CONGEST
 randomness: randomized
 graph_class: general
 runtime:

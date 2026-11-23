@@ -4545,7 +4545,7 @@ window.ATLAS_DATA = {
    "title": "Luby's MIS algorithm",
    "problem": "mis",
    "bound": "upper",
-   "model": "LOCAL",
+   "model": "CONGEST",
    "randomness": "randomized",
    "graph_class": "general",
    "runtime": {
@@ -4611,7 +4611,7 @@ window.ATLAS_DATA = {
    "title": "MIS via marking vertices randomly",
    "problem": "mis",
    "bound": "upper",
-   "model": "LOCAL",
+   "model": "CONGEST",
    "randomness": "randomized",
    "graph_class": "general",
    "runtime": {
@@ -6412,6 +6412,38 @@ window.ATLAS_DATA = {
    "status": "approved"
   },
   {
+   "id": "vc-lb-bfhklrsu16-randomized",
+   "title": "Round elimination via sinkless coloring",
+   "problem": "vertex-coloring",
+   "colors": {
+    "latex": "\\Delta",
+    "expr": "Delta"
+   },
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "randomized",
+   "graph_class": "general",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} \\log n)",
+    "expr": "Omega(log(log(n))/log(Delta))"
+   },
+   "year": 2015,
+   "sources": [
+    {
+     "paper": "bfhklrsu16",
+     "reference": "Corollary 25",
+     "url": "https://arxiv.org/html/1511.00900v1#Thmtheorem25"
+    },
+    {
+     "paper": "ckp16",
+     "reference": "Corollary 2",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmcorollary2"
+    }
+   ],
+   "comments": "Ω(log log n) on Δ-regular graphs of high girth, dependence on Δ from [[ckp16]]",
+   "status": "approved"
+  },
+  {
    "id": "ds-gs17-directed",
    "title": "Augmenting paths",
    "problem": "degree-splitting",
@@ -6760,6 +6792,33 @@ window.ATLAS_DATA = {
      "paper": "hss16"
     }
    ],
+   "status": "approved"
+  },
+  {
+   "id": "vc-lb-ckp16-deterministic",
+   "title": "Round elimination via sinkless coloring",
+   "problem": "vertex-coloring",
+   "colors": {
+    "latex": "\\Delta",
+    "expr": "Delta"
+   },
+   "bound": "lower",
+   "model": "LOCAL",
+   "randomness": "deterministic",
+   "graph_class": "trees",
+   "runtime": {
+    "latex": "\\Omega(\\log_{\\Delta} n)",
+    "expr": "Omega(log(n)/log(Delta))"
+   },
+   "year": 2016,
+   "sources": [
+    {
+     "paper": "ckp16",
+     "reference": "Theorem 5",
+     "url": "https://arxiv.org/html/1602.08166v2#Thmtheorem5"
+    }
+   ],
+   "comments": "Δ-regular trees, also Δ-regular graphs of girth Ω(log_Δ n); Δ ≥ 3",
    "status": "approved"
   },
   {

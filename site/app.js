@@ -86,6 +86,12 @@
   // with Delta, which can make them easier.
   const holdsForAllDelta = (r) => r.bound === "lower" && !r.colors && !r.discrepancy && !/\bDelta\b/.test(r.runtime.expr);
 
+  // Problems where a lower bound proved for a smaller maximum degree also holds for every larger one: add a
+  // disjoint star to raise the maximum degree. Not for colorings and degree splitting, whose palette or allowed
+  // discrepancy grows with Delta, nor for sinkless orientation, where Delta is the minimum degree (a star's leaves
+  // would be sinks).
+  const LOWER_BOUNDS_CARRY_UP = new Set(["maximal-matching", "mis", "network-decomposition"]);
+
   // Regimes of Delta a result applies in, or null for all of them.
   function allowedRegimes(r) {
     const limits = [holdsForAllDelta(r) ? null : CLASS_REGIMES[r.graph_class],
@@ -146,10 +152,116 @@
     },
   };
   const COLOR_TREE = (COLOR_TREES[PROBLEM] || COLOR_TREES["vertex-coloring"]).nodes;
-  const COLOR_FALLBACK = (COLOR_TREES[PROBLEM] || COLOR_TREES["vertex-coloring"]).fallback || {};
   const COLOR_NODE = Object.fromEntries(COLOR_TREE.map((n) => [n.id, n]));
   const RANDOMNESS_RANK = { deterministic: 0, randomized: 1 };
   const MODEL_RANK = { CONGEST: 0, LOCAL: 1 };   // a CONGEST algorithm also runs in LOCAL
+
+  // ---------- palettes, graph classes and settings (problem pages and the LOCAL overview) ----------
+
+  const colorTreeOf = (problem) => COLOR_TREES[problem] || COLOR_TREES["vertex-coloring"];
+  const colorNodesOf = new Map();
+  function colorNodeMap(problem) {
+    if (!colorNodesOf.has(problem)) colorNodesOf.set(problem, Object.fromEntries(colorTreeOf(problem).nodes.map((n) => [n.id, n])));
+    return colorNodesOf.get(problem);
+  }
+
+  // Growth class of a number of colors, read off at Delta = n.
+  const colorGroups = new Map();
+  function colorGroup(r) {
+    if (!r.colors) return null;
+    const key = colorsKey(r);
+    if (!colorGroups.has(key)) {
+      const atN = A.REGIMES.find((g) => g.id === "n");
+      const s = A.simplify(r.colors.expr, atN);
+      let id;
+      if (s.error) id = "exp";                                // only exponentials in Delta fail here
+      else if (s.term.v.every((x) => Math.abs(x) < 1e-9)) id = "const";
+      else if (A.compare(s.term, A.simplify("Delta", atN).term) <= 0) id = "linear";
+      else id = "poly";
+      colorGroups.set(key, id);
+    }
+    return colorGroups.get(key);
+  }
+
+  // The most specific color tree node of a result: an exact-count leaf if one matches, else its growth class.
+  function colorNodeOf(problem, r) {
+    if (!r.colors) return null;
+    const tree = colorTreeOf(problem);
+    const exact = tree.nodes.find((n) => (n.keys || []).includes(colorsKey(r)));
+    if (exact) return exact.id;
+    const group = colorGroup(r);
+    if ((tree.fallback || {})[group]) return tree.fallback[group];
+    return colorNodeMap(problem)[group] ? group : "all";
+  }
+
+  // Does the colors option `id` include result r (r's node is `id` or below it)?
+  function inColorOptionOf(problem, r, id) {
+    if (id === null || id === "all") return true;
+    const nodes = colorTreeOf(problem).nodes;
+    const byId = colorNodeMap(problem);
+    // Walk up the tree from r's node; an option with `includes` also contains those nodes' subtrees.
+    const seen = new Set();
+    const stack = [colorNodeOf(problem, r)];
+    while (stack.length) {
+      const n = stack.pop();
+      if (!n || seen.has(n)) continue;
+      if (n === id) return true;
+      seen.add(n);
+      stack.push(byId[n].parent);
+      for (const m of nodes) if ((m.includes || []).includes(n)) stack.push(m.id);
+    }
+    return false;
+  }
+
+  function classAndAncestors(c) {
+    const out = new Set([c]);
+    const stack = [c];
+    while (stack.length) for (const p of CLASS_PARENTS[stack.pop()] || []) if (!out.has(p)) { out.add(p); stack.push(p); }
+    return out;
+  }
+
+  // Does result s also hold in the setting of result r? An algorithm carries over to stronger models
+  // (CONGEST -> LOCAL), to randomized algorithms and to subclasses; a lower bound the other way round:
+  // to weaker models (LOCAL -> CONGEST), to deterministic algorithms and to superclasses.
+  function appliesTo(s, r) {
+    if (s.problem !== r.problem || s.bound !== r.bound || !sameParameters(s, r)) return false;
+    const [from, to] = r.bound === "lower" ? [r, s] : [s, r];
+    return RANDOMNESS_RANK[from.randomness] <= RANDOMNESS_RANK[to.randomness]
+      && MODEL_RANK[from.model] <= MODEL_RANK[to.model]
+      && classAndAncestors(to.graph_class).has(from.graph_class)
+      && (from.assumptions || []).every((a) => assumptionClosure(to.assumptions).has(a));
+  }
+
+  // Classes that fix the maximum degree, for comparing a lower bound's palette with a chosen one.
+  const FIXED_DELTA = { cycles: 2, paths: 2 };
+  // The value of a palette expression such as "Delta+1", "3" or "(1+eps)*Delta" for a given Delta, or null.
+  // Constants of a result (eps etc.) are small, as in the asymptotic engine.
+  const SMALL = { eps: 0.1, delta: 0.1, gamma: 0.1 };
+  function paletteValue(expr, delta) {
+    const ev = (node) => {
+      if (node.type === "num") return node.value;
+      if (node.type === "var") return node.name === "Delta" ? delta : SMALL[node.name] ?? null;
+      if (node.type !== "bin") return null;
+      const a = ev(node.l), b = ev(node.r);
+      if (a === null || b === null) return null;
+      return { "+": a + b, "-": a - b, "*": a * b, "/": a / b, "^": a ** b }[node.op];
+    };
+    try { return ev(A.parse(expr)); } catch (e) { return null; }
+  }
+
+  // Does result s count for the palette (a color tree node with an exact count)? An algorithm with at most that
+  // many colors also solves it; a lower bound holds for every palette up to its own (compared at the fixed degree
+  // of its class, e.g. 3 colors on cycles is a (Delta + 1)-coloring there).
+  function paletteFitsOf(problem, s, palette) {
+    if (!palette) return true;
+    if (s.bound === "upper") return inColorOptionOf(problem, s, palette.id);
+    const delta = FIXED_DELTA[s.graph_class];
+    if (delta !== undefined) {
+      const mine = paletteValue(s.colors.expr, delta), wanted = paletteValue(palette.keys[0], delta);
+      return mine !== null && wanted !== null && wanted <= mine;
+    }
+    return inColorOptionOf(problem, { id: `palette-${palette.id}`, colors: { expr: palette.keys[0] } }, colorNodeOf(problem, s));
+  }
 
   // ---------- DOM helpers ----------
 
@@ -1284,69 +1396,8 @@
       });
     }
 
-    // Growth class of a result's number of colors, read off at Delta = n.
-    const atN = A.REGIMES.find((g) => g.id === "n");
-    const linear = A.simplify("Delta", atN).term;
-    const groupCache = new Map();
-    function colorGroup(r) {
-      if (!r.colors) return null;
-      if (!groupCache.has(r.id)) {
-        const s = A.simplify(r.colors.expr, atN);
-        let id;
-        if (s.error) id = "exp";                                // only exponentials in Delta fail here
-        else if (s.term.v.every((x) => Math.abs(x) < 1e-9)) id = "const";
-        else if (A.compare(s.term, linear) <= 0) id = "linear";
-        else id = "poly";
-        groupCache.set(r.id, id);
-      }
-      return groupCache.get(r.id);
-    }
-
-    // The most specific COLOR_TREE node of a result: an exact-count leaf if one matches, else its growth class.
-    function colorNode(r) {
-      if (!r.colors) return null;
-      const exact = COLOR_TREE.find((n) => (n.keys || []).includes(colorsKey(r)));
-      if (exact) return exact.id;
-      const group = colorGroup(r);
-      if (COLOR_FALLBACK[group]) return COLOR_FALLBACK[group];
-      return COLOR_NODE[group] ? group : "all";
-    }
-
-    // Does the colors option `id` include result r (r's node is `id` or below it)?
-    function inColorOption(r, id) {
-      if (id === null || id === "all") return true;
-      // Walk up the tree from r's node; an option with `includes` also contains those nodes' subtrees.
-      const seen = new Set();
-      const stack = [colorNode(r)];
-      while (stack.length) {
-        const n = stack.pop();
-        if (!n || seen.has(n)) continue;
-        if (n === id) return true;
-        seen.add(n);
-        stack.push(COLOR_NODE[n].parent);
-        for (const m of COLOR_TREE) if ((m.includes || []).includes(n)) stack.push(m.id);
-      }
-      return false;
-    }
-
-    function classAndAncestors(c) {
-      const out = new Set([c]);
-      const stack = [c];
-      while (stack.length) for (const p of CLASS_PARENTS[stack.pop()] || []) if (!out.has(p)) { out.add(p); stack.push(p); }
-      return out;
-    }
-
-    // Does result s also hold in the setting of result r? An algorithm carries over to stronger models
-    // (CONGEST -> LOCAL), to randomized algorithms and to subclasses; a lower bound the other way round:
-    // to weaker models (LOCAL -> CONGEST), to deterministic algorithms and to superclasses.
-    function appliesTo(s, r) {
-      if (s.problem !== r.problem || s.bound !== r.bound || !sameParameters(s, r)) return false;
-      const [from, to] = r.bound === "lower" ? [r, s] : [s, r];
-      return RANDOMNESS_RANK[from.randomness] <= RANDOMNESS_RANK[to.randomness]
-        && MODEL_RANK[from.model] <= MODEL_RANK[to.model]
-        && classAndAncestors(to.graph_class).has(from.graph_class)
-        && (from.assumptions || []).every((a) => assumptionClosure(to.assumptions).has(a));
-    }
+    const colorNode = (r) => colorNodeOf(PROBLEM, r);
+    const inColorOption = (r, id) => inColorOptionOf(PROBLEM, r, id);
 
     // Filters show every result of the current table that holds in the chosen setting (see appliesTo).
     const isLower = () => state.bound === "lower";
@@ -1429,13 +1480,7 @@
       return Boolean(a && b && A.compare(a, b) < 0);
     };
     // Compare two terms ignoring the polylog factor an O~ hides (e.g. O~(log^{5/3} n) vs O(log^{5/3} n) tie).
-    const compareLead = (a, b) => {
-      for (let i = 0; i < a.v.length; i++) {
-        if (a.v[i] > b.v[i] + 1e-9) return 1;
-        if (a.v[i] < b.v[i] - 1e-9) return -1;
-      }
-      return 0;
-    };
+    const compareLead = A.compareLead;
     // result id -> Set of "<regime id>+" / "<regime id>-" where it is beaten but the crossover lies at that
     // regime up to lower-order factors: it is only beaten by an O~ factor there, or it is best once Delta moves
     // up (+) or down (-) by a lower-order factor (e.g. O(log^2 Delta log n) against O(sqrt(Delta)) at
@@ -1546,9 +1591,8 @@
     // for a chosen model (LOCAL or CONGEST) and a fixed regime of Delta (Theta(1), Theta(log n) or Theta(n); root's
     // data-regime picks the first one shown). The y-axis is ordinal: one row per growth class of n that occurs, in
     // increasing order, spaced by how far apart neighbouring classes are. Runtimes below the best lower bound are
-    // shaded red. A lower bound for a smaller Delta also holds for the chosen Delta (add a disjoint star to raise
-    // the maximum degree), so lower bounds are taken at their strongest regime up to it (except for colorings,
-    // which also choose a palette, see TIMELINE_PALETTES). Algorithms count if they
+    // shaded red. Where a lower bound for a smaller Delta also holds for the chosen Delta (see LOWER_BOUNDS_CARRY_UP),
+    // lower bounds are taken at their strongest regime up to it. Algorithms count if they
     // hold for general graphs (for Delta = Theta(1) also for bounded-degree graphs) under assumptions the regime
     // satisfies. Returns a function that draws the chart for its current width, or null if there is nothing to show.
     function drawEvolution(root) {
@@ -1565,41 +1609,12 @@
       if (!PALETTES.length) return null;
       view.palette = PALETTES[0];
 
-      // Classes that fix the maximum degree, for comparing a lower bound's palette with the chosen one.
-      const FIXED_DELTA = { cycles: 2, paths: 2 };
-      // The value of a palette expression such as "Delta+1", "3" or "(1+eps)*Delta" for a given Delta, or null.
-      // Constants of a result (eps etc.) are small, as in the asymptotic engine.
-      const SMALL = { eps: 0.1, delta: 0.1, gamma: 0.1 };
-      const numeric = (expr, delta) => {
-        const ev = (node) => {
-          if (node.type === "num") return node.value;
-          if (node.type === "var") return node.name === "Delta" ? delta : SMALL[node.name] ?? null;
-          if (node.type !== "bin") return null;
-          const a = ev(node.l), b = ev(node.r);
-          if (a === null || b === null) return null;
-          return { "+": a + b, "-": a - b, "*": a * b, "/": a / b, "^": a ** b }[node.op];
-        };
-        try { return ev(A.parse(expr)); } catch (e) { return null; }
-      };
-      // Does result s count for the palette? An algorithm with at most that many colors also solves it; a lower
-      // bound holds for every palette up to its own (compared at the fixed degree of its class, e.g. 3 colors on
-      // cycles is a (Delta + 1)-coloring there).
-      function paletteFits(s, palette) {
-        if (!palette) return true;
-        if (s.bound === "upper") return inColorOption(s, palette.id);
-        const delta = FIXED_DELTA[s.graph_class];
-        if (delta !== undefined) {
-          const mine = numeric(s.colors.expr, delta), wanted = numeric(palette.keys[0], delta);
-          return mine !== null && wanted !== null && wanted <= mine;
-        }
-        return inColorOption({ id: `palette-${palette.id}`, colors: { expr: palette.keys[0] } }, colorNode(s));
-      }
+      const paletteFits = (s, palette) => paletteFitsOf(PROBLEM, s, palette);
 
       // The four series for a model, a regime and a palette: steps [{year, term, latex, results}], one per year in
       // which the state of the art improved.
       function computeSeries(model, regime, palette) {
-        // With colors, a lower bound for a smaller Delta does not carry over: the palette grows with Delta.
-        const below = palette ? [regime] : A.REGIMES.slice(0, A.REGIMES.indexOf(regime) + 1);
+        const below = LOWER_BOUNDS_CARRY_UP.has(PROBLEM) ? A.REGIMES.slice(0, A.REGIMES.indexOf(regime) + 1) : [regime];
         // Algorithms may assume a lower bound on Delta that the regime satisfies.
         const regimeAssumptions = Object.keys(ASSUMPTION_REGIMES).filter((a) => ASSUMPTION_REGIMES[a].includes(regime.id));
         // A growing Delta exceeds any constant, so also Delta >= Delta_0 and, for a constant eps, eps > 1/Delta.
@@ -1613,7 +1628,12 @@
         });
         const valueOf = (r) => {
           const m = simplified.get(r.id);
-          if (r.bound === "upper") return usable(m.get(regime.id)) ? m.get(regime.id) : null;
+          if (r.bound === "upper") {
+            const s = m.get(regime.id);
+            if (!usable(s)) return null;
+            // Every algorithm takes at least a constant number of rounds (e.g. O(log_Delta log n) for large Delta).
+            return A.compare(s.term, TRIVIAL) < 0 ? { term: TRIVIAL, latex: "\\mathcal{O}(1)" } : s;
+          }
           let best = null;
           for (const g of below) {
             const s = m.get(g.id);
@@ -1734,7 +1754,12 @@
         + (view.palette
           ? "Algorithms with fewer colors count for a palette, and lower bounds for more colors. A lower bound for a "
             + "smaller maximum degree does not carry over, since the palette grows with Δ."
-          : "Lower bounds proved for a smaller maximum degree carry over by adding a disjoint star.") });
+          : LOWER_BOUNDS_CARRY_UP.has(PROBLEM)
+            ? "Lower bounds proved for a smaller maximum degree carry over by adding a disjoint star."
+            : PROBLEM === "sinkless-orientation"
+              ? "A lower bound for a smaller degree does not carry over, since Δ is the minimum degree."
+              : "A lower bound for a smaller maximum degree does not carry over, since the allowed discrepancy grows "
+                + "with Δ.") });
       root.replaceChildren(controls, legend, scroll, empty, note);
       const tooltip = el("div", { class: "evo-tooltip", role: "status", hidden: "" });
 
@@ -2891,18 +2916,357 @@
     }
   }
 
+  // ---------- model overviews (LOCAL and CONGEST) ----------
+
+  // One row per problem, with its parameters: a palette (color tree node) for colorings, the variant and
+  // discrepancy for degree splitting, a filter on the decomposition for network decomposition.
+  const OVERVIEW_ROWS = [
+    { id: "mm", problem: "maximal-matching", name: "Maximal matching" },
+    { id: "mis", problem: "mis", name: "MIS" },
+    { id: "vc-delta1", problem: "vertex-coloring", palette: "delta1", name: "(Δ+1)-vertex coloring" },
+    { id: "vc-delta", problem: "vertex-coloring", palette: "delta", name: "Δ-vertex coloring",
+      note: "Δ ≥ 3, no (Δ+1)-clique" },
+    { id: "ec-two1", problem: "edge-coloring", palette: "two1", name: "(2Δ−1)-edge coloring" },
+    { id: "ec-delta1", problem: "edge-coloring", palette: "delta1", name: "(Δ+1)-edge coloring" },
+    { id: "nd", problem: "network-decomposition", name: "Network decomposition",
+      note: "O(log n) colors, cluster diameter O(log n)",
+      // Decompositions with at most O(log n) colors and diameter (weak or strong).
+      filter: (r) => {
+        const atConst = A.REGIMES.find((g) => g.id === "const");
+        const limit = A.simplify("log(n)", atConst).term;
+        return ["colors", "diameter"].every((k) => {
+          const s = A.simplify(r.decomposition[k].expr, atConst);
+          return !s.error && A.compare(s.term, limit) <= 0;
+        });
+      } },
+    { id: "ds", problem: "degree-splitting", name: "Degree splitting", variant: "directed",
+      discrepancy: "eps*Delta", note: "directed, discrepancy εΔ for a constant ε > 0" },
+    { id: "so", problem: "sinkless-orientation", name: "Sinkless orientation", note: "minimum degree Δ ≥ 3" },
+  ];
+
+  // The regimes of Delta offered in the overview; "worst" takes, for every bound, the worst case over all sampled Delta.
+  const OVERVIEW_REGIMES = [
+    { id: "worst", latex: "\\text{any } \\Delta", title: "Worst case over Δ",
+      text: "Each bound as a function of n alone: the worst case over all Δ up to n." },
+    { id: "const", latex: "\\Delta = \\Theta(1)", title: "Constant degree", text: "Bounded-degree graphs." },
+    { id: "loglog", latex: "\\Delta = \\Theta(\\log\\log n)", title: "Very small degree",
+      text: "log Δ = Θ(log log log n): factors polynomial in Δ are polylog log n." },
+    { id: "log", latex: "\\Delta = \\Theta(\\log n)", title: "Logarithmic degree",
+      text: "The threshold where O(Δ) algorithms meet polylog n ones." },
+    { id: "exp12", latex: "\\Delta = 2^{\\Theta(\\sqrt{\\log n})}", title: "Quasi-polylogarithmic degree",
+      text: "log Δ = Θ(√log n): where bounds in log Δ and in log n trade off." },
+    { id: "n", latex: "\\Delta = \\Theta(n)", title: "Polynomial degree",
+      text: "Dense graphs, log Δ = Θ(log n)." },
+  ];
+
+  const GAP_CLASSES = {
+    tight: { label: "Tight", text: "upper and lower bound match asymptotically" },
+    almost: { label: "Almost tight", text: "the bounds match up to a factor polylogarithmic in the lower bound" },
+    poly: { label: "Polynomial gap", text: "the upper bound is polynomial in the lower bound" },
+    exp: { label: "Exponential gap", text: "the upper bound is exponential in the lower bound, or more" },
+    none: { label: "No lower bound", text: "no nontrivial lower bound is known" },
+  };
+
+  // Per model: the trivial upper bound and how it is achieved, and what the model allows.
+  const MODELS = {
+    LOCAL: { trivial: "n", trivialText: "Every node can learn the whole graph in O(n) rounds",
+      text: "messages of unbounded size" },
+    // A leader collects the m <= n Delta / 2 edges over a BFS tree, pipelined in O(m + D) rounds, and sends the
+    // nodes their outputs back.
+    CONGEST: { trivial: "n * Delta", trivialText: "A leader can collect all m = O(nΔ) edges over a BFS tree, "
+      + "solve the problem and send the outputs back in O(nΔ) rounds", text: "messages of O(log n) bits" },
+  };
+
+  function setupOverview(model) {
+    const root = document.getElementById("overview");
+    const MODEL = MODELS[model];
+    if (!root) return;
+    const CONST = A.REGIMES.find((g) => g.id === "const");
+    const ONE = A.simplify("O(1)", CONST);
+    const TRIVIAL = ONE.term;
+
+    const usable = (s) => s && !s.error && !s.na;
+
+    // Runtime of result r at regime g, as {term, latex} | {error} | {na} (it does not apply for this Delta).
+    const cache = new Map();
+    function at(r, g) {
+      const key = `${r.id}|${g.id}`;
+      if (!cache.has(key)) {
+        const allowed = allowedRegimes(r);
+        cache.set(key, allowed && !allowed.includes(g.id) ? { na: true } : A.simplify(r.runtime.expr, g));
+      }
+      return cache.get(key);
+    }
+
+    // Assumptions on Delta that algorithms may rely on in regime g.
+    function regimeAssumptions(g) {
+      const list = Object.keys(ASSUMPTION_REGIMES).filter((a) => ASSUMPTION_REGIMES[a].includes(g.id));
+      // A growing Delta exceeds any constant, so also Delta >= Delta_0 and, for a constant eps, eps > 1/Delta.
+      if (g.id !== "const") list.push("max-degree-constant", "eps-greater-inverse-delta");
+      return list;
+    }
+
+    // The results of a row that count for a bound and randomness in the model at regime g (see computeSeries on the
+    // problem pages): algorithms for general graphs (for constant Delta also bounded-degree graphs) under
+    // assumptions the regime satisfies, lower bounds for any class whose assumptions only restrict Delta or give
+    // extra input.
+    function pool(row, bound, randomness, g) {
+      const palette = row.palette ? colorNodeMap(row.problem)[row.palette] : null;
+      const target = {
+        problem: row.problem, bound, model, randomness,
+        graph_class: bound === "upper" && g.id === "const" ? "bounded-degree" : "general",
+        assumptions: bound === "upper" ? regimeAssumptions(g) : [],
+        variant: row.variant, discrepancy: row.discrepancy ? { expr: row.discrepancy } : undefined,
+      };
+      const lowerOk = (a) => ASSUMPTION_REGIMES[a] || a.startsWith("given-");
+      return data.results.filter((s) => s.problem === row.problem
+        && appliesTo(s, palette ? { ...target, colors: s.colors } : target)
+        && paletteFitsOf(row.problem, s, palette)
+        && (bound === "upper" || (s.assumptions || []).every(lowerOk))
+        && (!row.filter || row.filter(s)));
+    }
+
+    // Results obtained directly come before those obtained by a reduction, then the earliest first.
+    const order = (a, b) => Boolean(a.reduce_to) - Boolean(b.reduce_to) || a.year - b.year || a.id.localeCompare(b.id);
+
+    // The best bound at regime g: {term, latex, results, regime} or null (no algorithm / no nontrivial lower bound).
+    function bestAt(row, bound, randomness, g) {
+      const lower = bound === "lower";
+      const regimes = lower && LOWER_BOUNDS_CARRY_UP.has(row.problem) ? A.REGIMES.slice(0, A.REGIMES.indexOf(g) + 1) : [g];
+      let best = null;
+      for (const r of pool(row, bound, randomness, g)) {
+        // A lower bound counts at its strongest regime up to g (if it carries over to larger Delta).
+        let v = null;
+        for (const h of regimes) {
+          const s = at(r, h);
+          if (usable(s) && (!lower || A.compare(s.term, TRIVIAL) > 0) && (!v || A.compare(s.term, v.term) > 0)) v = s;
+        }
+        if (!v) continue;
+        // Every algorithm takes at least a constant number of rounds (e.g. O(log_Delta log n) for large Delta).
+        if (!lower && A.compare(v.term, TRIVIAL) < 0) v = ONE;
+        const c = best ? A.compare(v.term, best.term) : 0;
+        if (!best || c === (lower ? 1 : -1)) best = { term: v.term, latex: v.latex, results: [r], regime: g };
+        else if (c === 0) best.results.push(r);
+      }
+      // Gathering the whole graph solves every problem (in O(n) rounds in LOCAL, O(n Delta) in CONGEST), so no
+      // upper bound is worse than that.
+      const trivial = lower ? null : A.simplify(MODEL.trivial, g);
+      if (trivial && (!best || A.compare(best.term, trivial.term) > 0)) {
+        best = { term: trivial.term, latex: trivial.latex, results: [], trivial: true, regime: g };
+      }
+      if (best) best.results.sort(order);
+      return best;
+    }
+
+    // The best bound for a regime choice; for "worst", the worst case over all sampled Delta.
+    function bound(row, which, randomness, regimeId) {
+      if (regimeId !== "worst") return bestAt(row, which, randomness, A.REGIMES.find((g) => g.id === regimeId));
+      let worst = null;
+      for (const g of A.REGIMES) {
+        const b = bestAt(row, which, randomness, g);
+        if (!b) continue;
+        // The worst case for an algorithm is its slowest regime; for a lower bound its strongest.
+        if (!worst || A.compare(b.term, worst.term) > 0) worst = b;
+      }
+      return worst;
+    }
+
+    function classOf(lb, ub) {
+      if (!lb) return "none";
+      return A.classify(lb.term, ub.term);
+    }
+
+    // ---------- rendering ----------
+
+    const state = { regime: "worst" };
+    const fromHash = new URLSearchParams(location.hash.slice(1)).get("delta");
+    if (OVERVIEW_REGIMES.some((o) => o.id === fromHash)) state.regime = fromHash;
+
+    // A compact marker for a result obtained by a reduction, linking to the reduction. It names the problem the
+    // result comes from (e.g. "via sinkless orientation" for a degree splitting lower bound, "via MIS" for a
+    // matching algorithm), or for a reduction within the problem the technique (e.g. "via shattering").
+    function reductionMark(r) {
+      const target = data.results.find((x) => x.id === r.reduce_to);
+      if (!target) return null;
+      const used = reductionFor(r, target);
+      const p = problemInfo(target.problem);
+      const sameProblem = target.problem === r.problem;
+      // A palette with a fixed number of colors names the coloring, e.g. the 3-coloring of cycles.
+      let name = target.colors && /^\d+$/.test(target.colors.latex) ? `${target.colors.latex}-coloring` : p.name;
+      if (name !== name.toUpperCase()) name = name.charAt(0).toLowerCase() + name.slice(1);   // keep "MIS"
+      const label = (target.sources && sourceLabel(target.sources[0])) || target.title;
+      const title = `Obtained by a reduction${used ? ` (${used.title.toLowerCase()})` : ""} from `
+        + `${sameProblem ? "" : `${p.name}: `}${target.title} (${label})`;
+      const text = `via ${sameProblem ? (used ? used.title.toLowerCase() : "reduction") : name}`;
+      return used
+        ? el("a", { class: "chip via", href: `reductions.html#${used.id}`, title, text })
+        : el("span", { class: "chip via", title, text });
+    }
+
+    // The result a bound comes from: its source, linking to the result on its problem page.
+    function resultLink(r) {
+      const page = problemInfo(r.problem).page;
+      const label = (r.sources && sourceLabel(r.sources[0])) || r.title;
+      return page ? el("a", { href: `${page}#${r.id}`, title: r.title, text: label }) : el("span", { text: label });
+    }
+
+    function boundCell(b, which) {
+      const cell = el("td", { class: `col-${which}` });
+      if (!b) {
+        cell.append(el("span", { class: "muted", text: "—" }));
+        return cell;
+      }
+      cell.append(runtimeTex(b.latex));
+      const meta = el("div", { class: "ov-source" });
+      if (b.trivial) {
+        meta.append(el("span", { class: "muted", title: MODEL.trivialText, text: "trivial" }));
+      } else {
+        const [first, ...rest] = b.results;
+        meta.append(resultLink(first));
+        if (first.reduce_to) meta.append(" ", reductionMark(first));
+        if (rest.length) {
+          meta.append(" ", el("span", { class: "ov-more", title: rest.map((r) => (r.sources && sourceLabel(r.sources[0])) || r.title).join("\n"),
+            text: `+${rest.length} more` }));
+        }
+      }
+      if (state.regime === "worst") {
+        meta.append(el("span", { class: "ov-at" }, ["at ", tex(`\\Delta = \\Theta(${b.regime.point})`)]));
+      }
+      cell.append(meta);
+      return cell;
+    }
+
+    // The gap between a pair of bounds is shown by the color of both cells (see the legend), with its name as a
+    // tooltip and for screen readers.
+    function markGap(lbCell, ubCell, cls) {
+      const info = GAP_CLASSES[cls];
+      for (const cell of [lbCell, ubCell]) {
+        cell.classList.add(`gap-${cls}`);
+        cell.title = `${info.label}: ${info.text}`;
+      }
+      ubCell.append(el("span", { class: "visually-hidden", text: `Gap: ${info.label}` }));
+    }
+
+    const button = el("button", { type: "button", class: "filter-toggle regime-toggle", "aria-haspopup": "dialog" });
+    const legend = el("ul", { class: "gap-legend", "aria-label": "Colors of the bounds: the gap between them" }, [
+      el("li", { class: "gap-legend-title", text: "Gap between the bounds" }),
+      ...Object.entries(GAP_CLASSES).map(([id, info]) =>
+        el("li", {}, [el("span", { class: `gap-chip gap-${id}`, text: info.label }), ` ${info.text}`])),
+    ]);
+    const tbody = el("tbody");
+    const table = el("table", { class: "results-table overview-table" }, [
+      el("thead", {}, [
+        el("tr", {}, [
+          el("th", { rowspan: "2", scope: "col", text: "Problem" }),
+          el("th", { colspan: "2", scope: "colgroup", class: "ov-group", text: "Deterministic" }),
+          el("th", { colspan: "2", scope: "colgroup", class: "ov-group", text: "Randomized" }),
+        ]),
+        el("tr", {}, ["Lower bound", "Upper bound", "Lower bound", "Upper bound"].map((t, i) =>
+          el("th", { scope: "col", class: i % 2 === 0 ? "ov-first" : null, text: t }))),
+      ]),
+      tbody,
+    ]);
+
+    function render() {
+      const choice = OVERVIEW_REGIMES.find((o) => o.id === state.regime);
+      button.replaceChildren(el("span", { class: "filter-label", text: "Max. degree" }),
+        el("span", { class: "filter-value" }, [tex(choice.latex)]), el("span", { class: "chevron", "aria-hidden": "true" }));
+      button.title = `${choice.title}: ${choice.text} Click to choose another regime.`;
+      tbody.replaceChildren(...OVERVIEW_ROWS.map((row) => {
+        const name = el("td", { class: "col-problem" }, [problemLink(row.problem, row.name)]);
+        if (row.note) name.append(el("div", { class: "sub", text: row.note }));
+        const cells = [name];
+        for (const randomness of ["deterministic", "randomized"]) {
+          const lb = bound(row, "lower", randomness, state.regime);
+          const ub = bound(row, "upper", randomness, state.regime);
+          const lbCell = boundCell(lb, "lower");
+          const ubCell = boundCell(ub, "upper");
+          lbCell.classList.add("ov-first");
+          markGap(lbCell, ubCell, classOf(lb, ub));
+          cells.push(lbCell, ubCell);
+        }
+        return el("tr", { id: `row-${row.id}` }, cells);
+      }));
+    }
+
+    // The regime picker: a modal dialog with one option per regime.
+    const dialog = el("dialog", { class: "regime-dialog", "aria-labelledby": "regime-dialog-title" });
+    const options = OVERVIEW_REGIMES.map((o) => {
+      const b = el("button", { type: "button", class: "regime-option", "data-regime": o.id }, [
+        el("span", { class: "regime-option-latex" }, [tex(o.latex)]),
+        el("span", { class: "regime-option-title", text: o.title }),
+        el("span", { class: "regime-option-text", text: o.text }),
+      ]);
+      b.addEventListener("click", () => {
+        state.regime = o.id;
+        history.replaceState(null, "", o.id === "worst" ? location.pathname : `#delta=${o.id}`);
+        dialog.close();
+        render();
+      });
+      return b;
+    });
+    const close = el("button", { type: "button", class: "regime-close", "aria-label": "Close", text: "×" });
+    close.addEventListener("click", () => dialog.close());
+    dialog.append(
+      el("div", { class: "regime-dialog-head" }, [
+        el("h2", { id: "regime-dialog-title", text: "Choose the maximum degree Δ" }), close,
+      ]),
+      el("p", { class: "regime-dialog-intro", text: "Runtimes depend on n and Δ. Fix Δ as a function of n to compare "
+        + "the bounds as functions of n alone, or take the worst case over all Δ." }),
+      el("div", { class: "regime-options" }, options),
+    );
+    // A click on the backdrop (outside the dialog's box) closes it.
+    dialog.addEventListener("click", (e) => {
+      const box = dialog.getBoundingClientRect();
+      if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) dialog.close();
+    });
+    button.addEventListener("click", () => {
+      for (const b of options) b.setAttribute("aria-pressed", String(b.dataset.regime === state.regime));
+      dialog.showModal();
+      (options.find((b) => b.dataset.regime === state.regime) || options[0]).focus();
+    });
+
+    root.replaceChildren(
+      el("div", { class: "overview-toolbar" }, [button]),
+      legend,
+      el("div", { class: "table-scroll" }, [table]),
+      el("p", { class: "evo-note", text:
+        `Bounds are for general graphs in the ${model} model (${MODEL.text}), simplified to functions of n for the `
+        + "chosen Δ. An upper bound is the fastest known algorithm (for Δ = Θ(1) also algorithms for bounded-degree "
+        + "graphs); a deterministic algorithm also counts as randomized"
+        + (model === "LOCAL" ? ", and a CONGEST algorithm also counts for LOCAL. "
+          : ". Only algorithms that work with small messages count, while every LOCAL lower bound also holds in CONGEST. ")
+        + "A lower bound is the strongest known one for any graph "
+        + "class; a randomized lower bound also holds for deterministic algorithms. For maximal matching, MIS and "
+        + "network decomposition a lower bound for a smaller Δ carries over to larger Δ; for colorings and degree "
+        + "splitting it does not, since the palette or the allowed discrepancy grows with Δ, and for sinkless "
+        + "orientation Δ is the minimum degree. Among results with the same bound, one obtained directly is shown "
+        + "first; a bound shown with a reduction is only known through it. Since Δ is only sampled, the worst case is "
+        + "approximate." }),
+      dialog,
+    );
+    render();
+  }
+
   // ---------- start ----------
 
-  // The "Problems" menu is a <details>; close it on an outside click or Escape.
-  const navMenu = document.querySelector(".nav-menu");
-  if (navMenu) {
+  // The "Problems" and "Models" menus are <details>; close them on an outside click or Escape, and close the
+  // other one when one opens.
+  const navMenus = [...document.querySelectorAll(".nav-menu")];
+  for (const menu of navMenus) {
+    menu.addEventListener("toggle", () => {
+      if (menu.open) for (const other of navMenus) if (other !== menu) other.open = false;
+    });
+  }
+  if (navMenus.length) {
     document.addEventListener("click", (e) => {
-      if (navMenu.open && !navMenu.contains(e.target)) navMenu.open = false;
+      for (const menu of navMenus) if (menu.open && !menu.contains(e.target)) menu.open = false;
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && navMenu.open) {
-        navMenu.open = false;
-        navMenu.querySelector("summary").focus();
+      const menu = navMenus.find((m) => m.open);
+      if (e.key === "Escape" && menu) {
+        menu.open = false;
+        menu.querySelector("summary").focus();
       }
     });
   }
@@ -2916,5 +3280,6 @@
   if (PROBLEM) setupProblem();
   else if (document.body.dataset.page === "bibliography") setupBibliography();
   else if (document.body.dataset.page === "reductions") setupReductions();
+  else if (document.body.dataset.page === "model") setupOverview(document.body.dataset.model);
   else setupLanding();
 })();

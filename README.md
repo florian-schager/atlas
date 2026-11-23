@@ -16,7 +16,8 @@ graph algorithms, with the state of the art highlighted for every range of the m
 Every result records its runtime, the model (LOCAL or CONGEST), whether it is deterministic or randomized, the
 graph class and assumptions it needs, the number of colors (for colorings), and the theorem in the paper it comes
 from, with a link to it where possible. The site also lists the reductions between the problems and a
-bibliography of all papers.
+bibliography of all papers, and overviews of the LOCAL and CONGEST models compare the best lower and upper bound of every
+problem for a chosen regime of Δ and classify the gap between them.
 
 ## How the state of the art is determined
 

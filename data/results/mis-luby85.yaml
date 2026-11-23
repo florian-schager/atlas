@@ -2,7 +2,7 @@ id: mis-luby85
 title: Luby's MIS algorithm
 problem: mis
 bound: upper
-model: LOCAL
+model: CONGEST
 randomness: randomized
 graph_class: general
 runtime:

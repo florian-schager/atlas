@@ -1,0 +1,20 @@
+id: vc-lb-ckp16-deterministic
+title: Round elimination via sinkless coloring
+problem: vertex-coloring
+colors:
+  latex: \Delta
+  expr: Delta
+bound: lower
+model: LOCAL
+randomness: deterministic
+graph_class: trees
+runtime:
+  latex: \Omega(\log_{\Delta} n)
+  expr: Omega(log(n)/log(Delta))
+year: 2016
+sources:
+- paper: ckp16
+  reference: Theorem 5
+  url: https://arxiv.org/html/1602.08166v2#Thmtheorem5
+comments: Δ-regular trees, also Δ-regular graphs of girth Ω(log_Δ n); Δ ≥ 3
+status: approved
