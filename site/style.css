@@ -875,3 +875,137 @@ a.chip.result:focus-visible { outline: 2px solid var(--accent); outline-offset: 
   .regime-option { grid-template-columns: 1fr; }
   .regime-option-latex { grid-row: auto; }
 }
+
+/* LOCAL model illustration */
+.swatch-known { width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid var(--accent); background: var(--accent-soft); }
+.swatch-msg { width: 8px; height: 8px; border-radius: 50%; background: var(--color-2); }
+.local-anim .lm-v { fill: var(--text); font: italic 600 17px var(--serif); }
+.local-anim .lm-labels text { fill: var(--muted); font: 13px var(--sans); text-anchor: end; opacity: 0; }
+.local-anim .lm-messages circle { fill: var(--color-2); opacity: 0; }
+/* One cycle of 10 s in five slots of 2 s: before the first round, rounds 1 to 3 (messages travel along every edge in
+   both directions, then v knows one hop further) and a pause. */
+.local-anim .lm-messages circle, .local-anim .lm-k1, .local-anim .lm-k2, .local-anim .lm-k3,
+.local-anim .lm-e1, .local-anim .lm-e2, .local-anim .lm-e3, .local-anim .lm-labels text {
+  animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: linear;
+}
+.local-anim .lm-messages circle { animation-name: lm-msg; animation-timing-function: ease-in-out; }
+.local-anim .lm-k1 { animation-name: lm-know1; }
+.local-anim .lm-k2 { animation-name: lm-know2; }
+.local-anim .lm-k3 { animation-name: lm-know3; }
+.local-anim .lm-e1 { animation-name: lm-edge1; }
+.local-anim .lm-e2 { animation-name: lm-edge2; }
+.local-anim .lm-e3 { animation-name: lm-edge3; }
+.local-anim .lm-l0 { animation-name: lm-label0; }
+.local-anim .lm-l1 { animation-name: lm-label1; }
+.local-anim .lm-l2 { animation-name: lm-label2; }
+.local-anim .lm-l3 { animation-name: lm-label3; }
+.local-anim .lm-l4 { animation-name: lm-label4; }
+@keyframes lm-msg {
+  0%, 20.9% { opacity: 0; transform: translate(0, 0); }
+  21% { opacity: 1; transform: translate(0, 0); }
+  33% { opacity: 1; transform: translate(var(--dx), var(--dy)); }
+  33.1%, 40.9% { opacity: 0; transform: translate(0, 0); }
+  41% { opacity: 1; transform: translate(0, 0); }
+  53% { opacity: 1; transform: translate(var(--dx), var(--dy)); }
+  53.1%, 60.9% { opacity: 0; transform: translate(0, 0); }
+  61% { opacity: 1; transform: translate(0, 0); }
+  73% { opacity: 1; transform: translate(var(--dx), var(--dy)); }
+  73.1%, 100% { opacity: 0; transform: translate(0, 0); }
+}
+@keyframes lm-know1 {
+  0%, 33.9% { fill: var(--surface); stroke: var(--node); }
+  34%, 97% { fill: var(--accent-soft); stroke: var(--accent); }
+  100% { fill: var(--surface); stroke: var(--node); }
+}
+@keyframes lm-edge1 {
+  0%, 33.9% { stroke: var(--edge); stroke-width: 2; }
+  34%, 97% { stroke: var(--accent); stroke-width: 3; }
+  100% { stroke: var(--edge); stroke-width: 2; }
+}
+@keyframes lm-know2 {
+  0%, 53.9% { fill: var(--surface); stroke: var(--node); }
+  54%, 97% { fill: var(--accent-soft); stroke: var(--accent); }
+  100% { fill: var(--surface); stroke: var(--node); }
+}
+@keyframes lm-edge2 {
+  0%, 53.9% { stroke: var(--edge); stroke-width: 2; }
+  54%, 97% { stroke: var(--accent); stroke-width: 3; }
+  100% { stroke: var(--edge); stroke-width: 2; }
+}
+@keyframes lm-know3 {
+  0%, 73.9% { fill: var(--surface); stroke: var(--node); }
+  74%, 97% { fill: var(--accent-soft); stroke: var(--accent); }
+  100% { fill: var(--surface); stroke: var(--node); }
+}
+@keyframes lm-edge3 {
+  0%, 73.9% { stroke: var(--edge); stroke-width: 2; }
+  74%, 97% { stroke: var(--accent); stroke-width: 3; }
+  100% { stroke: var(--edge); stroke-width: 2; }
+}
+@keyframes lm-label0 { 0%, 19.9% { opacity: 1; } 20%, 100% { opacity: 0; } }
+@keyframes lm-label1 { 0%, 19.9% { opacity: 0; } 20%, 39.9% { opacity: 1; } 40%, 100% { opacity: 0; } }
+@keyframes lm-label2 { 0%, 39.9% { opacity: 0; } 40%, 59.9% { opacity: 1; } 60%, 100% { opacity: 0; } }
+@keyframes lm-label3 { 0%, 59.9% { opacity: 0; } 60%, 79.9% { opacity: 1; } 80%, 100% { opacity: 0; } }
+@keyframes lm-label4 { 0%, 79.9% { opacity: 0; } 80%, 100% { opacity: 1; } }
+/* Without motion: the state after two rounds. */
+.local-anim .lm-static { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .local-anim * { animation: none !important; }
+  .illustration .local-anim .nodes circle.lm-k1, .illustration .local-anim .nodes circle.lm-k2 {
+    fill: var(--accent-soft); stroke: var(--accent);
+  }
+  .illustration .local-anim .edges line.lm-e1, .illustration .local-anim .edges line.lm-e2 { stroke: var(--accent); stroke-width: 3; }
+  .local-anim .lm-labels .lm-static { display: inline; opacity: 1; }
+}
+
+/* CONGEST model illustration: identifiers queue at u and cross the edge to w one per round. One cycle of 14 s
+   in 7 slots of 2 s: before the first round, rounds 1 to 5 and a pause. Generated with fixed coordinates
+   matching the figure in congest.html. */
+.congest-anim .edges line.cg-bridge { stroke: var(--node); stroke-width: 3; }
+.congest-anim .cg-note { fill: var(--muted); font: italic 11px var(--sans); text-anchor: middle; }
+.congest-anim .cg-name { fill: var(--text); font: italic 600 17px var(--serif); }
+.congest-anim .cg-packets rect { fill: var(--color-2); stroke: var(--surface); stroke-width: 1.5; }
+.congest-anim .cg-labels text { fill: var(--muted); font: 13px var(--sans); text-anchor: end; opacity: 0; }
+.congest-anim .cg-packets rect, .congest-anim .nodes circle[class*="cg-k"], .congest-anim .cg-labels text {
+  animation-duration: 14s; animation-iteration-count: infinite; animation-timing-function: linear;
+}
+.swatch-packet { width: 10px; height: 10px; border-radius: 2px; background: var(--color-2); }
+.congest-anim .cg-p0 { animation-name: cg-packet0; animation-timing-function: ease-in-out; }
+@keyframes cg-packet0 { 0% { transform: translate(200px, 150px); opacity: 1; } 15% { transform: translate(200px, 150px); opacity: 1; } 20.714% { transform: translate(330px, 150px); opacity: 1; } 22.857% { transform: translate(302px, 110px); opacity: 1; } 97% { transform: translate(302px, 110px); opacity: 1; } 99.9% { transform: translate(302px, 110px); opacity: 0; } 100% { transform: translate(200px, 150px); opacity: 0; } }
+.congest-anim .cg-p1 { animation-name: cg-packet1; animation-timing-function: ease-in-out; }
+@keyframes cg-packet1 { 0% { transform: translate(55px, 85px); opacity: 1; } 15% { transform: translate(55px, 85px); opacity: 1; } 20.714% { transform: translate(200px, 150px); opacity: 1; } 22.857% { transform: translate(200px, 124px); opacity: 1; } 29.286% { transform: translate(200px, 124px); opacity: 1; } 30.714% { transform: translate(200px, 150px); opacity: 1; } 35% { transform: translate(330px, 150px); opacity: 1; } 37.143% { transform: translate(316px, 110px); opacity: 1; } 97% { transform: translate(316px, 110px); opacity: 1; } 99.9% { transform: translate(316px, 110px); opacity: 0; } 100% { transform: translate(55px, 85px); opacity: 0; } }
+.congest-anim .cg-p2 { animation-name: cg-packet2; animation-timing-function: ease-in-out; }
+@keyframes cg-packet2 { 0% { transform: translate(40px, 205px); opacity: 1; } 15% { transform: translate(40px, 205px); opacity: 1; } 20.714% { transform: translate(200px, 150px); opacity: 1; } 22.857% { transform: translate(200px, 110px); opacity: 1; } 29.286% { transform: translate(200px, 110px); opacity: 1; } 32.857% { transform: translate(200px, 124px); opacity: 1; } 43.571% { transform: translate(200px, 124px); opacity: 1; } 45% { transform: translate(200px, 150px); opacity: 1; } 49.286% { transform: translate(330px, 150px); opacity: 1; } 51.429% { transform: translate(330px, 110px); opacity: 1; } 97% { transform: translate(330px, 110px); opacity: 1; } 99.9% { transform: translate(330px, 110px); opacity: 0; } 100% { transform: translate(40px, 205px); opacity: 0; } }
+.congest-anim .cg-p3 { animation-name: cg-packet3; animation-timing-function: ease-in-out; }
+@keyframes cg-packet3 { 0% { transform: translate(140px, 268px); opacity: 1; } 15% { transform: translate(140px, 268px); opacity: 1; } 20.714% { transform: translate(200px, 150px); opacity: 1; } 22.857% { transform: translate(200px, 96px); opacity: 1; } 29.286% { transform: translate(200px, 96px); opacity: 1; } 32.857% { transform: translate(200px, 110px); opacity: 1; } 43.571% { transform: translate(200px, 110px); opacity: 1; } 47.143% { transform: translate(200px, 124px); opacity: 1; } 57.857% { transform: translate(200px, 124px); opacity: 1; } 59.286% { transform: translate(200px, 150px); opacity: 1; } 63.571% { transform: translate(330px, 150px); opacity: 1; } 65.714% { transform: translate(344px, 110px); opacity: 1; } 97% { transform: translate(344px, 110px); opacity: 1; } 99.9% { transform: translate(344px, 110px); opacity: 0; } 100% { transform: translate(140px, 268px); opacity: 0; } }
+.congest-anim .cg-p4 { animation-name: cg-packet4; animation-timing-function: ease-in-out; }
+@keyframes cg-packet4 { 0% { transform: translate(130px, 42px); opacity: 1; } 15% { transform: translate(130px, 42px); opacity: 1; } 20.714% { transform: translate(200px, 150px); opacity: 1; } 22.857% { transform: translate(200px, 82px); opacity: 1; } 29.286% { transform: translate(200px, 82px); opacity: 1; } 32.857% { transform: translate(200px, 96px); opacity: 1; } 43.571% { transform: translate(200px, 96px); opacity: 1; } 47.143% { transform: translate(200px, 110px); opacity: 1; } 57.857% { transform: translate(200px, 110px); opacity: 1; } 61.429% { transform: translate(200px, 124px); opacity: 1; } 72.143% { transform: translate(200px, 124px); opacity: 1; } 73.571% { transform: translate(200px, 150px); opacity: 1; } 77.857% { transform: translate(330px, 150px); opacity: 1; } 80% { transform: translate(358px, 110px); opacity: 1; } 97% { transform: translate(358px, 110px); opacity: 1; } 99.9% { transform: translate(358px, 110px); opacity: 0; } 100% { transform: translate(130px, 42px); opacity: 0; } }
+.illustration .congest-anim .nodes circle.cg-k1 { animation-name: cg-know1; }
+@keyframes cg-know1 { 0%, 22.757% { fill: var(--surface); stroke: var(--node); } 22.857%, 97% { fill: var(--accent-soft); stroke: var(--accent); } 100% { fill: var(--surface); stroke: var(--node); } }
+.illustration .congest-anim .nodes circle.cg-k2 { animation-name: cg-know2; }
+@keyframes cg-know2 { 0%, 37.043% { fill: var(--surface); stroke: var(--node); } 37.143%, 97% { fill: var(--accent-soft); stroke: var(--accent); } 100% { fill: var(--surface); stroke: var(--node); } }
+.illustration .congest-anim .nodes circle.cg-k3 { animation-name: cg-know3; }
+@keyframes cg-know3 { 0%, 51.329% { fill: var(--surface); stroke: var(--node); } 51.429%, 97% { fill: var(--accent-soft); stroke: var(--accent); } 100% { fill: var(--surface); stroke: var(--node); } }
+.illustration .congest-anim .nodes circle.cg-k4 { animation-name: cg-know4; }
+@keyframes cg-know4 { 0%, 65.614% { fill: var(--surface); stroke: var(--node); } 65.714%, 97% { fill: var(--accent-soft); stroke: var(--accent); } 100% { fill: var(--surface); stroke: var(--node); } }
+.illustration .congest-anim .nodes circle.cg-k5 { animation-name: cg-know5; }
+@keyframes cg-know5 { 0%, 79.9% { fill: var(--surface); stroke: var(--node); } 80%, 97% { fill: var(--accent-soft); stroke: var(--accent); } 100% { fill: var(--surface); stroke: var(--node); } }
+.congest-anim .cg-l0 { animation-name: cg-label0; }
+@keyframes cg-label0 { 0%, 14.186% { opacity: 1; } 14.286%, 100% { opacity: 0; } }
+.congest-anim .cg-l1 { animation-name: cg-label1; }
+@keyframes cg-label1 { 0%, 14.186% { opacity: 0; } 14.286%, 28.471% { opacity: 1; } 28.571%, 100% { opacity: 0; } }
+.congest-anim .cg-l2 { animation-name: cg-label2; }
+@keyframes cg-label2 { 0%, 28.471% { opacity: 0; } 28.571%, 42.757% { opacity: 1; } 42.857%, 100% { opacity: 0; } }
+.congest-anim .cg-l3 { animation-name: cg-label3; }
+@keyframes cg-label3 { 0%, 42.757% { opacity: 0; } 42.857%, 57.043% { opacity: 1; } 57.143%, 100% { opacity: 0; } }
+.congest-anim .cg-l4 { animation-name: cg-label4; }
+@keyframes cg-label4 { 0%, 57.043% { opacity: 0; } 57.143%, 71.329% { opacity: 1; } 71.429%, 100% { opacity: 0; } }
+.congest-anim .cg-l5 { animation-name: cg-label5; }
+@keyframes cg-label5 { 0%, 71.329% { opacity: 0; } 71.429%, 85.614% { opacity: 1; } 85.714%, 100% { opacity: 0; } }
+.congest-anim .cg-l6 { animation-name: cg-label6; }
+@keyframes cg-label6 { 0%, 85.614% { opacity: 0; } 85.714%, 100% { opacity: 1; } }
+/* Without motion: the state before the first round (the packets at their senders). */
+@media (prefers-reduced-motion: reduce) {
+  .congest-anim * { animation: none !important; }
+  .congest-anim .cg-labels .cg-l0 { opacity: 1; }
+}

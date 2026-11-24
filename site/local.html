@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LOCAL model · Atlas of Distributed Algorithms</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css?v=11bdb4d513">
+  <link rel="stylesheet" href="style.css?v=9cc2af09a5">
   <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
 </head>
 <body data-page="model" data-model="LOCAL">
@@ -39,26 +39,127 @@
   </header>
 
   <main class="wrap">
-    <section class="problem problem-wide">
+    <section class="problem">
       <div class="problem-text" id="problem-text">
-        <p class="eyebrow">Overview</p>
+        <p class="eyebrow">Model</p>
         <h1>The LOCAL model</h1>
         <p>
-          The best known lower and upper bounds for every problem in the LOCAL model on general graphs, for
-          deterministic and randomized algorithms. The nodes communicate in synchronous rounds with messages of
-          unbounded size, so the number of rounds measures locality alone; see the
-          <a href="congest.html">CONGEST model</a> for messages of $O(\log n)$ bits. Runtimes depend on the number of nodes $n$ and the maximum
-          degree $\Delta$; choose a regime of $\Delta$ to compare them as functions of $n$, or take the worst case
-          over all $\Delta$.
+          The input graph is the communication network: every node is a processor with a unique identifier, and
+          the nodes compute in synchronous rounds. In each round, every node sends a message of unbounded size to
+          each of its neighbors, receives theirs and computes; in the randomized setting it also has private random
+          bits. The complexity of an algorithm is the number of rounds until every node knows its part of the
+          output. Since messages are unrestricted (unlike in the <a href="congest.html">CONGEST model</a>), a
+          $t$-round algorithm is exactly a function from radius-$t$ neighborhoods to outputs.
         </p>
         <p class="params">
-          The gap between the bounds is classified as <em>tight</em> (they match asymptotically),
-          <em>almost tight</em> (they match up to a factor polylogarithmic in the lower bound, such as
-          $\log n$ against $\log n / \log\log n$), a <em>polynomial gap</em> (the upper bound is polynomial in the
-          lower bound, such as $\log^{5/3} n$ against $\log n$) or an <em>exponential gap</em> (the upper bound is
-          exponential in the lower bound or more, such as $\mathrm{polylog}\, n$ against $\log^* n$).
+          The table lists the best known lower and upper bound for every problem on general graphs, for
+          deterministic and randomized algorithms. Runtimes depend on the number of nodes $n$ and the maximum
+          degree $\Delta$: choose a regime of $\Delta$ to compare them as functions of $n$, or take the worst case
+          over all $\Delta$.
         </p>
       </div>
+
+      <figure class="illustration">
+        <svg class="local-anim" viewBox="0 0 480 310" role="img" aria-labelledby="fig-title fig-desc">
+          <title id="fig-title">Rounds of communication in the LOCAL model</title>
+          <desc id="fig-desc">A graph with fourteen nodes. In each of three rounds, every node sends a message along every edge at the same time. After round t, the highlighted node v knows all nodes within distance t of it and the edges between them, until after three rounds it knows the whole graph.</desc>
+          <g class="edges">
+            <line class="lm-e1" x1="240" y1="150" x2="160" y2="105"/>
+            <line class="lm-e1" x1="240" y1="150" x2="322" y2="108"/>
+            <line class="lm-e1" x1="240" y1="150" x2="252" y2="232"/>
+            <line class="lm-e2" x1="160" y1="105" x2="82" y2="58"/>
+            <line class="lm-e2" x1="160" y1="105" x2="92" y2="182"/>
+            <line class="lm-e2" x1="160" y1="105" x2="236" y2="38"/>
+            <line class="lm-e2" x1="322" y1="108" x2="236" y2="38"/>
+            <line class="lm-e2" x1="322" y1="108" x2="400" y2="56"/>
+            <line class="lm-e2" x1="322" y1="108" x2="398" y2="188"/>
+            <line class="lm-e2" x1="252" y1="232" x2="398" y2="188"/>
+            <line class="lm-e2" x1="252" y1="232" x2="158" y2="268"/>
+            <line class="lm-e3" x1="82" y1="58" x2="28" y2="118"/>
+            <line class="lm-e3" x1="92" y1="182" x2="28" y2="118"/>
+            <line class="lm-e3" x1="92" y1="182" x2="40" y2="262"/>
+            <line class="lm-e3" x1="158" y1="268" x2="40" y2="262"/>
+            <line class="lm-e3" x1="398" y1="188" x2="430" y2="272"/>
+            <line class="lm-e3" x1="400" y1="56" x2="458" y2="118"/>
+            <line class="lm-e3" x1="398" y1="188" x2="458" y2="118"/>
+            <line class="lm-e3" x1="82" y1="58" x2="236" y2="38"/>
+          </g>
+          <g class="lm-messages" aria-hidden="true">
+            <circle cx="240" cy="150" r="3.5" style="--dx: -80px; --dy: -45px"/>
+            <circle cx="160" cy="105" r="3.5" style="--dx: 80px; --dy: 45px"/>
+            <circle cx="240" cy="150" r="3.5" style="--dx: 82px; --dy: -42px"/>
+            <circle cx="322" cy="108" r="3.5" style="--dx: -82px; --dy: 42px"/>
+            <circle cx="240" cy="150" r="3.5" style="--dx: 12px; --dy: 82px"/>
+            <circle cx="252" cy="232" r="3.5" style="--dx: -12px; --dy: -82px"/>
+            <circle cx="160" cy="105" r="3.5" style="--dx: -78px; --dy: -47px"/>
+            <circle cx="82" cy="58" r="3.5" style="--dx: 78px; --dy: 47px"/>
+            <circle cx="160" cy="105" r="3.5" style="--dx: -68px; --dy: 77px"/>
+            <circle cx="92" cy="182" r="3.5" style="--dx: 68px; --dy: -77px"/>
+            <circle cx="160" cy="105" r="3.5" style="--dx: 76px; --dy: -67px"/>
+            <circle cx="236" cy="38" r="3.5" style="--dx: -76px; --dy: 67px"/>
+            <circle cx="322" cy="108" r="3.5" style="--dx: -86px; --dy: -70px"/>
+            <circle cx="236" cy="38" r="3.5" style="--dx: 86px; --dy: 70px"/>
+            <circle cx="322" cy="108" r="3.5" style="--dx: 78px; --dy: -52px"/>
+            <circle cx="400" cy="56" r="3.5" style="--dx: -78px; --dy: 52px"/>
+            <circle cx="322" cy="108" r="3.5" style="--dx: 76px; --dy: 80px"/>
+            <circle cx="398" cy="188" r="3.5" style="--dx: -76px; --dy: -80px"/>
+            <circle cx="252" cy="232" r="3.5" style="--dx: 146px; --dy: -44px"/>
+            <circle cx="398" cy="188" r="3.5" style="--dx: -146px; --dy: 44px"/>
+            <circle cx="252" cy="232" r="3.5" style="--dx: -94px; --dy: 36px"/>
+            <circle cx="158" cy="268" r="3.5" style="--dx: 94px; --dy: -36px"/>
+            <circle cx="82" cy="58" r="3.5" style="--dx: -54px; --dy: 60px"/>
+            <circle cx="28" cy="118" r="3.5" style="--dx: 54px; --dy: -60px"/>
+            <circle cx="92" cy="182" r="3.5" style="--dx: -64px; --dy: -64px"/>
+            <circle cx="28" cy="118" r="3.5" style="--dx: 64px; --dy: 64px"/>
+            <circle cx="92" cy="182" r="3.5" style="--dx: -52px; --dy: 80px"/>
+            <circle cx="40" cy="262" r="3.5" style="--dx: 52px; --dy: -80px"/>
+            <circle cx="158" cy="268" r="3.5" style="--dx: -118px; --dy: -6px"/>
+            <circle cx="40" cy="262" r="3.5" style="--dx: 118px; --dy: 6px"/>
+            <circle cx="398" cy="188" r="3.5" style="--dx: 32px; --dy: 84px"/>
+            <circle cx="430" cy="272" r="3.5" style="--dx: -32px; --dy: -84px"/>
+            <circle cx="400" cy="56" r="3.5" style="--dx: 58px; --dy: 62px"/>
+            <circle cx="458" cy="118" r="3.5" style="--dx: -58px; --dy: -62px"/>
+            <circle cx="398" cy="188" r="3.5" style="--dx: 60px; --dy: -70px"/>
+            <circle cx="458" cy="118" r="3.5" style="--dx: -60px; --dy: 70px"/>
+            <circle cx="82" cy="58" r="3.5" style="--dx: 154px; --dy: -20px"/>
+            <circle cx="236" cy="38" r="3.5" style="--dx: -154px; --dy: 20px"/>
+          </g>
+          <g class="nodes">
+            <circle class="in-set" cx="240" cy="150" r="11"/>
+            <circle class="free lm-k1" cx="160" cy="105" r="9"/>
+            <circle class="free lm-k1" cx="322" cy="108" r="9"/>
+            <circle class="free lm-k1" cx="252" cy="232" r="9"/>
+            <circle class="free lm-k2" cx="82" cy="58" r="9"/>
+            <circle class="free lm-k2" cx="92" cy="182" r="9"/>
+            <circle class="free lm-k2" cx="236" cy="38" r="9"/>
+            <circle class="free lm-k2" cx="400" cy="56" r="9"/>
+            <circle class="free lm-k2" cx="398" cy="188" r="9"/>
+            <circle class="free lm-k2" cx="158" cy="268" r="9"/>
+            <circle class="free lm-k3" cx="28" cy="118" r="9"/>
+            <circle class="free lm-k3" cx="40" cy="262" r="9"/>
+            <circle class="free lm-k3" cx="430" cy="272" r="9"/>
+            <circle class="free lm-k3" cx="458" cy="118" r="9"/>
+          </g>
+          <text class="lm-v" x="255" y="155">v</text>
+          <g class="lm-labels">
+            <text class="lm-l0" x="472" y="300">before the first round</text>
+            <text class="lm-l1" x="472" y="300">round 1</text>
+            <text class="lm-l2" x="472" y="300">round 2</text>
+            <text class="lm-l3" x="472" y="300">round 3</text>
+            <text class="lm-l4" x="472" y="300">after 3 rounds</text>
+            <text class="lm-static" x="472" y="300">after 2 rounds</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="key"><span class="swatch swatch-set"></span>node $v$</span>
+          <span class="key"><span class="swatch swatch-known"></span>known to $v$</span>
+          <span class="key"><span class="swatch swatch-msg"></span>message</span>
+          <span class="caption-text">
+            In every round, all nodes exchange messages with all their neighbors at once. After $t$ rounds, $v$ knows
+            everything within distance $t$, so its output can only depend on its radius-$t$ neighborhood.
+          </span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="results" id="overview"></section>

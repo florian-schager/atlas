@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CONGEST model · Atlas of Distributed Algorithms</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css?v=11bdb4d513">
+  <link rel="stylesheet" href="style.css?v=9cc2af09a5">
   <link rel="icon" href="favicon.svg?v=e57b830f71" type="image/svg+xml">
 </head>
 <body data-page="model" data-model="CONGEST">
@@ -39,26 +39,84 @@
   </header>
 
   <main class="wrap">
-    <section class="problem problem-wide">
+    <section class="problem">
       <div class="problem-text" id="problem-text">
-        <p class="eyebrow">Overview</p>
+        <p class="eyebrow">Model</p>
         <h1>The CONGEST model</h1>
         <p>
-          The best known lower and upper bounds for every problem in the CONGEST model on general graphs, for
-          deterministic and randomized algorithms. As in the <a href="local.html">LOCAL model</a>, the nodes
-          communicate in synchronous rounds, but every message has only $O(\log n)$ bits. Every lower bound for
-          LOCAL also holds here, while algorithms must work with small messages. Runtimes depend on the number of nodes $n$ and the maximum
-          degree $\Delta$; choose a regime of $\Delta$ to compare them as functions of $n$, or take the worst case
-          over all $\Delta$.
+          The CONGEST model is the <a href="local.html">LOCAL model</a> with limited bandwidth: the nodes of the
+          input graph compute in synchronous rounds, but in each round a node can send only a message of
+          $O(\log n)$ bits, a constant number of identifiers, over each of its edges. The complexity of an
+          algorithm is again the number of rounds until every node knows its part of the output. A node can no
+          longer collect its whole neighborhood quickly, and information that has to pass through a few edges
+          queues up there.
         </p>
         <p class="params">
-          The gap between the bounds is classified as <em>tight</em> (they match asymptotically),
-          <em>almost tight</em> (they match up to a factor polylogarithmic in the lower bound, such as
-          $\log n$ against $\log n / \log\log n$), a <em>polynomial gap</em> (the upper bound is polynomial in the
-          lower bound, such as $\log^{5/3} n$ against $\log n$) or an <em>exponential gap</em> (the upper bound is
-          exponential in the lower bound or more, such as $\mathrm{polylog}\, n$ against $\log^* n$).
+          The table lists the best known lower and upper bound for every problem on general graphs, for
+          deterministic and randomized algorithms. Only algorithms that work with $O(\log n)$-bit messages count,
+          while every lower bound for LOCAL also holds here. Runtimes depend on the number of nodes $n$ and the
+          maximum degree $\Delta$: choose a regime of $\Delta$ to compare them as functions of $n$, or take the
+          worst case over all $\Delta$.
         </p>
       </div>
+
+      <figure class="illustration">
+        <svg class="congest-anim" viewBox="0 0 480 310" role="img" aria-labelledby="fig-title fig-desc">
+          <title id="fig-title">Limited bandwidth in the CONGEST model</title>
+          <desc id="fig-desc">Two groups of nodes joined by a single edge between u and w. Each node on the left sends its identifier towards w. All of them reach u in the first round, but only one message can cross the edge from u to w per round, so w learns the five identifiers one per round and knows all of them after five rounds.</desc>
+          <g class="edges">
+            <line x1="200" y1="150" x2="55" y2="85"/>
+            <line x1="200" y1="150" x2="40" y2="205"/>
+            <line x1="200" y1="150" x2="140" y2="268"/>
+            <line x1="200" y1="150" x2="130" y2="42"/>
+            <line x1="55" y1="85" x2="40" y2="205"/>
+            <line x1="40" y1="205" x2="140" y2="268"/>
+            <line x1="55" y1="85" x2="130" y2="42"/>
+            <line class="cg-bridge" x1="200" y1="150" x2="330" y2="150"/>
+            <line x1="330" y1="150" x2="440" y2="55"/>
+            <line x1="330" y1="150" x2="440" y2="245"/>
+            <line x1="440" y1="55" x2="440" y2="245"/>
+          </g>
+          <text class="cg-note" x="268" y="135">one message per round</text>
+          <g class="nodes">
+            <circle class="free cg-k1" cx="200" cy="150" r="9"/>
+            <circle class="free cg-k2" cx="55" cy="85" r="9"/>
+            <circle class="free cg-k3" cx="40" cy="205" r="9"/>
+            <circle class="free cg-k4" cx="140" cy="268" r="9"/>
+            <circle class="free cg-k5" cx="130" cy="42" r="9"/>
+            <circle class="in-set" cx="330" cy="150" r="11"/>
+            <circle class="free" cx="440" cy="55" r="9"/>
+            <circle class="free" cx="440" cy="245" r="9"/>
+          </g>
+          <text class="cg-name" x="196" y="180">u</text>
+          <text class="cg-name" x="346" y="156">w</text>
+          <g class="cg-packets" aria-hidden="true">
+            <rect class="cg-p0" x="-5" y="-5" width="10" height="10" rx="2" transform="translate(200 150)"/>
+            <rect class="cg-p1" x="-5" y="-5" width="10" height="10" rx="2" transform="translate(55 85)"/>
+            <rect class="cg-p2" x="-5" y="-5" width="10" height="10" rx="2" transform="translate(40 205)"/>
+            <rect class="cg-p3" x="-5" y="-5" width="10" height="10" rx="2" transform="translate(140 268)"/>
+            <rect class="cg-p4" x="-5" y="-5" width="10" height="10" rx="2" transform="translate(130 42)"/>
+          </g>
+          <g class="cg-labels">
+            <text class="cg-l0" x="472" y="300">before the first round</text>
+            <text class="cg-l1" x="472" y="300">round 1</text>
+            <text class="cg-l2" x="472" y="300">round 2</text>
+            <text class="cg-l3" x="472" y="300">round 3</text>
+            <text class="cg-l4" x="472" y="300">round 4</text>
+            <text class="cg-l5" x="472" y="300">round 5</text>
+            <text class="cg-l6" x="472" y="300">after 5 rounds</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="key"><span class="swatch swatch-set"></span>node $w$</span>
+          <span class="key"><span class="swatch swatch-known"></span>known to $w$</span>
+          <span class="key"><span class="swatch swatch-packet"></span>message of $O(\log n)$ bits</span>
+          <span class="caption-text">
+            The identifiers of $u$'s neighbors all reach $u$ in one round, but cross the edge to $w$ one per
+            round: $w$ needs five rounds to learn what it would know after two rounds in LOCAL.
+          </span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="results" id="overview"></section>
